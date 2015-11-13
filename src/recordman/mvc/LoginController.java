@@ -16,7 +16,7 @@ public class LoginController {
 		
 	}
 	
-	@Inject
+	//@Inject
 	//private UserDataHandle userdatahandle;
 	
 	@RequestMapping(value="/login")
@@ -30,7 +30,7 @@ public class LoginController {
 			request.getSession().setAttribute("rootPath", rootpath );
 			if( true ){
 				System.out.println("login successed");
-				return "redirect:/mgn/leavehospital/showinhospitals";
+				return "redirect:/runstatus/show";
 			}else{
 				System.out.println("login failed");
 				model.addAttribute("loginFail", true);

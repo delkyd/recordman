@@ -1,13 +1,19 @@
-(function(){
+$(function(){
 	setContentMinHeight();
 	$(window).resize(setContentMinHeight);
-
-})();
+	loadProperties();
+	 
+	$('.js-slideout-toggle').click(function(){
+		
+		$('.slideout-panel').toggleClass('slideout-panel-slided');
+		$('html').toggleClass('slideout-open');
+	});
+});
 
 function setContentMinHeight(){
 	var fh = $("#footer").height();
 	var wh = $(window).height();
-	var nh = $('#nav').height();
+	var nh = $('.site-header').height();
 	$('#content').css('min-height', (wh - fh-nh)+'px');
 }
 
@@ -49,8 +55,17 @@ function getAjaxData(json,flag) {
 	});
 }
 
-function showAlert(c, Func){
-	$("#alertModal .modal-body p").html(c);
+function loadProperties(){
+	jQuery.i18n.properties({
+		name:'i18nstring',
+		path:rootPath+'/resources/js/i18n/',
+		mode:'map'	
+	});
+}
+
+function showAlert(t, c, Func){
+	$("#alertModal .modal-title").text(t);
+	$("#alertModal .modal-body p").text(c);
 	$("#alertModal").modal('show');
 	
 	$('#alertModal').on('hidden.bs.modal', function(event){
@@ -82,4 +97,3 @@ function showConfirmDelete(title,message,yesFn,noFn){
 		$("#confirmModal").modal('hide');
 	});
 }
-
