@@ -1,5 +1,5 @@
 body,p,input,label,button,a,li{
-	font-family: '微软雅黑' !important;
+	font-family: '微软雅黑 ,宋体,Arial,Verdana,Sans-serif' !important;
     font-size: 14px;
     vertical-align: middle;
 }
@@ -27,6 +27,10 @@ footer p {
 	background: #FFF url(../img/common/loading.gif) no-repeat center center !important;
 }
 
+#content{
+	padding-top:50px;	
+}
+
 /*框架布局*/
 .slideout-menu {
     bottom: 0;
@@ -38,29 +42,20 @@ footer p {
     top: 0;
     width: 256px;
     z-index: 0;
-    
-    transition: display 0.5s;
-	Firefox 4
-	-moz-transition: display 0.5s;
-	Safari and Chrome
-	-webkit-transition: display 0.5s;
-	Opera
-	-o-transition: display 0.5s;
 }
 
 .slideout-panel {
-	transform: translateX(0px);
     height: 100%;
     position: relative;
-    z-index: 1;
+   	z-index: 1;
     
-    transition: transform 0.5s;
+    transition: transform 0.2s;
 	Firefox 4
-	-moz-transition: transform 0.5s;
+	-moz-transition: transform 0.2s;
 	Safari and Chrome
-	-webkit-transition: transform 0.5s;
+	-webkit-transition: transform 0.2s;
 	Opera
-	-o-transition: transform 0.5s; 
+	-o-transition: transform 0.2s; 
 }
 
 .slideout-panel-slided{
@@ -77,12 +72,23 @@ footer p {
 
 .site-header {
     background-color: #222222;
-    overflow: hidden;
     width: 100%;
+    position:fixed;
+    left:0px;
+    top:0px;
+    z-index:999;
+}
+
+.testfixed{
+	background-color: #222222;
+	width:100px;
+	height:100px;
+	left:500px;
+	top:80px;
+	position:fixed;
 }
 
 .desktop-header {
-    overflow: hidden;
     white-space: nowrap;
 }
 
@@ -107,11 +113,10 @@ footer p {
     line-height: 48px;   
    	padding: 0px 4px; 
     text-decoration: none;
-    font-size: 16px;
 }
 
 .desktop-header ul{
-	list-style-type: none;
+	list-style: outside none none;
 	margin:0px;
 }
 
@@ -212,6 +217,11 @@ footer p {
     padding: 0 20px;
     text-transform: uppercase;
 }
+
+.mobile-menu ul{
+	list-style: outside none none;
+}
+
 .mobile-menu .menu-section-list {
     list-style: outside none none;
     margin: 10px 0;
@@ -228,6 +238,14 @@ footer p {
 .mobile-menu .logo {
     height: 128px;
     width: 128px;
+}
+
+.mobile-menu .sub-menu{
+	display:none;
+}
+
+.mobile-menu .sub-menu-down{
+	display:block;
 }
 
 /*登录页面*/

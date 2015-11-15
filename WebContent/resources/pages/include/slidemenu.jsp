@@ -5,19 +5,13 @@
 	<header class="menu-header"></header>
 	<section class="menu-section">
 		<ul class="menu-section-list">
-			<li id="nav_runstatus"><a
-				href="<%=request.getContextPath()%>/runstatus/show"><fmt:message
-						key="runstatus" bundle="${bundle }" /></a></li>
-			<li id="nav_setupwizard"><a href=""><fmt:message
-						key="setupwizard" bundle="${bundle }" /></a></li>
-			<li id="nav_network"><a href=""><fmt:message key="network"
-						bundle="${bundle }" /></a></li>
-			<li id="nav_faultrecord"><a href=""><fmt:message
-						key="faultrecord" bundle="${bundle }" /></a></li>
-			<li id="nav_systemtool" class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-					aria-haspopup="true" aria-expanded="false"><fmt:message key="systemtool" bundle="${bundle }"/> <span class="caret"></span></a>
-					<ul class="dropdown-menu">
+			<li id="nav_runstatus"><a href="<%=request.getContextPath()%>/runstatus/show"><fmt:message key="runstatus" bundle="${bundle }" /></a></li>
+			<li id="nav_setupwizard"><a href=""><fmt:message key="setupwizard" bundle="${bundle }" /></a></li>
+			<li id="nav_network"><a href=""><fmt:message key="network" bundle="${bundle }" /></a></li>
+			<li id="nav_faultrecord"><a href=""><fmt:message key="faultrecord" bundle="${bundle }" /></a></li>
+			<li id="nav_systemtool" class="dropdownmenu">
+					<a href="#" class="dropdownmenu-toggle"><fmt:message key="systemtool" bundle="${bundle }"/> <span class="caret"></span></a>
+					<ul class="sub-menu">
 						<li><a href=""><fmt:message key="settime" bundle="${bundle }"/></a></li>
 						<li><a href=""><fmt:message key="upgrade" bundle="${bundle }"/></a></li>
 						<li><a href=""><fmt:message key="setpwd" bundle="${bundle }"/></a></li>

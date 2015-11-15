@@ -11,8 +11,9 @@
 </head>
 <body>
 	<fmt:setBundle var="bundle" basename="codeman.i18n.resource.i18nstring" scope="page"/>
-	<nav class="navbar navbar-default navbar-static-top navbar-inverse" id="nav">
+	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" id="nav">
 			<div class="container">
+				<img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave">
 				<span class="navbar-brand"><fmt:message key="brand" bundle="${bundle }"/></span>
 			</div>
 	</nav>
@@ -46,9 +47,9 @@
 				</form>
 			</div>	
 		</div>
-	</div>
-	
+	</div>	
 	<%@ include file="include/footer.jsp" %>
+	<%@ include file="include/html_footer.jsp"%>
   	<script src="<%=request.getContextPath()%>/resources/js/login/login.js"></script>
 </body>
 </html>

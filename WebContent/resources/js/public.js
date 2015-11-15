@@ -4,17 +4,39 @@ $(function(){
 	loadProperties();
 	 
 	$('.js-slideout-toggle').click(function(){
-		
-		$('.slideout-panel').toggleClass('slideout-panel-slided');
-		$('html').toggleClass('slideout-open');
+		toggleSlidepanel();
 	});
+	
+	$('.mobile-menu .dropdownmenu').click(function(){
+		$(this).find('.sub-menu').toggleClass('sub-menu-down');
+	})
 });
+
+var slidepanelOpened = false;
+
+function openSlidepanel(){
+	$('.slideout-panel').addClass('slideout-panel-slided');
+	$('html').addClass('slideout-open');
+	slidepanelOpened = true;
+}
+
+function closeSlidepanel(){
+	$('.slideout-panel').removeClass('slideout-panel-slided');
+	setTimeout(function(){
+		$('html').removeClass('slideout-open');
+	}, 200);
+	slidepanelOpened = false;
+}
+
+function toggleSlidepanel(){
+	slidepanelOpened?closeSlidepanel():openSlidepanel();
+}
 
 function setContentMinHeight(){
 	var fh = $("#footer").height();
 	var wh = $(window).height();
-	var nh = $('.site-header').height();
-	$('#content').css('min-height', (wh - fh-nh)+'px');
+	var nh = $('#nav').height();
+	$('#content').css('min-height', (wh - fh)+'px');
 }
 
 function setNavActive(id){

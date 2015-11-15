@@ -13,8 +13,8 @@
 		<%@ include file="../include/nav.jsp"%>	
 			<div id="content" class="container">
 				<div class="page-header">
-				  <h1>Run Status</h1>			  
-				</div>			
+				  <h1>Run Status</h1>
+				</div>		
 			</div>
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
