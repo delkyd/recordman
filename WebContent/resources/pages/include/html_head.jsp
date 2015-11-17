@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<fmt:setBundle var="bundle" basename="codeman.i18n.resource.i18nstring" scope="page"/>
+	<fmt:setBundle var="bundle" basename="recordman.i18n.resource.i18nstring" scope="page"/>
 	<title><fmt:message key="web_title" bundle="${bundle }"/></title>
 	<script type="text/javascript">
 		var rootPath = "${rootPath}";
