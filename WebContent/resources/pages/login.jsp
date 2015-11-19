@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" />
 </head>
 <body>
-	<fmt:setBundle var="bundle" basename="codeman.i18n.resource.i18nstring" scope="page"/>
+	<fmt:setBundle var="bundle" basename="recordman.i18n.resource.i18nstring" scope="page"/>
 	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" id="nav">
 			<div class="container">
 				<img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave">

@@ -14,7 +14,8 @@
 			<div id="content" class="container">
 				<div class="page-header">
 				  <h1>Run Status</h1>
-				</div>		
+				</div>
+				<button class="btn btn-default" id="test">Button</button>		
 			</div>
 		<%@ include file="../include/footer.jsp"%>
 	</div>	

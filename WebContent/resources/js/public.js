@@ -97,7 +97,7 @@ function showAlert(t, c, Func){
 	});
 }
 
-function showConfirmDelete(title,message,yesFn,noFn){
+function showConfirm(title,message,yesFn,noFn){
 	$('#confirmModal').find('.modal-title').text(title);
 	$('#confirmModal').find('.modal-body p').text(message);
 	
@@ -118,4 +118,14 @@ function showConfirmDelete(title,message,yesFn,noFn){
 		}
 		$("#confirmModal").modal('hide');
 	});
+}
+
+function showWave(comtradeData){
+	var w = $(window).width()-20;
+	var h = $(window).height()-60;
+	$('#waveModal .modal-dialog').attr("style", 'width:'+w+'px'+';height:'+h+'px');
+	$('#waveModal .modal-header').attr("style", 'width:'+w+'px'+';height:'+h+'px');
+	
+	//$('#waveModal_hdrContent').hide();
+	$('#waveModal').modal('show');
 }

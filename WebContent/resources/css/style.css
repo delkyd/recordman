@@ -8,6 +8,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     display: block;
 }
 
+a,input,button{
+	outline-style:none;
+	Firefox 4
+	-moz-outline:none;
+}
+
 .container, .site-content {
     margin: 0 auto;
     max-width: 900px;
@@ -342,4 +348,8 @@ fieldset[disabled] .customBtn {
 	width:32px;
 	height:32px;
 	background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB20lEQVRYR+2Xv0sbYRjHv897QkFxEbSLOAnu2lzjYi6QQTQXFHeDBKFtUgdHUbCCo+APDLiVqlO2XHZPCTaXzUGXlv4BXbqUQkvzPuWiJ8eReKG+lym33t37+Tzf5+F97whdvnTDXCBgiYFq3bZOqJv8eCLzlomPAXak5BgJLdc1AQ9OoJ2aXd5+lZi70aBVuyIQhMeM9D4kFzRBqcgFnoBna3blnKZS5pj42xhSPQu/hgfuBr//zrk992L3Vd6Eu0yKG+ZHBrKqBQDsAVj3wwXzeyJa9uA+AZ5ogFdVSfRByzP4DYE+uAPnVu7CQVrWsctnfk4zAUiM1q6slAoB3cgUCHzkwV8nzANAFlrBHxNQJdASTlgD08bPkRd7t6XSn2CRyhJoW7mgXTBtAZh2bKsWiUA7OAta0VhcS/CXyASCcD1pHpKUeRdev6h8mjYy45EJhMHduCMT6AQemUCn8EgEgvC4kT5i5ndez4NTrrQFDwdL0dtkwuDKE9BnTJsEfji2tdgJPCqBl8z4RpCz7WL3t0FpC/RkuogGJpt7ONGxc2mdhp0fSgXCYK3u9wR6CfQS6CXQUQIMzEPC+Z+NJvQdgX4AyfafZPd/rInQhZ75gABtfrbLX4PL/AOlpRC+5APUbgAAAABJRU5ErkJggg==);
+}
+
+#waveModal .modal-header{
+	border-bottom-width:0px;
 }
