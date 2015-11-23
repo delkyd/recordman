@@ -20,8 +20,8 @@ public class LoginController {
 	//private UserDataHandle userdatahandle;
 	
 	@RequestMapping(value="/login")
-	public String login(@RequestParam("name") String userName,
-						@RequestParam("pwd") String userPwd,Model model, HttpServletRequest request){
+	public String login(@RequestParam String name,
+						@RequestParam String pwd,Model model, HttpServletRequest request){
 		try{						
 			System.out.println("login method");
 			

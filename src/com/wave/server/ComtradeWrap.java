@@ -17,12 +17,12 @@ public class ComtradeWrap {
 
 			try { 
 				 System.out.println("java.lib.path is " + System.getProperty("java.library.path")); 
-				 System.loadLibrary("XJReadWave");
+				 System.loadLibrary("JReadComtrade");
 			}
 			catch(UnsatisfiedLinkError e) 
 			{ 
-		    logger.error("加载 XJReadWave XJComtrade 异常   请查看相关文件路径是否正确 ");
-		    logger.error("加载 XJReadWave XJComtrade 路径： " + System.getProperty("java.library.path"));
+		    logger.error("load JReadComtrade and quickComtrade failed,please check the file path");
+		    logger.error("load JReadComtrade quickComtrade path： " + System.getProperty("java.library.path"));
 			logger.error(e.toString());
 		        
 		  }
@@ -75,13 +75,10 @@ public class ComtradeWrap {
 	 /**
 	  * ******************************************************************************
 	 *
-	 * Method: freeXJComtrade<BR>
-	 * Desc: 	释放	XJComtrade.dll,必须是最后释放	  <BR>   void
+	 * Method: freeQuickComtrade<BR>
+	 * Desc: 	释放	quickComtrade.dll,必须是最后释放	  <BR>   void
 	 *
 	 *******************************************************************************
 	  */
-	 public native static void freeXJComtrade();
-	
-	 
-	
+	 public native static void freeQuickComtrade();	
 }

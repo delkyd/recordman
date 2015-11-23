@@ -15,7 +15,8 @@
 				<div class="page-header">
 				  <h1>Run Status</h1>
 				</div>
-				<button class="btn btn-default" id="test">Button</button>		
+				<button class="btn btn-default" id="test">Button</button>
+				<button class="btn btn-default" id="another">Another</button>		
 			</div>
 		<%@ include file="../include/footer.jsp"%>
 	</div>	

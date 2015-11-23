@@ -125,7 +125,196 @@ function showWave(comtradeData){
 	var h = $(window).height()-60;
 	$('#waveModal .modal-dialog').attr("style", 'width:'+w+'px'+';height:'+h+'px');
 	$('#waveModal .modal-header').attr("style", 'width:'+w+'px'+';height:'+h+'px');
+	$('#waveModal .modal-header #wave-graph').attr("style", 'width:'+(w-30)+'px'+';height:'+(h-60)+'px');
+	$('#waveModal .modal-header #wave-hdr').attr("style", 'width:'+(w-30)+'px'+';height:'+(h-60)+'px;');
 	
-	//$('#waveModal_hdrContent').hide();
 	$('#waveModal').modal('show');
+	
+	wave_graph(comtradeData);	
+	if( comtradeData.comtrade.hdr != null ){
+		wave_hdr(comtradeData.comtrade.hdr);		
+	}
+}
+
+function wave_hdr_hide(){
+	$('#wave-hdr .panel-zero').hide();
+	$('#wave-hdr .panel-success').hide();
+	$('#wave-hdr .panel-info').hide();
+	$('#wave-hdr .panel-warning').hide();
+	$('#wave-hdr .panel-danger').hide();
+	$('#wave-hdr .panel-primary').hide();
+}
+
+function wave_hdr_show(){
+	$('#wave-hdr .panel-zero').show();
+	$('#wave-hdr .panel-success').show();
+	$('#wave-hdr .panel-info').show();
+	$('#wave-hdr .panel-warning').show();
+	$('#wave-hdr .panel-danger').show();
+	$('#wave-hdr .panel-primary').show();
+}
+
+function wave_hdr(hdrData){
+	if( hdrData == null )
+		return;
+	if( hdrData.result == 0 ){
+		$('#wave-hdr .alert').html("HDR文件不存在");
+		$('#wave-hdr .alert').show();
+		wave_hdr_hide();
+		return;
+	}
+	if( hdrData.result == 1 ){
+		$('#wave-hdr .alert').html("HDR文件格式不符合规范");
+		$('#wave-hdr .alert').show();
+		wave_hdr_hide();
+		return;
+	}
+	$('#wave-hdr .alert').hide();
+	wave_hdr_show();
+	wave_setHdrBrief(hdrData);
+	wave_setFaultInfo(hdrData);
+	wave_setTripInfo(hdrData);
+	wave_setDigitalStatus(hdrData);
+	wave_setDigitalEvent(hdrData);
+	wave_setSettingValue(hdrData);
+}
+function wave_setHdrBrief(hdrData){
+	var html = "<tr>";
+	html += "<td width='16%' class='odd'>故障起始时间</td>";
+	html += "<td width='16%' >"+hdrData.FaultStartTime+"</td>";
+	html += "<td width='16%' class='odd'>故障持续时间</td>";
+	html += "<td width='16%' >"+hdrData.FaultKeepingTime+"</td>";
+	html += "<td width='16%' class='odd'>文件大小(字节)</td>";
+	html += "<td width='16%' >"+hdrData.DataFileSize+"</td>";
+	html += "</tr>";
+	$('#waveModal_breifTb tbody').html(html);	
+}
+
+function wave_setFaultInfo(hdrData){
+	if(hdrData.FaultInfo){
+		var html="";
+		var col = 0;
+		for ( var i = 0; i < hdrData.FaultInfo.length; i++) {
+			var info = hdrData.FaultInfo[i];
+			if( col == 0 ){
+				html += "<tr>";
+			}
+			html += "<td width='16%' class='odd'>" +info.name+"</td>";
+			html += "<td width='16%'>"+info.value+"</td>";
+			col++;
+			if( col == 3 ){
+				html+="</tr>";
+				col = 0;
+			}				
+		}
+		if( col == 0 )
+			html += "</tr>";
+		$('#waveModal_faultinfoTb tbody').html(html);
+	}
+}
+
+function wave_setTripInfo(hdrData){
+	if(hdrData.TripInfo){
+		var html = "";
+		for( var i = 0; i < hdrData.TripInfo.length; i++ ){
+			var info = hdrData.TripInfo[i];
+			if( i%2 == 0 )
+				html += "<tr>";
+			else
+				html += "<tr class='odd'>";
+			html += "<td>"+info.time+"</td>";
+			html += "<td>"+info.name+"</td>";
+			html += "<td>"+info.value+"</td>";
+			html += "<td>"+info.phase+"</td>";
+			if( info.FaultInfo ){
+				html += "<td><ol>";
+				for( var k = 0; k < info.FaultInfo.length; k++ ){
+					var fault = info.FaultInfo[k];
+					html += "<li>"+fault.name+"&nbsp;&nbsp;"+fault.value+"</li>";
+				}
+				html += "</ol></td>";
+			}else{
+				html += "<td></td>";
+			}
+			
+			html += "</tr>";
+		}
+		$('#waveModal_tripinfoTb tbody').html(html);
+	}
+}
+
+function wave_setDigitalStatus(hdrData){
+	if(hdrData.DigitalStatus){
+		var html="";
+		var col = 0;
+		for ( var i = 0; i < hdrData.DigitalStatus.length; i++) {
+			var info = hdrData.DigitalStatus[i];
+			if( col == 0 ){
+				html += "<tr>";
+			}
+			html += "<td width='16%' class='odd'>" +info.name+"</td>";
+			html += "<td width='16%'>"+info.value+"</td>";
+			col++;
+			if( col == 3 ){
+				html+="</tr>";
+				col = 0;
+			}				
+		}
+		if( col == 0 )
+			html += "</tr>";
+		$('#waveModal_distatusTb tbody').html(html);
+	}
+}
+
+function wave_setDigitalEvent(hdrData){
+	if(hdrData.DigitalEvent){
+		var html = "";
+		for( var i = 0; i < hdrData.DigitalEvent.length; i++ ){
+			var info = hdrData.DigitalEvent[i];
+			if( i%2 == 0 )
+				html += "<tr>";
+			else
+				html += "<tr class='odd'>";
+			html += "<td>"+info.time+"</td>";
+			html += "<td>"+info.name+"</td>";
+			html += "<td>"+info.value+"</td>";
+			html += "</tr>";
+		}
+		$('#waveModal_dieventTb tbody').html(html);
+	}
+}
+
+function wave_setSettingValue(hdrData){
+	if(hdrData.SettingValue){
+		var html="";
+		var col = 0;
+		for ( var i = 0; i < hdrData.SettingValue.length; i++) {
+			var info = hdrData.SettingValue[i];
+			if( col == 0 ){
+				html += "<tr>";
+			}
+			html += "<td width='16%' class='odd'>" +info.name+"</td>";
+			html += "<td width='16%'>"+info.value+" "+info.unit+"</td>";
+			col++;
+			if( col == 3 ){
+				html+="</tr>";
+				col = 0;
+			}				
+		}
+		if( col == 0 )
+			html += "</tr>";
+		$('#waveModal_settingTb tbody').html(html);
+	}
+}
+
+function wave_graph(data, height){
+	$('#wave-graph').jscomtrade({
+		title: {                                                          
+            text:data.comtrade.filename			
+        },
+        subtitle:{
+        	text: '采样时间:'+data.comtrade.sampletime+' 故障时间:'+data.comtrade.sampletime
+        },
+        comtrade:data.comtrade		
+	});
 }

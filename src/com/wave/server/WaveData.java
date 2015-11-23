@@ -6,7 +6,6 @@ public class WaveData {
 
 	public ComtradeCFG comtrade;// cfg文件信息,及共享信息
 	
-
 	public ComtradeChannel Channel;//ComtradeChannel
 
 	public WaveData(ComtradeCFG comtrade) {
@@ -84,13 +83,6 @@ public class WaveData {
 	 * 返 回 值: 由文件直接计算(ax+b)得来的值
 	 **/
 	float getFileValue(int nSampleNo) {
-		/*System.out.println("**************************************************" );
-		System.out.println(Channel.fScale);
-		System.out.println("  nSampleNo: "+nSampleNo  +"  /" + Channel.ListA[nSampleNo] );
-		System.out.println("Channel.fOffset" +Channel.fOffset);		
-		System.out.println(Channel.fScale * Channel.ListA[nSampleNo]);
-		System.out.println(Channel.fScale * Channel.ListA[nSampleNo] + Channel.fOffset);
-		**/
 		// 指定的通道号或者指定的采样点不存在,总是返回0
 		return (float) (Channel.fScale * Channel.ListA[nSampleNo] + Channel.fOffset);
 	}

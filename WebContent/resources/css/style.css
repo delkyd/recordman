@@ -353,3 +353,13 @@ fieldset[disabled] .customBtn {
 #waveModal .modal-header{
 	border-bottom-width:0px;
 }
+
+.panel-zero > .panel-heading {
+    background-color: #ebf5e7;
+    border-color: #dfeed2;
+    color: #93a034;
+}
+
+#wave-hdr{
+	overflow:auto;
+}
