@@ -1235,7 +1235,14 @@ defaultOptions = {
 		numericSymbols: ['k', 'M', 'G', 'T', 'P', 'E'], // SI prefixes used in axis labels
 		resetZoom: 'Reset zoom',
 		resetZoomTitle: 'Reset zoom level 1:1',
-		thousandsSep: ','
+		thousandsSep: ',',
+		b_time: '时间',
+		b_curdi: '当前时间"动作"的开关',
+		b_primarycursor: ' 主游标:',
+		b_secondcursor: ' 副游标:',
+		b_effectivevalue: ' 有效值:',
+		b_reset: '复归',
+		b_action: '动作'
 	},
 	global: {
 		useUTC: true,
@@ -5798,7 +5805,7 @@ Pointer.prototype = {
 				this.synCursor(cursor);
 				this.refreshChannelValue();
 			}			
-		}		
+		}
 	},
 	onContainerMouseUp: function(e){
 		e = this.normalize(e);
@@ -5813,10 +5820,12 @@ Pointer.prototype = {
 	onContainerMouseMove: function(e){
 		var chart = this.chart;
 		e = this.normalize(e);
+		var lbox = chart.getLeftPageturnerBox(),
+			rbox = chart.getRightPageturnerBox();
 		if( this.mouseInComtradePlot(e) ){
 			if(chart.PageturnerDisplayed){
-				if( !this.pointInRect(e.chartX, e.chartYscroll, chart.getLeftPageturnerBox()) &&
-						!this.pointInRect(e.chartX, e.chartYscroll, chart.getRightPageturnerBox())){
+				if( !this.pointInRect(e.chartX, e.chartYscroll, lbox) &&
+						!this.pointInRect(e.chartX, e.chartYscroll, rbox)){
 					chart.showPageturner(false);
 				}
 			}
@@ -5832,19 +5841,10 @@ Pointer.prototype = {
 				this.synCursor(this.chart.secondaryCursor);
 				this.refreshChannelValue();
 			}			
-		}/*else{
-			var rect = this.chart.plotBox;
-			//rect.x += this.chart.turnerLeftBox.width;
-			if( this.pointInRect(e.chartX, e.chartY, rect)){
-				chart.showPageturner(false);
-			}else{
-				if( e.chartX < rect.x || e.chartX > rect.x+rect.width ){
-					chart.showPageturner(true);
-				}
-			}			
-		}*/
-		if(this.pointInRect(e.chartX, e.chartYscroll, this.chart.getLeftPageturnerBox()) ||
-				this.pointInRect(e.chartX, e.chartYscroll, this.chart.getRightPageturnerBox())){
+		}
+		
+		if(this.pointInRect(e.chartX, e.chartYscroll, lbox) ||
+				this.pointInRect(e.chartX, e.chartYscroll, rbox)){
 			if(!chart.PageturnerDisplayed){
 				chart.showPageturner(true);
 			}
@@ -5923,8 +5923,8 @@ Pointer.prototype = {
 			}
 		}
 		//组织tooltip文字 
-		var text = '<span style="font-weight:bold">时间:'+curtime+'</span><br><br>';
-		text += '<span>当前时间"动作"的开关</span><br>';
+		var text = '<span style="font-weight:bold">'+chart.options.lang.b_time+':'+curtime+'</span><br><br>';
+		text += '<span>'+chart.options.lang.b_curdi+'</span><br>';
 		for( var index = 0; index < onchannel.length; index++ ){
 			text += '<span style="font-weight:bold">'+onchannel[index]+'</span><br>';
 		}
@@ -5990,8 +5990,12 @@ Pointer.prototype = {
 		container.onclick = function(e){
 			pointer.onClick(e);
 		}
-		
-		
+		container.oncontextmenu=function(){
+			return false;
+		}
+		container.ondragstart=function(){
+			return false;
+		}
 	}
 	
 };
@@ -6916,6 +6920,7 @@ Channels.prototype = {
 			axis = chart.axis,
 			renderer = chart.renderer,
 			chartOptions = chart.options.chart,
+			langOptions = chart.options.lang,
 			comtradeOptions = chart.options.comtrade,
 			channelsOptions = chart.options.comtrade.channels;
 		if( this.vArray == null || this.idArray == null ){
@@ -6942,9 +6947,9 @@ Channels.prototype = {
 				
 				dv = math.sqrt(dv/(s2-s1+1));
 								
-				var text = ' 主游标:'+JSComtrade.numberFormat(v1,2)+c.unit
-							+' 副游标:'+JSComtrade.numberFormat(v2,2)+c.unit
-							+' 有效值:'+JSComtrade.numberFormat(dv,2);
+				var text = langOptions.b_primarycursor+JSComtrade.numberFormat(v1,2)+c.unit
+							+langOptions.b_secondcursor+JSComtrade.numberFormat(v2,2)+c.unit
+							+langOptions.b_effectivevalue+JSComtrade.numberFormat(dv,2);
 				ele.textSetter(text);
 			}else{
 				var v1 = 0,
@@ -6969,7 +6974,8 @@ Channels.prototype = {
 					if( setv1 == true && setv2 == true )
 						break;
 				}
-				var text = ' 主游标:'+(v1==0?'复归':'动作')+' 副游标:'+(v2==0?'复归':'动作');
+				var text = langOptions.b_primarycursor+(v1==0?langOptions.b_reset:langOptions.b_action)+
+							langOptions.b_secondcursor+(v2==0?langOptions.b_reset:langOptions.b_action);
 				ele.textSetter(text);
 			}			
 		}
@@ -7234,11 +7240,11 @@ Chart.prototype={
 		
 		var chart = this;
 		//add the chart to the global lookup
-		chart.index = charts.length;
-		charts.push(chart);
+		//chart.index = charts.length;
+		//charts.push(chart);
+		chart.index = chartCount++;
 		chartCount++;
-		
-		
+				
 		chart.firstRender();
 	},
 	/*
@@ -7291,8 +7297,6 @@ Chart.prototype={
 		// depends on inverted and on margins being set		
 		chart.layoutPages();
 		
-		$(this.container).scrollTop(0);	
-		
 		if( JSComtrade.Axis ){
 			chart.axis = new Axis(chart, options.axis);
 		}
@@ -7312,12 +7316,11 @@ Chart.prototype={
 		
 		if( JSComtrade.Channels ){
 			chart.channels = new Channels(chart, options.comtrade);
-		}
-		
+		}	
+
 		chart.render();
-		
 		chart.showPageturner(false);
-		
+			
 		//add canvas
 		chart.renderer.draw();
 		
@@ -7342,7 +7345,7 @@ Chart.prototype={
 		containerId;
 		
 		chart.renderTo = renderTo = optionsChart.renderTo;
-		containerId = PREFIX + idCounter++;
+		containerId = PREFIX + chart.index;
 		
 		if(isString(renderTo)){
 			chart.renderTo = renderTo = doc.getElementById(renderTo);
@@ -7354,14 +7357,13 @@ Chart.prototype={
 		// because web pages that are saved to disk from the browser, will preserve the data-highcharts-chart
 		// attribute and the SVG contents, but not an interactive chart. So in this case,
 		// charts[oldChartIndex] will point to the wrong chart if any (#2609).
-		oldChartIndex = pInt(attr(renderTo, indexAttrName));
-		if(!isNaN(oldChartIndex)&&charts[oldChartIndex]&&charts[oldChartIndex].hasRendered){
-			alert(charts[oldChartIndex].nodeName);
-			charts[oldChartIndex].destroy();
+		/*oldChartIndex = pInt(attr(renderTo, indexAttrName));
+		if(!isNaN(oldChartIndex)&& charts[oldChartIndex] && charts[oldChartIndex]!='undefined'){
+			charts[oldChartIndex].destory();
 			if(axischarts[oldChartIndex]){
 				axischarts[oldChartIndex].destory();
 			}
-		}
+		}*/
 		
 		//make a reference to the chart from the div
 		attr(renderTo, indexAttrName, chart.index);
@@ -7394,7 +7396,7 @@ Chart.prototype={
 			chart.renderToClone||renderTo);	
 		//cache the cursor
 		chart._cursor = container.style.cursor;
-		charts[chart.index] = container;
+		//charts[chart.index] = container;
 		
 		var cheight = optionsChart.channel.height + optionsChart.channelMargin[0] + optionsChart.channelMargin[2];
 		var comtradeOptions = chart.options.comtrade;
@@ -7425,7 +7427,7 @@ Chart.prototype={
 				zIndex:0},
 				optionsChart.style),
 			chart.renderToClone||renderTo);
-		axischarts[chart.index] = chart.axiscontainer;
+		//axischarts[chart.index] = chart.axiscontainer;
 		//Initialize the axis renderer
 		chart.axisrenderer = optionsChart.forExport?
 				new SVGRenderer(axiscontainer, chartWidth-scrollwidth, chart.axisHeight, optionsChart.style, true):

@@ -45,7 +45,7 @@
 			    <li role="presentation"><a href="#wave-hdr" aria-controls="wave-hdr" role="tab" data-toggle="tab"><fmt:message key="wave-hdr" bundle="${bundle }"/></a></li>
 			</ul>
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id='wave-graph' ondragstart="return false;" onmousedown="return false"></div>
+				<div role="tabpanel" class="tab-pane active" id='wave-graph' ondragstart="return false;" onmousedown="return false;"></div>
 				<div role="tabpanel" class="tab-pane" id="wave-hdr" >
 					<div class="alert alert-danger" role="alert"></div>
 					<div class="panel panel-zero">

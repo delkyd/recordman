@@ -127,13 +127,21 @@ function showWave(comtradeData){
 	$('#waveModal .modal-header').attr("style", 'width:'+w+'px'+';height:'+h+'px');
 	$('#waveModal .modal-header #wave-graph').attr("style", 'width:'+(w-30)+'px'+';height:'+(h-60)+'px');
 	$('#waveModal .modal-header #wave-hdr').attr("style", 'width:'+(w-30)+'px'+';height:'+(h-60)+'px;');
-	
+		
+	$('#waveModal .nav-tabs a:first').tab('show');
 	$('#waveModal').modal('show');
 	
-	wave_graph(comtradeData);	
-	if( comtradeData.comtrade.hdr != null ){
-		wave_hdr(comtradeData.comtrade.hdr);		
-	}
+	$('#waveModal').unbind('shown.bs.modal');
+	$('#waveModal').on('shown.bs.modal', function (e) {
+		wave_graph(comtradeData);	
+		if( comtradeData.comtrade.hdr != null ){
+			wave_hdr(comtradeData.comtrade.hdr);
+			$('#waveModal .nav-tabs a[href="#wave-hdr"]').unbind('shown.bs.tab');
+			$('#waveModal .nav-tabs a[href="#wave-hdr"]').on('shown.bs.tab', function(e){
+				$('#wave-hdr').scrollTop(0);
+			});			
+		}
+	});
 }
 
 function wave_hdr_hide(){
@@ -158,13 +166,13 @@ function wave_hdr(hdrData){
 	if( hdrData == null )
 		return;
 	if( hdrData.result == 0 ){
-		$('#wave-hdr .alert').html("HDR文件不存在");
+		$('#wave-hdr .alert').html($.i18n.prop('b_hdrnotexist'));
 		$('#wave-hdr .alert').show();
 		wave_hdr_hide();
 		return;
 	}
 	if( hdrData.result == 1 ){
-		$('#wave-hdr .alert').html("HDR文件格式不符合规范");
+		$('#wave-hdr .alert').html($.i18n.prop('b_hdrformaterror'));
 		$('#wave-hdr .alert').show();
 		wave_hdr_hide();
 		return;
@@ -180,11 +188,11 @@ function wave_hdr(hdrData){
 }
 function wave_setHdrBrief(hdrData){
 	var html = "<tr>";
-	html += "<td width='16%' class='odd'>故障起始时间</td>";
+	html += "<td width='16%' class='odd'>"+$.i18n.prop('b_faultstarttime')+"</td>";
 	html += "<td width='16%' >"+hdrData.FaultStartTime+"</td>";
-	html += "<td width='16%' class='odd'>故障持续时间</td>";
+	html += "<td width='16%' class='odd'>"+$.i18n.prop('b_faultduration')+"</td>";
 	html += "<td width='16%' >"+hdrData.FaultKeepingTime+"</td>";
-	html += "<td width='16%' class='odd'>文件大小(字节)</td>";
+	html += "<td width='16%' class='odd'>"+$.i18n.prop('b_filesize')+"</td>";
 	html += "<td width='16%' >"+hdrData.DataFileSize+"</td>";
 	html += "</tr>";
 	$('#waveModal_breifTb tbody').html(html);	
@@ -309,12 +317,15 @@ function wave_setSettingValue(hdrData){
 
 function wave_graph(data, height){
 	$('#wave-graph').jscomtrade({
-		title: {                                                          
-            text:data.comtrade.filename			
-        },
-        subtitle:{
-        	text: '采样时间:'+data.comtrade.sampletime+' 故障时间:'+data.comtrade.sampletime
-        },
+		lang: {
+			b_time: $.i18n.prop('b_time'),
+			b_curdi: $.i18n.prop('b_curdi'),
+			b_primarycursor: $.i18n.prop('b_primarycursor'),
+			b_secondcursor: $.i18n.prop('b_secondcursor'),
+			b_effectivevalue: $.i18n.prop('b_effectivevalue'),
+			b_reset: $.i18n.prop('b_reset'),
+			b_action: $.i18n.prop('b_action')
+		},
         comtrade:data.comtrade		
 	});
 }
