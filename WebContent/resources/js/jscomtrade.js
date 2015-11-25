@@ -5797,6 +5797,12 @@ Pointer.prototype = {
 		e = this.normalize(e);
 		
 		if( this.mouseInComtradePlot(e) ){
+			if(this.chart.PageturnerDisplayed){
+				var rbox = chart.getRightPageturnerBox();
+				if( this.pointInRect(e.chartX, e.chartYscroll, rbox)){
+					return;
+				}
+			}
 			var cursor = this.getCursorByMouse(e);
 			if( cursor && cursor.enable()){
 				cursor.active(true);
@@ -6107,7 +6113,7 @@ Axis.prototype = {
 			channelMargin = chart.options.chart.channelMargin,
 			pxPerMs = chart.options.chart.pxPerMS,
 			minSpace = 40,
-			maxTime = comtradeOptions.times[comtradeOptions.times.length-1]-comtradeOptions.sampleOffset,
+			maxTime = comtradeOptions.times[comtradeOptions.times.length-1],
 			attrAttr={stroke:axis.axisOptions.style.color,
 				'stroke-width': axis.axisOptions.style.stokeWidth},
 			gAttr = {zIndex:2};
@@ -6246,7 +6252,7 @@ Axis.prototype = {
 			}
 			
 		}else{ //非第一页
-			var startTime = chart.curHPage * chart.spanPrePage - comtradeOptions.sampleOffset;
+			var startTime = axis.getStartTime();
 			//绘制第一个点
 			var x = cBox.x;
 			time0pos = x;
@@ -6387,7 +6393,7 @@ Axis.prototype = {
 			comtradeOptions = chart.options.comtrade,
 			channelMargin = chart.options.chart.channelMargin,
 			startTime = this.getStartTime(),
-			maxTime = comtradeOptions.times[comtradeOptions.times.length-1]-comtradeOptions.sampleOffset,
+			maxTime = comtradeOptions.times[comtradeOptions.times.length-1],
 			startX = chart.plotLeft+channelMargin[3];
 		if( pointX < chart.poltLeft || pointX > (chart.plotLeft+chart.plotWidth)){
 			return invaildTime-1;
@@ -6439,7 +6445,7 @@ Axis.prototype = {
 		var chart = this.chart,
 			comtradeOptions = chart.options.comtrade,
 			startTime = this.getStartTime(),
-			maxTime = comtradeOptions.times[comtradeOptions.times.length-1]-comtradeOptions.sampleOffset,
+			maxTime = comtradeOptions.times[comtradeOptions.times.length-1],
 			endTime = mathMin( (startTime + chart.spanPrePage), maxTime );
 		return endTime;
 	},
@@ -6449,7 +6455,7 @@ Axis.prototype = {
 	getLeftSample:function(time){
 		var chart = this.chart,
 			comtradeOptions = chart.options.comtrade;
-		//time += comtradeOptions.sampleOffset;
+		
 		for( var i in comtradeOptions.times ){
 			if( comtradeOptions.times[i] > time ){
 				if( i > 0 )
@@ -6466,7 +6472,7 @@ Axis.prototype = {
 	getRightSample:function(time){
 		var chart = this.chart,
 			comtradeOptions = chart.options.comtrade;
-		//time += comtradeOptions.sampleOffset;
+	
 		for( var i in comtradeOptions.times ){
 			if( comtradeOptions.times[i] >= time ){
 				return i;
@@ -6717,11 +6723,14 @@ Channels.prototype = {
 					exfirstvalue = cn.data[exfirstSample],
 					firstx = axis.getSampleTime(firstSample),
 					firstvalue = cn.data[firstSample];
-					pathdata[1] = startX;				
+					pathdata[1] = startX;		
+					var startT = parseFloat(axis.getTimeByPoint(startX));
 					var zerovalue = firstvalue;
-					if( firstx != exfirstx)
-						zerovalue = (firstvalue-exfirstvalue)*(startX-exfirstx)/(firstx-exfirstx)+exfirstvalue;
-
+					if( (firstx-exfirstx) > 1)
+						zerovalue = (firstvalue-exfirstvalue)*(startT-exfirstx)/(firstx-exfirstx)+exfirstvalue;
+					if( mathAbs(zerovalue) > amplitude){
+						zerovalue = exfirstvalue;
+					}
 					if( zerovalue < 0 ){
 						pathdata[2] = midY + ( mathAbs(zerovalue)/amplitude * halfChannelH);
 					}else if( zerovalue > 0 ){
@@ -6757,9 +6766,13 @@ Channels.prototype = {
 					endvalue = cn.data[endSample];
 					pathdata[cindex*3]=L;
 					pathdata[cindex*3+1] = maxX;
+					var endT = parseFloat(axis.getTimeByPoint(maxX));
 					var zerovalue = endvalue;
-					if( endx != exendx )
-						zerovalue = (exendvalue-endvalue)*(exendx-maxX)/(exendx-endx)+endvalue;
+					if( (exendx-endx)>1 )
+						zerovalue = (exendvalue-endvalue)*(exendx-endT)/(exendx-endx)+endvalue;
+					if( mathAbs(zerovalue) > amplitude){
+						zerovalue = exendvalue;
+					}
 					if( zerovalue < 0 ){
 						pathdata[cindex*3+2] = midY + ( mathAbs(zerovalue)/amplitude * halfChannelH);
 					}else if( zerovalue > 0 ){
@@ -7430,10 +7443,10 @@ Chart.prototype={
 		//axischarts[chart.index] = chart.axiscontainer;
 		//Initialize the axis renderer
 		chart.axisrenderer = optionsChart.forExport?
-				new SVGRenderer(axiscontainer, chartWidth-scrollwidth, chart.axisHeight, optionsChart.style, true):
-				new Renderer(axiscontainer, chartWidth-scrollwidth, chart.axisHeight, optionsChart.style);
+				new SVGRenderer(axiscontainer, chartWidth, chart.axisHeight, optionsChart.style, true):
+				new Renderer(axiscontainer, chartWidth, chart.axisHeight, optionsChart.style);
 		if(useCanVG){
-			chart.axiscontainer.create(chart,axiscontainer, chartWidth-scrollwidth, chart.axisHeight);
+			chart.axiscontainer.create(chart,axiscontainer, chartWidth, chart.axisHeight);
 		}
 	},
 	getChartSize:function(){

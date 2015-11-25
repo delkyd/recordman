@@ -208,7 +208,11 @@ function wave_setFaultInfo(hdrData){
 				html += "<tr>";
 			}
 			html += "<td width='16%' class='odd'>" +info.name+"</td>";
-			html += "<td width='16%'>"+info.value+"</td>";
+			var unit = '';
+			if( info.unit && info.unit != null ){
+				unit = info.unit;
+			}
+			html += "<td width='16%'>"+info.value+" "+unit+"</td>";
 			col++;
 			if( col == 3 ){
 				html+="</tr>";
@@ -238,7 +242,11 @@ function wave_setTripInfo(hdrData){
 				html += "<td><ol>";
 				for( var k = 0; k < info.FaultInfo.length; k++ ){
 					var fault = info.FaultInfo[k];
-					html += "<li>"+fault.name+"&nbsp;&nbsp;"+fault.value+"</li>";
+					var unit = '';
+					if( info.unit && info.unit != null ){
+						unit = info.unit;
+					}
+					html += "<li>"+fault.name+"&nbsp;&nbsp;"+fault.value+" "+unit+"</li>";
 				}
 				html += "</ol></td>";
 			}else{
@@ -301,8 +309,12 @@ function wave_setSettingValue(hdrData){
 			if( col == 0 ){
 				html += "<tr>";
 			}
+			var unit = '';
+			if( info.unit && info.unit != null ){
+				unit = info.unit;
+			}
 			html += "<td width='16%' class='odd'>" +info.name+"</td>";
-			html += "<td width='16%'>"+info.value+" "+info.unit+"</td>";
+			html += "<td width='16%'>"+info.value+" "+unit+"</td>";
 			col++;
 			if( col == 3 ){
 				html+="</tr>";

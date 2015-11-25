@@ -20,7 +20,7 @@ $(function(){
 	});
 	$('#another').click(function(){
 		var param={};
-		param.filepath='D:/stdown/comtrade/test';
+		param.filepath='D:/stdown/comtrade/PCS931/PL2201A_RCD_00246_20151124_072435_615_f';
 		var dataParam = {
 			    url: rootPath+"/wave/read",
 				param:param,

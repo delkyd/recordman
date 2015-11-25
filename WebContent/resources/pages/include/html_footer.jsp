@@ -50,21 +50,21 @@
 					<div class="alert alert-danger" role="alert"></div>
 					<div class="panel panel-zero">
 						<div class="panel-heading"><fmt:message key="hdr-overview" bundle="${bundle }"/></div>
-						<table id="waveModal_breifTb" class="table">
+						<table id="waveModal_breifTb" class="table table-striped">
 							<tbody></tbody>
 						</table>
 					</div>
 			
 					<div class="panel panel-success">
 						<div class="panel-heading"><fmt:message key="hdr-fault" bundle="${bundle }"/></div>
-						<table id="waveModal_faultinfoTb" class="table">
+						<table id="waveModal_faultinfoTb" class="table table-striped">
 							<tbody></tbody>
 						</table>
 					</div>
 			
 					<div class="panel panel-info">
 						<div class="panel-heading"><fmt:message key="hdr-action" bundle="${bundle }"/></div>
-						<table id="waveModal_tripinfoTb" class="table">
+						<table id="waveModal_tripinfoTb" class="table table-striped">
 							<thead>
 								<tr>
 									<th width="15%"><fmt:message key="time" bundle="${bundle }"/></th>
@@ -80,14 +80,14 @@
 			
 					<div class="panel panel-warning">
 						<div class="panel-heading"><fmt:message key="hdr-diBeforeFault" bundle="${bundle }"/></div>
-						<table id="waveModal_distatusTb" class="table">
+						<table id="waveModal_distatusTb" class="table table-striped">
 							<tbody></tbody>
 						</table>
 					</div>
 			
 					<div class="panel panel-danger">
 						<div class="panel-heading"><fmt:message key="hdr-distatus" bundle="${bundle }"/></div>
-						<table id="waveModal_dieventTb" class="table">
+						<table id="waveModal_dieventTb" class="table table-striped">
 							<thead>
 								<tr>
 									<th width="15%"><fmt:message key="time" bundle="${bundle }"/></th>
@@ -102,7 +102,7 @@
 			
 					<div class="panel panel-primary">
 						<div class="panel-heading"><fmt:message key="hdr-setting" bundle="${bundle }"/></div>
-						<table id="waveModal_settingTb" class="table">
+						<table id="waveModal_settingTb" class="table table-striped">
 							<tbody></tbody>
 						</table>
 					</div>
