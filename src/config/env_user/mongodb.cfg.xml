@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mongodbConfig>
+	<!-- 数据库相关的配置 -->
+	<nodes namespace="mongodb">
+		<node key="ip" value="192.168.12.178" />
+		<node key="port" value="27017" />
+		<node key="dbname" value="recordman" />
+		<node key="user.name" value="recordman" />
+		<node key="user.password" value="donotpanic42" />		
+	</nodes>
+
+</mongodbConfig>

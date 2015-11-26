@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<redisConfig>
+	<!-- 数据库相关的配置 -->
+	<nodes namespace="redis">
+		<node key="ip" value="192.168.12.178" />
+		<node key="port" value="6379" />
+		<node key="user.name" value="admin" />
+		<node key="user.password" value="donotpainc42" />		
+	</nodes>
+
+</redisConfig>
