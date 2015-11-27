@@ -4,8 +4,7 @@
 	<nodes namespace="redis">
 		<node key="ip" value="192.168.12.178" />
 		<node key="port" value="6379" />
-		<node key="user.name" value="admin" />
-		<node key="user.password" value="donotpainc42" />		
+		<node key="password" value="Don0tpanic42" />		
 	</nodes>
 
 </redisConfig>

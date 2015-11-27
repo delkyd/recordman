@@ -5,8 +5,8 @@
 		<node key="ip" value="192.168.12.178" />
 		<node key="port" value="27017" />
 		<node key="dbname" value="recordman" />
-		<node key="user.name" value="recordman" />
-		<node key="user.password" value="donotpanic42" />		
+		<node key="user" value="recordman" />
+		<node key="password" value="Don0tpanic42" />		
 	</nodes>
 
 </mongodbConfig>
