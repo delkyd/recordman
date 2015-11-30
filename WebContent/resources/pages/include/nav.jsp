@@ -25,6 +25,7 @@
 						<li><a href=""><fmt:message key="setpwd" bundle="${bundle }"/></a></li>
 						<li><a href=""><fmt:message key="reboot" bundle="${bundle }"/></a></li>
 						<li><a href=""><fmt:message key="syslog" bundle="${bundle }"/></a></li>
+						<li><a href="<%=request.getContextPath()%>/systest/show">test</a></li>
 					</ul>
 				</li>
 			</ul>

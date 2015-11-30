@@ -34,7 +34,7 @@ footer p {
 }
 
 #content{
-	padding-top:50px;	
+	padding-top:50px;
 }
 
 /*框架布局*/
@@ -187,6 +187,7 @@ footer p {
 
 .site-wrapper{
 	background: white none repeat scroll 0 0;
+	/* background: #3e3e3e none repeat scroll 0 0; */
 }
 
 /*侧边栏*/
@@ -362,4 +363,72 @@ fieldset[disabled] .customBtn {
 
 #wave-hdr{
 	overflow:auto;
+}
+
+/*runstatus*/
+.runstatus-graph{
+	color:#ffffff;
+	background-color: #214b63;
+	padding:30px 0px 40px 0px;
+}
+
+.runstatus-graph .conclusion{
+	padding:0px 40px;
+}
+
+.runstatus-graph .image{
+	width:445px;
+	height:132px;
+	background: #000 url(../../resources/images/dev.png) no-repeat center center;
+    margin:10px auto;
+}
+
+.callout{
+	text-align: center;
+    font-size: 15px;
+}
+
+.callout .contained{
+	max-width: 340px;
+	height: 220px;
+	margin:40px auto 0;
+}
+
+.callout .icon{
+	width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin: 0 auto 30px;
+}
+
+.callout .title {
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.callout .content {
+	color: #646466;
+    font-size: 15px;
+    margin-bottom: 30px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.callout .byebye_buffering{
+	background-image: url(../../resources/images/runstatus/byebye_buffering.svg);
+}
+
+.callout .light_the_way{
+	background-image: url(../../resources/images/runstatus/light_the_way.svg);
+}
+
+.callout .plenty_of_room{
+	background-image: url(../../resources/images/runstatus/plenty_of_room.svg);
+}
+
+.callout .skip_the_crowds{
+	background-image: url(../../resources/images/runstatus/skip_the_crowds.svg);
 }
