@@ -341,3 +341,4 @@ function wave_graph(data, height){
         comtrade:data.comtrade		
 	});
 }
+

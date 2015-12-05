@@ -116,7 +116,6 @@
 	</div>
 <script src="<%=request.getContextPath()%>/resources/js/jquery-1.11.3.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/jquery.i18n.properties-min-1.0.9.js"></script>
-<script src="<%=request.getContextPath()%>/resources/js/jquery.jscroll.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/jscomtrade.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/public.js"></script>

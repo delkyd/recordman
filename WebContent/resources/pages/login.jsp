@@ -18,7 +18,7 @@
 			</div>
 	</nav>
 	<div id="content" class="gradient1">
-		<div class="container ">	
+		<!-- <div class=" container-fluid"> -->
 			<div class="loginFormBox center-block-form" id="loginform">
 				<form class="form" onsubmit="return validLogin();" action="<%=request.getContextPath()%>/logon/login" method="post">
 					<div class="form-group input-group input-group-lg col-xs-10 col-xs-offset-1">
@@ -46,7 +46,7 @@
 			  		</div>	
 				</form>
 			</div>	
-		</div>
+		<!-- </div> -->
 	</div>	
 	<%@ include file="include/footer.jsp" %>
 	<%@ include file="include/html_footer.jsp"%>
