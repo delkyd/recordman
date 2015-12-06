@@ -1,6 +1,6 @@
 $(function(){
 	setNavActive('nav_network');
-	$('.ip_input .item').keydown(onipitemkeydown);
+
 	$('.ip_input .item').keyup(onipitemkeyup);
 	setipvalue('#ip', '192.168.116.5');
 });
@@ -15,8 +15,34 @@ function setipvalue(obj, ip){
 	}
 }
 
-function onipitemkeydown(e){
-	
+function getipvalue(obj){
+	var ret = '';
+	var inputs = $(obj).children('.item');
+	if( inputs.length == 4 ){
+		for(var i=0; i < 4 ; i++ ){
+			ret += $(inputs[i]).val();
+			if( i != 3 ){
+				ret += '.';
+			}
+		}
+	}
+	return ret;
+}
+
+function vaildateipctrl(obj){
+	var ret = true;
+	var inputs = $(obj).children('.item');
+	if( inputs.length == 4 && ips.length == 4 ){
+		for(var i=0; i < 4 ; i++ ){
+			var v = $(inputs[i]).val();
+			if( v == '' || v.length==0 ){
+				ret = false;
+				break;
+			}
+				
+		}
+	}
+	return ret;
 }
 
 function onipitemkeyup(e){

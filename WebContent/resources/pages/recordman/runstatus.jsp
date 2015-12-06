@@ -12,6 +12,7 @@
 	<div class="site-wrapper slideout-panel">				
 		<%@ include file="../include/nav.jsp"%>	
 		<div id="content" class="container-fluid">
+			<div class="faq">
 				<div class="runstatus-graph">
 				  <div class="conclusion"><h2>Everything looks ok</h2></div>
 				  <div class="image">
@@ -72,6 +73,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>

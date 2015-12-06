@@ -14,7 +14,7 @@
 			<ul>
 				<li><a class="home" href=""><img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave"><fmt:message key="product_name" bundle="${bundle }"/></a></li>
 				<li id='nav_runstatus'><a href="<%=request.getContextPath()%>/runstatus/show"><fmt:message key="nav_runstatus" bundle="${bundle }"/></a></li>				
-				<li><a href=""><fmt:message key="nav_faultrecord" bundle="${bundle }"/></a></li>
+				<li id='nav_faultrecord'><a href="<%=request.getContextPath()%>/recordfile/show"><fmt:message key="nav_faultrecord" bundle="${bundle }"/></a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
 						aria-haspopup="true" aria-expanded="true"><fmt:message key="nav_setup" bundle="${bundle }"/><span class="caret"></span></a>
 					<ul class="dropdown-menu">

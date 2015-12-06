@@ -40,8 +40,8 @@
     						<p class="list-group-item-text">未启用</p>
 						</a>
 					</div>
-					<div class="col-sm-8">
-						<form class="form-horizontal">
+					<div class="col-sm-8 netconfig">
+						<form class="form-horizontal" onsubmit="return false;">
 							<div class="form-group">
 								<label class="col-sm-2 control-label">是否启用</label>
 								<div class="col-sm-10">
@@ -49,15 +49,69 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">名称</label>
+								<div class="col-sm-10">
+									<input id='name' type="text" class="form-control" placeholder="建议填入有意义的名字">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">引导协议</label>
+								<div class="col-sm-10">
+									<select id='bootproto' class="form-control">
+										<option>static</option>
+										<option>dhcp</option>
+										<option>none</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">IP地址</label>
 								<div class="col-sm-10">
-									<div id='ip' class="ip_input">
+									<div id='ip' class="form-control ip_input">
 										<input type="text" class="item">.
 										<input type="text" class="item">.
 										<input type="text" class="item">.
 										<input type="text" class="item">
 									</div>
 								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">子网掩码</label>
+								<div class="col-sm-10">
+									<div id='netmask' class="form-control ip_input">
+										<input type="text" class="item">.
+										<input type="text" class="item">.
+										<input type="text" class="item">.
+										<input type="text" class="item">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">广播地址</label>
+								<div class="col-sm-10">
+									<div id='broadcast' class="form-control ip_input">
+										<input type="text" class="item">.
+										<input type="text" class="item">.
+										<input type="text" class="item">.
+										<input type="text" class="item">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">网关</label>
+								<div class="col-sm-10">
+									<div id='network' class="form-control ip_input">
+										<input type="text" class="item">.
+										<input type="text" class="item">.
+										<input type="text" class="item">.
+										<input type="text" class="item">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+							   <div class="col-sm-offset-2 col-sm-10">
+							     <button class="btn btn-default">Update</button>
+							   </div>
 							</div>
 						</form>
 					</div>

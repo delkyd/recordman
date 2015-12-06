@@ -377,6 +377,15 @@ fieldset[disabled] .customBtn {
 	overflow:auto;
 }
 
+.faq{
+	background-image: url(../../resources/images/4_BENEFIT2_APPMODULE_shadow_x2.png);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
 /*runstatus*/
 .runstatus-graph{
 	color:#ffffff;
@@ -498,14 +507,7 @@ fieldset[disabled] .customBtn {
 }
 
 /*network*/
-.faq{
-	background-image: url(../../resources/images/4_BENEFIT2_APPMODULE_shadow_x2.png);
-    background-position: top center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    padding-top: 100px;
-    padding-bottom: 80px;
-}
+
 .ethernets{
 	padding:0px 40px;
 }
@@ -514,25 +516,90 @@ fieldset[disabled] .customBtn {
     padding: 15px 15px;
     border-width: 1px 0px 1px 0px;
 }
+
+.netconfig{
+	padding:0px 40px;
+}
 /*ip_input*/
-.ip_input {
-    display: block;
-    width:230px;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #555;
-    background-color: #FFF;
-    background-image: none;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
-    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+.netconfig .form-control{
+	width:230px;
 }
 
 .ip_input .item{
 	width:40px;
 	border: 0px none transparent;
 	padding:0px 8px;
+}
+
+/*faultrecord*/
+.query-bar{
+	padding:10px 40px;
+	background-color: #f3f3f3;
+	margin-bottom:20px;
+}
+
+.query-bar .form-group{
+	padding:0px 20px 10px 0px;
+}
+
+.query-bar .form-control{
+	min-width:160px;
+}
+
+.day-zone {
+    background: #ececec;
+    min-height: 100px;
+    margin-bottom: 20px;
+}
+
+.day-zone .heading{
+	background: #fff;
+    left: 30px;
+    padding: 10px 10px 10px 10px;
+    color: #fff;
+    font-weight: normal;
+}
+
+.day-zone .heading a, .day-zone .heading h1 {
+    display: inline;
+}
+
+.day-zone .heading h1{
+	font-size: 24px;
+    line-height: 26px;
+    font-weight: normal;
+    font-family: 'FuturaW01-LightCondense 774878','Arial Narrow',sans-serif;
+    color: #fff;
+}
+
+.day-zone .heading span{
+	font-size: 14px;
+    margin: 0px 3px;
+    font-family: 'Bembo W01',serif;
+}
+
+.result-zone .blue .color{
+	background-color: #31c2de;
+}
+
+.result-zone .yellow .color{
+	background-color: #f3d529;
+}
+
+.result-zone .pink .color{
+	background-color: #e83f96;
+}
+
+.result-zone .green .color{
+	background-color: #bad730;
+}
+.result-zone .gallery{
+	padding:10px 10px;
+}
+.result-zone .gallery .item{
+	display: inline-block;
+	margin-right:10px;
+	border:1px solid #ff0000;
+	width:160px;
+	height:100px;
 }
