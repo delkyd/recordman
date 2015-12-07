@@ -49,22 +49,39 @@
 						</div>
 						<div class="gallery">
 							<div class="item">
+								<h4>09:54:23.153200</h4>
+								<h5>cpu120151206095423153200</h5>
+								<h3>A相短路</h3>
 							</div>
 							<div class="item">
+								<h4>09:54:23.153200</h4>
+								<h5>cpu120151206095423153200</h5>
+								<h3>B相短路</h3>
 							</div>
 							<div class="item">
+								<h4>09:54:23.153200</h4>
+								<h5>220kV录波器cpu120151206095423153200</h5>
+								<h3>C相短路</h3>
 							</div>
 							<div class="item">
+								<h4>09:54:23.153200</h4>
+								<span>cpu120151206095423153200_shiyishihenchangdemingzi还有中文</span>
+								<h3>ABC三相接地</h3>
 							</div>
 							<div class="item">
+								<h4>09:54:23.153200</h4>
+								<h5>cpu12015120609</h5>
+								<h3>AB相短路</h3>
 							</div>
 							<div class="item">
+								<h4>09:54:23.153200</h4>
+								<h5>cpu120</h5>
+								<h3>BC相短路</h3>
 							</div>
 							<div class="item">
-							</div>
-							<div class="item">
-							</div>
-							<div class="item">
+								<h4>09:54:23.153200</h4>
+								<h5>cpu120151206095423153200</h5>
+								<h3>CA相短路</h3>
 							</div>
 						</div>
 					</div>
@@ -153,6 +170,6 @@
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>
 	<script
-		src="<%=request.getContextPath()%>/resources/js/recordman/runstatus.js"></script>
+		src="<%=request.getContextPath()%>/resources/js/recordman/recordfile.js"></script>
 </body>
 </html>

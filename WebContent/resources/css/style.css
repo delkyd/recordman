@@ -533,9 +533,9 @@ fieldset[disabled] .customBtn {
 
 /*faultrecord*/
 .query-bar{
-	padding:10px 40px;
-	background-color: #f3f3f3;
+	padding:10px 10px 10px 0px;
 	margin-bottom:20px;
+	border-bottom:5px solid #00a3cf;
 }
 
 .query-bar .form-group{
@@ -547,14 +547,15 @@ fieldset[disabled] .customBtn {
 }
 
 .day-zone {
-    background: #ececec;
-    min-height: 100px;
     margin-bottom: 20px;
+    padding:0px 10px;
+    /* border-bottom:5px solid #00a3cf; */
 }
 
 .day-zone .heading{
+	position: absolute;
+	height: 50px;
 	background: #fff;
-    left: 30px;
     padding: 10px 10px 10px 10px;
     color: #fff;
     font-weight: normal;
@@ -578,12 +579,24 @@ fieldset[disabled] .customBtn {
     font-family: 'Bembo W01',serif;
 }
 
+.result-zone .blue{
+	border-bottom:5px solid #31c2de;
+}
+
 .result-zone .blue .color{
 	background-color: #31c2de;
 }
 
+.result-zone .yellow{
+	border-bottom:5px solid #f3d529;
+}
+
 .result-zone .yellow .color{
 	background-color: #f3d529;
+}
+
+.result-zone .yellow{
+	border-bottom:5px solid #e83f96;
 }
 
 .result-zone .pink .color{
@@ -594,12 +607,54 @@ fieldset[disabled] .customBtn {
 	background-color: #bad730;
 }
 .result-zone .gallery{
-	padding:10px 10px;
+	padding:60px 0px 10px 0px;
 }
 .result-zone .gallery .item{
 	display: inline-block;
 	margin-right:10px;
-	border:1px solid #ff0000;
-	width:160px;
-	height:100px;
+	margin-bottom:10px;
+	background: #ffffff;
+	width:180px;
+	height:160px;
+	
+	padding:0px 10px;
+	word-wrap:break-word;
+	vertical-align:top;
 }
+
+.result-zone .gallery .item:hover{
+	cursor: pointer;
+}
+
+.result-zone .blue .gallery .item{
+	border-top:2px solid #31c2de;
+}
+
+.result-zone .blue .gallery .item:hover{
+	border-top:8px solid #31c2de;
+}
+
+.result-zone .yellow .gallery .item{
+	border-top:2px solid #f3d529;
+}
+
+.result-zone .yellow .gallery .item:hover{
+	border-top:8px solid #f3d529;
+}
+
+.result-zone .pink .gallery .item{
+	border-top:2px solid #e83f96;
+}
+
+.result-zone .pink .gallery .item:hover{
+	border-top:8px solid #e83f96;
+}
+
+.result-zone .green .gallery .item{
+	border-top:2px solid #bad730;
+}
+
+.result-zone .green .gallery .item:hover{
+	border-top:8px solid #bad730;
+}
+

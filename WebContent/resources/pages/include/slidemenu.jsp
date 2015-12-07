@@ -5,9 +5,9 @@
 	<header class="menu-header"></header>
 	<section class="menu-section">
 		<ul class="menu-section-list">
-			<li id='nav_runstatus'><a href="<%=request.getContextPath()%>/runstatus/show"><fmt:message key="nav_runstatus" bundle="${bundle }"/></a></li>				
-				<li><a href=""><fmt:message key="nav_faultrecord" bundle="${bundle }"/></a></li>
-			<li id="nav_setup" class="dropdownmenu">
+			<li><a href="<%=request.getContextPath()%>/runstatus/show"><fmt:message key="nav_runstatus" bundle="${bundle }"/></a></li>				
+			<li><a href="<%=request.getContextPath()%>/recordfile/show"><fmt:message key="nav_faultrecord" bundle="${bundle }"/></a></li>
+			<li class="dropdownmenu">
 					<a href="#" class="dropdownmenu-toggle"><fmt:message key="nav_setup" bundle="${bundle }"/> <span class="caret"></span></a>
 					<ul class="sub-menu">
 						<li><a href="<%=request.getContextPath()%>/network/show"><fmt:message key="nav_setup_network" bundle="${bundle }"/></a></li>
@@ -16,7 +16,7 @@
 						<li><a href=""><fmt:message key="nav_setup_setting" bundle="${bundle }"/></a></li>
 					</ul>
 			</li>
-			<li id="nav_systemtool" class="dropdownmenu">
+			<li class="dropdownmenu">
 					<a href="#" class="dropdownmenu-toggle"><fmt:message key="nav_systemtool" bundle="${bundle }"/> <span class="caret"></span></a>
 					<ul class="sub-menu">
 						<li><a href=""><fmt:message key="nav_sys_settime" bundle="${bundle }"/></a></li>

@@ -17,15 +17,15 @@
 					<div class="col-sm-4 list-group ethernets">
 						<a class="list-group-item">
 							<h4 class="list-group-item-heading">eth0</h4>
-    						<p class="list-group-item-text">192.168.116.5/255.255.255.0</p>
+    						<p class="list-group-item-text">11.123.87.5/255.255.255.0</p>
 						</a>
 						<a class="list-group-item">
 							<h4 class="list-group-item-heading">eth1</h4>
-    						<p class="list-group-item-text">192.168.120.125/255.255.255.0</p>
+    						<p class="list-group-item-text">192.168.120.125/255.255.0.0</p>
 						</a>
 						<a class="list-group-item active">
 							<h4 class="list-group-item-heading">eth2</h4>
-    						<p class="list-group-item-text">11.123.87.5/255.0.0.0</p>
+    						<p class="list-group-item-text">192.168.116.5/255.255.255.0</p>
 						</a>
 						<a class="list-group-item">
 							<h4 class="list-group-item-heading">eth3</h4>
@@ -45,7 +45,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">是否启用</label>
 								<div class="col-sm-10">
-									<input type="checkbox" data-toggle="toggle">
+									<input id='toggle' type="checkbox" data-toggle="toggle">
 								</div>
 							</div>
 							<div class="form-group">
