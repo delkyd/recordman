@@ -107,8 +107,6 @@
 						</table>
 					</div>
 				</div>
-
-				<%-- <input type="hidden" id="waveModal_filePath" name="filePath" value="${filePath}"> --%>
 	      	</div>
 	      </div>
 	    </div>

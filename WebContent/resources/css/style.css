@@ -20,8 +20,8 @@ a,input,button{
 }
 
 footer {
-    background-color: #272727;
-    color: #fff;
+    background-color: #2a2730;
+    color: #99979c;
     text-align: center;
     min-width:500px;
 }
@@ -38,6 +38,11 @@ footer p {
 	padding-top:50px;
 	min-width:500px;
 }
+
+.bluebk{
+	background-color: #003b64;
+}
+
 
 /*框架布局*/
 .slideout-menu {
@@ -79,21 +84,15 @@ footer p {
 }
 
 .site-header {
-    background-color: #222222;
+    /* background-color: #222222; */
+    background-color: #f8f8f8;
+    border-color: #c3c4c4;
+    border-radius: 4px;
     width: 100%;
     position:fixed;
     left:0px;
     top:0px;
     z-index:999;
-}
-
-.testfixed{
-	background-color: #222222;
-	width:100px;
-	height:100px;
-	left:500px;
-	top:80px;
-	position:fixed;
 }
 
 .desktop-header {
@@ -102,7 +101,7 @@ footer p {
 
 .desktop-header .home {
 	font-weight: bold;
-    color: #ffffff;
+    color: #555;
     font-size: 16px;
     margin-right: 1em;
 }
@@ -116,7 +115,7 @@ footer p {
 }
 
 .desktop-header a {
-    color: #f9f9f9;
+    color: #555;
     display: inline-block;
     line-height: 48px;   
    	padding: 0px 4px; 
@@ -136,15 +135,15 @@ footer p {
     margin-left: 0;
 }
 .desktop-header a:hover {
-    color: white;
+    color: #555;
     text-decoration: none;
-    background-color: #424242;
+    background-color: #e7e7e7;
 }
 
 .desktop-header .active > a{
 	font-size: 16px;
-	color: #ffffff;
-	background-color: #424242;
+	color: #555;
+	background-color: #e7e7e7;
 }
 
 
@@ -197,7 +196,6 @@ footer p {
 
 .site-wrapper{
 	background: white none repeat scroll 0 0;
-	/* background: #3e3e3e none repeat scroll 0 0; */
 }
 
 /*侧边栏*/
@@ -382,8 +380,8 @@ fieldset[disabled] .customBtn {
     background-position: top center;
     background-repeat: no-repeat;
     background-size: 100%;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding: 50px;
+    /* padding-bottom: 50px; */
 }
 
 /*runstatus*/
@@ -506,36 +504,12 @@ fieldset[disabled] .customBtn {
 	background-image: url(../../resources/images/runstatus/skip_the_crowds.svg);
 }
 
-/*network*/
-
-.ethernets{
-	padding:0px 40px;
-}
-
-.list-group-item {
-    padding: 15px 15px;
-    border-width: 1px 0px 1px 0px;
-}
-
-.netconfig{
-	padding:0px 40px;
-}
-/*ip_input*/
-.netconfig .form-control{
-	width:230px;
-}
-
-.ip_input .item{
-	width:40px;
-	border: 0px none transparent;
-	padding:0px 8px;
-}
 
 /*faultrecord*/
 .query-bar{
 	padding:10px 10px 10px 0px;
 	margin-bottom:20px;
-	border-bottom:5px solid #00a3cf;
+	border-bottom:5px solid #2893a6;
 }
 
 .query-bar .form-group{
@@ -549,7 +523,6 @@ fieldset[disabled] .customBtn {
 .day-zone {
     margin-bottom: 20px;
     padding:0px 10px;
-    /* border-bottom:5px solid #00a3cf; */
 }
 
 .day-zone .heading{
@@ -595,7 +568,7 @@ fieldset[disabled] .customBtn {
 	background-color: #f3d529;
 }
 
-.result-zone .yellow{
+.result-zone .pink{
 	border-bottom:5px solid #e83f96;
 }
 
@@ -603,13 +576,18 @@ fieldset[disabled] .customBtn {
 	background-color: #e83f96;
 }
 
+.result-zone .green{
+	border-bottom:5px solid #bad730;
+}
+
 .result-zone .green .color{
 	background-color: #bad730;
 }
+
 .result-zone .gallery{
 	padding:60px 0px 10px 0px;
 }
-.result-zone .gallery .item{
+.gallery .item{
 	display: inline-block;
 	margin-right:10px;
 	margin-bottom:10px;
@@ -620,41 +598,187 @@ fieldset[disabled] .customBtn {
 	padding:0px 10px;
 	word-wrap:break-word;
 	vertical-align:top;
-}
-
-.result-zone .gallery .item:hover{
-	cursor: pointer;
+	
+	position:relative;
 }
 
 .result-zone .blue .gallery .item{
 	border-top:2px solid #31c2de;
 }
 
-.result-zone .blue .gallery .item:hover{
-	border-top:8px solid #31c2de;
-}
-
 .result-zone .yellow .gallery .item{
 	border-top:2px solid #f3d529;
-}
-
-.result-zone .yellow .gallery .item:hover{
-	border-top:8px solid #f3d529;
 }
 
 .result-zone .pink .gallery .item{
 	border-top:2px solid #e83f96;
 }
 
-.result-zone .pink .gallery .item:hover{
-	border-top:8px solid #e83f96;
-}
-
 .result-zone .green .gallery .item{
 	border-top:2px solid #bad730;
 }
 
-.result-zone .green .gallery .item:hover{
-	border-top:8px solid #bad730;
+.result-zone .gallery .item:hover{
+	cursor: pointer;
+	/* border-top-width:8px; */
+}
+
+.gallery .item:hover .toolbar{
+	width:100%;
+	height:60px;
+	background: RGBA(206,82,79,0.7);
+	position: absolute;
+	left:0px;
+	top:0px;
+	padding:2px;
+}
+
+.gallery .item:hover .toolbar .icon{
+	width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.gallery .item:hover .toolbar .icon:hover{
+	background-size: 80%;
+}
+
+.gallery .item:hover .toolbar .export{
+	background-image: url(../../resources/images/cloud-download.png);
+}
+
+/*dev config*/
+
+.devconfig{
+	width:100%;
+	padding:60px 40px;
+	margin:0px auto;
+}
+
+@media (min-width:  768px){
+	.devconfig {
+    	width: 750px;
+	}
+}
+
+@media (min-width:  992px){
+	.devconfig {
+    	width: 970px;
+	}
+}
+
+@media (min-width:  1200px){
+	.devconfig {
+    	width: 1170px;
+	}
+}
+
+.devconfig .branding{
+	width:41.666666%;
+	height:600px;
+	display:none;
+	margin-left:8.333333%;
+	float:left;
+}
+
+.devconfig .config{
+	width:90%;
+	padding:40px 40px;
+	background: #ffffff;
+	border: 1px solid #c3c4c4;
+	float:left;
+}
+
+.devconfig .config .heading{
+	margin-top:0px;
+	margin-bottom: 30px;
+	font-size: 20px;
+    text-align: center;
+}
+
+@media only screen and (min-width: 992px) {
+	.devconfig .branding{
+		display:block;
+	}
+	
+	.devconfig .config{
+		width:41.666666%;
+		margin-left:8.333333%;
+	}
+}
+
+.devconfig .branding .log{
+	background-image: url("../../resources/images/log-big.png");
+    background-repeat: no-repeat;
+    display: block;
+    width: 300px;
+    height: 260px;
+    margin: 80px auto;
+}
+
+/*network*/
+
+.netconfig{
+	width:100%;
+	padding:60px 40px;
+	margin:0px auto;
+}
+
+@media (min-width:  820px){
+	.netconfig {
+    	width: 800px;
+	}
+}
+
+@media (min-width:  992px){
+	.netconfig {
+    	width: 970px;
+	}
+}
+
+@media (min-width:  1200px){
+	.netconfig {
+    	width: 1170px;
+	}
+}
+
+.list-group-item {
+    padding: 15px 15px;
+    border-width: 1px 0px 1px 0px;
+}
+
+.netconfig .ethernets{
+}
+
+.netconfig .config{
+	padding:40px 40px;
+	background: #ffffff;
+	border: 1px solid #c3c4c4;
+}
+
+@media (min-width:  800px){
+	.netconfig .ethernets{
+		width:41.666666%;
+		margin-left:8.333333%;
+		float:left;
+	}
+	.netconfig .config{
+		width:41.666666%;
+		margin-left:8.333333%;
+		float:left;
+	}
+}
+
+/*ip_input*/
+.netconfig .form-control{
+	/* width:230px; */
+}
+
+.ip_input .item{
+	width:40px;
+	border: 0px none transparent;
+	padding:0px 8px;
 }
 

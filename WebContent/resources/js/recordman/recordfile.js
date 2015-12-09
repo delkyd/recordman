@@ -1,6 +1,10 @@
 $(function(){
 	setNavActive('nav_faultrecord');
 	$('.result-zone .gallery .item').click(clickitem);
+	$('.gallery .toolbar .export').click(function(){
+		alert('export file');
+		return false;
+	});
 });
 
 function clickitem(){

@@ -12,9 +12,9 @@
 	<%@ include file="../include/slidemenu.jsp"%>
 	<div class="site-wrapper slideout-panel">				
 		<%@ include file="../include/nav.jsp"%>	
-			<div id="content" class="container-fluid">
-				<div class="row faq">
-					<div class="col-sm-4 list-group ethernets">
+			<div id="content" class="container-fluid bluebk">
+				<div class="netconfig">
+					<div class="list-group ethernets">
 						<a class="list-group-item">
 							<h4 class="list-group-item-heading">eth0</h4>
     						<p class="list-group-item-text">11.123.87.5/255.255.255.0</p>
@@ -40,23 +40,23 @@
     						<p class="list-group-item-text">未启用</p>
 						</a>
 					</div>
-					<div class="col-sm-8 netconfig">
-						<form class="form-horizontal" onsubmit="return false;">
+					<div class="config">
+						<form class="form" onsubmit="return false;">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">是否启用</label>
-								<div class="col-sm-10">
+								<label class=" control-label">是否启用</label>
+								<div class="">
 									<input id='toggle' type="checkbox" data-toggle="toggle">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">名称</label>
-								<div class="col-sm-10">
+								<label class=" control-label">名称</label>
+								<div class="">
 									<input id='name' type="text" class="form-control" placeholder="建议填入有意义的名字">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">引导协议</label>
-								<div class="col-sm-10">
+								<label class=" control-label">引导协议</label>
+								<div class="">
 									<select id='bootproto' class="form-control">
 										<option>static</option>
 										<option>dhcp</option>
@@ -65,8 +65,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">IP地址</label>
-								<div class="col-sm-10">
+								<label class=" control-label">IP地址</label>
+								<div class="">
 									<div id='ip' class="form-control ip_input">
 										<input type="text" class="item">.
 										<input type="text" class="item">.
@@ -76,8 +76,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">子网掩码</label>
-								<div class="col-sm-10">
+								<label class=" control-label">子网掩码</label>
+								<div class="">
 									<div id='netmask' class="form-control ip_input">
 										<input type="text" class="item">.
 										<input type="text" class="item">.
@@ -87,8 +87,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">广播地址</label>
-								<div class="col-sm-10">
+								<label class=" control-label">广播地址</label>
+								<div class="">
 									<div id='broadcast' class="form-control ip_input">
 										<input type="text" class="item">.
 										<input type="text" class="item">.
@@ -98,8 +98,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">网关</label>
-								<div class="col-sm-10">
+								<label class=" control-label">网关</label>
+								<div class="">
 									<div id='network' class="form-control ip_input">
 										<input type="text" class="item">.
 										<input type="text" class="item">.
@@ -109,8 +109,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-							   <div class="col-sm-offset-2 col-sm-10">
-							     <button class="btn btn-default">Update</button>
+							   <div class=" ">
+							     <button class="btn btn-lg btn-block btn-primary">Update</button>
 							   </div>
 							</div>
 						</form>
