@@ -11,17 +11,23 @@
 	<%@ include file="../include/slidemenu.jsp"%>
 	<div class="site-wrapper slideout-panel">				
 		<%@ include file="../include/nav.jsp"%>	
-			<div id="content" class="container">
-				<div class="page-header">
-				  <h1>System Test</h1>
+			<div id="content" class="container-fluid bluebk">
+				<div class="conf-container">					
+					<div class="onepage formstyle">
+						<h1 class="heading">修改密码</h1>
+						<span>点击按钮重启录波器，重启后请稍后再重新登陆</span>
+							<div class="form-group">
+							   <div class="">
+							     <button class="btn btn-lg btn-block btn-primary">Reboot</button>
+							   </div>
+							</div>
+						</form>
+					</div>
 				</div>
-				<button class="btn btn-default" id="test">Button</button>
-				<button class="btn btn-default" id="another">Another</button>		
 			</div>
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>
-	<script
-		src="../resources/js/recordman/systest.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/recordman/syspwd.js"></script>
 </body>
 </html>

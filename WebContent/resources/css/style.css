@@ -87,7 +87,7 @@ footer p {
     /* background-color: #222222; */
     background-color: #f8f8f8;
     border-color: #c3c4c4;
-    border-radius: 4px;
+    /* border-radius: 4px; */
     width: 100%;
     position:fixed;
     left:0px;
@@ -131,6 +131,10 @@ footer p {
 	display:inline;
 }
 
+.desktop-header .dropdown-menu{
+	top: 36px;
+}
+
 .desktop-header a:first-child {
     margin-left: 0;
 }
@@ -169,7 +173,7 @@ footer p {
 .site-header .mobile-header .btn-hamburger {
     background: transparent none repeat scroll 0 0;
     border: 0 none;
-    color: #eeeeee;
+    color: #555;
     left: 10px;
     outline: medium none;
     padding: 0;
@@ -179,7 +183,7 @@ footer p {
 
 .mobile-header .home {
 	font-weight: bold;
-    color: #ffffff;
+    color: #555;
     font-size: 16px;
     margin-right: 1em;
 }
@@ -189,10 +193,9 @@ footer p {
 }
 
 .mobile-header a:hover {
-    color: white;
     text-decoration: none;
     background: transparent;
-}
+} 
 
 .site-wrapper{
 	background: white none repeat scroll 0 0;
@@ -649,63 +652,80 @@ fieldset[disabled] .customBtn {
 	background-image: url(../../resources/images/cloud-download.png);
 }
 
-/*dev config*/
-
-.devconfig{
+/* configure page left-right style*/
+.conf-container{
 	width:100%;
 	padding:60px 40px;
 	margin:0px auto;
 }
 
-@media (min-width:  768px){
-	.devconfig {
-    	width: 750px;
+.fullpage{
+	padding:60px 40px;
+}
+
+@media (min-width:  820px){
+	.conf-container {
+    	width: 800px;
 	}
 }
 
 @media (min-width:  992px){
-	.devconfig {
+	.conf-container {
     	width: 970px;
 	}
 }
 
 @media (min-width:  1200px){
-	.devconfig {
+	.conf-container {
     	width: 1170px;
 	}
 }
 
-.devconfig .branding{
-	width:41.666666%;
-	height:600px;
-	display:none;
-	margin-left:8.333333%;
-	float:left;
+@media (min-width:  820px){
+	.conf-container .left{
+		width:41.666666%;
+		margin-left:8.333333%;
+		float:left;
+	}
+	.conf-container .right{
+		width:41.666666%;
+		margin-left:8.333333%;
+		float:left;
+	}
+	
+	.conf-container .onepage{
+		width: 600px;
+		margin-left:auto;
+		margin-right:auto;
+	}
 }
 
-.devconfig .config{
-	width:90%;
-	padding:40px 40px;
+.formstyle{
 	background: #ffffff;
 	border: 1px solid #c3c4c4;
-	float:left;
+	border-radius: 4px;
+	padding:40px 40px 20px 40px;
+	margin-bottom:20px;
 }
 
-.devconfig .config .heading{
+.formstyle .heading{
 	margin-top:0px;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 	font-size: 20px;
     text-align: center;
 }
 
-@media only screen and (min-width: 992px) {
+/*****************************************/
+
+/*dev config*/
+
+.devconfig .branding{
+	display:none;
+}
+
+@media only screen and (min-width: 820px) {
 	.devconfig .branding{
 		display:block;
-	}
-	
-	.devconfig .config{
-		width:41.666666%;
-		margin-left:8.333333%;
 	}
 }
 
@@ -720,65 +740,33 @@ fieldset[disabled] .customBtn {
 
 /*network*/
 
-.netconfig{
-	width:100%;
-	padding:60px 40px;
-	margin:0px auto;
-}
-
-@media (min-width:  820px){
-	.netconfig {
-    	width: 800px;
-	}
-}
-
-@media (min-width:  992px){
-	.netconfig {
-    	width: 970px;
-	}
-}
-
-@media (min-width:  1200px){
-	.netconfig {
-    	width: 1170px;
-	}
-}
-
 .list-group-item {
     padding: 15px 15px;
     border-width: 1px 0px 1px 0px;
 }
 
-.netconfig .ethernets{
-}
-
-.netconfig .config{
-	padding:40px 40px;
-	background: #ffffff;
-	border: 1px solid #c3c4c4;
-}
-
-@media (min-width:  800px){
-	.netconfig .ethernets{
-		width:41.666666%;
-		margin-left:8.333333%;
-		float:left;
-	}
-	.netconfig .config{
-		width:41.666666%;
-		margin-left:8.333333%;
-		float:left;
-	}
-}
-
 /*ip_input*/
-.netconfig .form-control{
-	/* width:230px; */
-}
-
 .ip_input .item{
 	width:40px;
 	border: 0px none transparent;
 	padding:0px 8px;
 }
 
+/*channels*/
+@media (min-width:  820px){
+	.channels .image{
+		width:82.33333%;
+		margin-left:8.333333%;
+	}
+}
+
+.di .onlyAi{
+	display:none;
+}
+
+.range .form-control{
+	display:inline;
+	width:46%;
+}
+
+/*primary dev*/

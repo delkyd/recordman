@@ -4,7 +4,7 @@ $(function(){
 		var param={};
 		param.filepath='F:/stdown/comtrade/20151121_111226_244';
 		var dataParam = {
-			    url: rootPath+"/wave/read",
+			    url: "../wave/read",
 				param:param,
 				call: function(data) {					
 					if(data!=null && data.comtrade.err!=1) {
@@ -21,7 +21,7 @@ $(function(){
 		var param={};
 		param.filepath='F:/stdown/comtrade/PCS931/PL2201A_RCD_00246_20151124_072435_615_f';
 		var dataParam = {
-			    url: rootPath+"/wave/read",
+			    url: "../wave/read",
 				param:param,
 				call: function(data) {					
 					if(data!=null && data.comtrade.err!=1) {

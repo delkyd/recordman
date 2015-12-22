@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/devparam/devconfig")
-public class DevconfigController {
+@RequestMapping("/system/systime")
+public class SystemtimeController {
 	@RequestMapping(value="/")
 	public String show(){
-		return "recordman/devconfig";
+		return "recordman/systime";
 	}
 }

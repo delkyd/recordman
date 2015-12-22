@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" />
 </head>
 <body>
-	<fmt:setBundle var="bundle" basename="recordman.i18n.resource.i18nstring" scope="page"/>
 	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" id="nav">
 			<div class="container">
 				<img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave">
@@ -43,7 +42,7 @@
 					</div>	
 					<div class="form-group input-group input-group-lg col-xs-10 col-xs-offset-1">
 						<button id="submitBtn" type="submit" class="btn btn-primary btn-lg btn-block"><fmt:message key="login" bundle="${bundle }"/></button>
-			  		</div>	
+			  		</div>
 				</form>
 			</div>	
 		<!-- </div> -->

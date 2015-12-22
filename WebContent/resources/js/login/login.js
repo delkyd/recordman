@@ -35,7 +35,7 @@ function validLogin(){
 function loadProperties(){
 	jQuery.i18n.properties({
 		name:'i18nstring',
-		path:rootPath+'/resources/js/i18n/',
+		path:'./resources/js/i18n/',
 		mode:'map'	
 	});
 }

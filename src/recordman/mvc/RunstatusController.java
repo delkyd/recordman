@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/runstatus")
 public class RunstatusController {
-	@RequestMapping(value="/show")
+	@RequestMapping(value="/")
 	public String show(){
 		return "recordman/runstatus";
 	}

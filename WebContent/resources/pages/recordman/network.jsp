@@ -13,8 +13,8 @@
 	<div class="site-wrapper slideout-panel">				
 		<%@ include file="../include/nav.jsp"%>	
 			<div id="content" class="container-fluid bluebk">
-				<div class="netconfig">
-					<div class="list-group ethernets">
+				<div class="netconfig conf-container">
+					<div class="list-group ethernets left">
 						<a class="list-group-item">
 							<h4 class="list-group-item-heading">eth0</h4>
     						<p class="list-group-item-text">11.123.87.5/255.255.255.0</p>
@@ -40,7 +40,7 @@
     						<p class="list-group-item-text">未启用</p>
 						</a>
 					</div>
-					<div class="config">
+					<div class="config right formstyle">
 						<form class="form" onsubmit="return false;">
 							<div class="form-group">
 								<label class=" control-label">是否启用</label>

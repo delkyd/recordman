@@ -6,43 +6,42 @@
 <html class="no-js" lang="en">
 <head>
 <%@ include file="../include/html_head.jsp"%>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap-toggle.min.css" />
 </head>
 <body>
 	<%@ include file="../include/slidemenu.jsp"%>
 	<div class="site-wrapper slideout-panel">				
 		<%@ include file="../include/nav.jsp"%>	
 			<div id="content" class="container-fluid bluebk">
-				<div class="devconfig ">					
-					<div class="config">
-						<h1 class="heading">装置基本参数</h1>
+				<div class="devconfig conf-container">					
+					<div class="config left formstyle">
+						<h1 class="heading"><fmt:message key="devconf_heading" bundle="${bundle }"/></h1>
 						<form class="form" onsubmit="return false;">
 							<div class="form-group">
-								<label class="control-label">厂站名称</label>
+								<label class="control-label"><fmt:message key="devconf_stationname" bundle="${bundle }"/></label>
 								<div class="">
-									<input id='station_name' type="text" class="form-control" placeholder="变电站名称">
+									<input id='station_name' type="text" class="form-control" >
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label">公司名称</label>
+								<label class="control-label"><fmt:message key="devconf_companyname" bundle="${bundle }"/></label>
 								<div class="">
-									<input id='company_name' type="text" class="form-control" placeholder="公司名称">
+									<input id='company_name' type="text" class="form-control" >
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label">装置名称</label>
+								<label class="control-label"><fmt:message key="devconf_devname" bundle="${bundle }"/></label>
 								<div class="">
-									<input id='dev_name' type="text" class="form-control" placeholder="装置名称">
+									<input id='dev_name' type="text" class="form-control" >
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label">序列号</label>
+								<label class="control-label"><fmt:message key="devconf_serialno" bundle="${bundle }"/></label>
 								<div class="">
-									<input id='dev_serial' type="text" class="form-control" placeholder="产品序列号">
+									<input id='dev_serial' type="text" class="form-control" >
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label">装置型号</label>
+								<label class="control-label"><fmt:message key="devconf_devmodel" bundle="${bundle }"/></label>
 								<div class="">
 									<select id='dev_type' class="form-control">
 										<option>Ben5000</option>
@@ -52,7 +51,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label">通信规约</label>
+								<label class="control-label"><fmt:message key="devconf_commuprotocol" bundle="${bundle }"/></label>
 								<div class="">
 									<select id='commu_protocol' class="form-control">
 										<option>浙江103</option>
@@ -69,7 +68,7 @@
 							</div>
 						</form>
 					</div>
-					<div class="branding">
+					<div class="branding right">
 						<span class="log"></span>
 					</div>
 				</div>
@@ -77,7 +76,6 @@
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>
-	<script src="<%=request.getContextPath()%>/resources/js/bootstrap-toggle.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/recordman/devconfig.js"></script>
 </body>
 </html>

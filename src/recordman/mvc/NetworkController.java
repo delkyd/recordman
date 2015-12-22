@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/network")
+@RequestMapping("/devparam/network")
 public class NetworkController {
-	@RequestMapping(value="/show")
+	@RequestMapping(value="/")
 	public String show(){
 		return "recordman/network";
 	}

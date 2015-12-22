@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import recordman.bean.user;
+import recordman.datahandle.UserDataHandle;
+
 @Controller
 @RequestMapping("/logon")
 public class LoginController {
@@ -16,8 +19,8 @@ public class LoginController {
 		
 	}
 	
-	//@Inject
-	//private UserDataHandle userdatahandle;
+	@Inject
+	private UserDataHandle userdatahandle;
 	
 	@RequestMapping(value="/login")
 	public String login(@RequestParam String name,
@@ -25,18 +28,21 @@ public class LoginController {
 		try{						
 			System.out.println("login method");
 			
-			String rootpath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+request.getContextPath();
-			model.addAttribute("rootPath", rootpath);
-			request.getSession().setAttribute("rootPath", rootpath );
-			if( true ){
+			user u = userdatahandle.find(name, pwd);
+			if( null != u ){
+				request.getSession().setAttribute("user", u);
 				System.out.println("login successed");
-				return "redirect:/runstatus/show";
+				
+				String rootpath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+request.getContextPath();
+				model.addAttribute("rootPath", rootpath);
+				request.getSession().setAttribute("rootPath", rootpath );
+				
+				return "redirect:/runstatus/";
 			}else{
 				System.out.println("login failed");
 				model.addAttribute("loginFail", true);
 				return "login";
 			}
-			
 		}catch( Exception e ){
 			e.printStackTrace();			
 			return "login";

@@ -4,10 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/devparam/devconfig")
-public class DevconfigController {
+@RequestMapping("/devparam/channels")
+public class ChannelsController {
 	@RequestMapping(value="/")
 	public String show(){
-		return "recordman/devconfig";
+		return "recordman/channels";
 	}
+	
 }
