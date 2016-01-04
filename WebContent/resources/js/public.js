@@ -1,3 +1,14 @@
+/* const define*/
+var CONST={};
+CONST.RUNSTATUS={};
+CONST.RUNSTATUS.QUIT=0;
+CONST.RUNSTATUS.RUN = 1;
+
+CONST.TIMESYNC={};
+CONST.TIMESYNC.DESYNC= 0;
+CONST.TIMESYNC.SYNC=1;
+
+/* const end */
 $(function(){
 	setContentMinHeight();
 	$(window).resize(setContentMinHeight);

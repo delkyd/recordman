@@ -464,7 +464,7 @@ fieldset[disabled] .customBtn {
 
 .callout .contained{
 	max-width: 340px;
-	height: 220px;
+	height: 240px;
 	margin:40px auto 0;
 }
 
@@ -489,6 +489,17 @@ fieldset[disabled] .customBtn {
     line-height: 22px;
     text-align: center;
     padding: 0 20px;
+}
+
+.callout .content span{
+	display:block;
+}
+
+.callout .content span.error{
+	color: #d04f2f;
+}
+.callout .content span.unknown{
+	color: #ef9b10;
 }
 
 .callout .byebye_buffering{

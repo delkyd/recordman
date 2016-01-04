@@ -2,7 +2,7 @@
 <mongodbConfig>
 	<!-- 数据库相关的配置 -->
 	<nodes namespace="mongodb">
-		<node key="ip" value="192.168.12.178" />
+		<node key="ip" value="192.168.12.179" />
 		<node key="port" value="27017" />
 		<node key="dbname" value="recordman" />
 		<node key="user" value="recordman" />
