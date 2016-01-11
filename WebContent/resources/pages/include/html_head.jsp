@@ -8,6 +8,6 @@
 	<script type="text/javascript">
 		var rootPath = "${rootPath}";
 	</script>
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" />	
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" />
 	

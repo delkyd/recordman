@@ -21,229 +21,53 @@
 								<option>稳态</option>
 							</select>
 						</div>
-						<div class="form-group">
+						<!-- <div class="form-group" >
 							<select id='dev' class="form-control">
 								<option>工控机</option>
 								<option>DSP</option>
 							</select>
-						</div>
+						</div> -->
 						<div class="form-group">
 							<select id='period' class="form-control">
-								<option>一周</option>
-								<option>一月</option>
-								<option>半年</option>
-								<option>一年</option>
-								<option>自定义</option>
+								<option value='1'>一天</option>
+								<option value='2'>一周</option>
+								<option value='3'>一月</option>
+								<option value='4'>半年</option>
+								<option value='5'>一年</option>
+								<option value='0'>自定义</option>
 							</select>
-						</div>						
+						</div>
 						<div class="form-group">
-							<button class="btn btn-default">Query</button>
+							<div class='input-group date' id='datetimepicker1' style="display: none;">
+								<input type='text' class="form-control" /> <span
+									class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class='input-group date' id='datetimepicker2' style="display: none;">
+								<input type='text' class="form-control" /> <span
+									class="input-group-addon"> <span
+									class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<button id="query" class="btn btn-default">Query</button>
 						</div>
 					</form>				
 				</div>
 				<div class="result-zone">
-					<div class="day-zone blue">
-						<div class="heading color">
-							<h1>2015-12-6</h1>
-							<span>共9个文件,其中5个有故障</span>
-						</div>
-						<div class="gallery">
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-								<h4>09:54:23.153200</h4>
-								<h5>cpu120151206095423153200</h5>
-								<h3>A相短路</h3>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-								<h4>09:54:23.153200</h4>
-								<h5>cpu120151206095423153200</h5>
-								<h3>B相短路</h3>
-							</div>
-							<div class="item">
-							<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-								<h4>09:54:23.153200</h4>
-								<h5>220kV录波器cpu120151206095423153200</h5>
-								<h3>C相短路</h3>
-							</div>
-							<div class="item">
-							<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-								<h4>09:54:23.153200</h4>
-								<span>cpu120151206095423153200_shiyishihenchangdemingzi还有中文</span>
-								<h3>ABC三相接地</h3>
-							</div>
-							<div class="item">
-							<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-								<h4>09:54:23.153200</h4>
-								<h5>cpu12015120609</h5>
-								<h3>AB相短路</h3>
-							</div>
-							<div class="item">
-							<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-								<h4>09:54:23.153200</h4>
-								<h5>cpu120</h5>
-								<h3>BC相短路</h3>
-							</div>
-							<div class="item">
-							<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-								<h4>09:54:23.153200</h4>
-								<h5>cpu120151206095423153200</h5>
-								<h3>CA相短路</h3>
-							</div>
-						</div>
-					</div>
-					<div class="day-zone yellow">
-						<div class="heading color">
-							<h1>2015-12-5</h1>
-							<span>共9个文件,其中5个有故障</span>
-						</div>
-						<div class="gallery">
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-					<div class="day-zone pink">
-						<div class="heading color">
-							<h1>2015-12-4</h1>
-							<span>共9个文件,其中5个有故障</span>
-						</div>
-						<div class="gallery">
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="day-zone green">
-						<div class="heading color">
-							<h1>2015-12-3</h1>
-							<span>共9个文件,其中5个有故障</span>
-						</div>
-						<div class="gallery">
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="toolbar">
-									<div class="icon export"></div>
-								</div>
-							</div>
-							
-						</div>
-					</div>
+
 				</div>
 			</div>
 		</div>
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>
-	<script
-		src="<%=request.getContextPath()%>/resources/js/recordman/recordfile.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/moment-with-locales.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/recordman/recordfile.js"></script>
 </body>
 </html>

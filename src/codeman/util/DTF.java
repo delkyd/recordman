@@ -12,7 +12,7 @@ public class DTF {
 	public static final int ERROR_INT = 0;
 	public static final float ERROR_FLOAT = 0;
 	public static String defaultDateFormat = "yyyy-MM-dd HH:mm:ss";
-	public static String eventDateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
+	public static String utcFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
 	public static final String defaultFloatFormat = "##.##";
 	public static Integer StringToInt( String str ){
 		if( str == null || str.isEmpty() ){
@@ -40,13 +40,23 @@ public class DTF {
 		return null;
 	}
 	
-	public static Date StringToDate( String str, String format ){		
+	public static Date utcStringToDate( String str ){
+		SimpleDateFormat sdf = new SimpleDateFormat(utcFormat);
 		try {
 			if( str == null || str.isEmpty() ){
 				return null;
 			}
-			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			Date date = sdf.parse(str.trim());
+			int indexPlus = str.indexOf("+");
+			String newString;
+			if( indexPlus != -1 ){
+				String f = str.substring(0, indexPlus);
+				String zone = str.substring( indexPlus+1, str.length());
+				zone = zone.replaceAll(":", "");
+				newString = String.format("%s+%s", f,zone);
+			}else{
+				newString = str;
+			}
+			Date date = sdf.parse(newString.trim());
 			return date;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,18 +64,13 @@ public class DTF {
 		return null;
 	}
 	
-	public static Date DoubleStringToDate( String sDate, String sMills){
-		if( sDate == null || sDate.isEmpty() || sMills == null  ){
-			return null;
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat(eventDateFormat);
+	public static Date StringToDate( String str, String format ){		
 		try {
-			String sNew = sDate;
-			int nfind = sDate.indexOf('.');
-			if( nfind >= 0)
-				sNew = sNew.substring(0, nfind);
-			sNew += ("."+sMills);
-			Date date = sdf.parse(sNew);
+			if( str == null || str.isEmpty() ){
+				return null;
+			}
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
+			Date date = sdf.parse(str.trim());
 			return date;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -82,14 +87,6 @@ public class DTF {
 		return null;
 	}
 	
-	public static String DateToEventString( Date date ){
-		try{
-			return (new SimpleDateFormat( eventDateFormat)).format(date);
-		}catch( Exception e){
-			e.printStackTrace();
-		}
-		return null;
-	}
 	
 	public static String DateToString( Date date, String format ){
 		try{

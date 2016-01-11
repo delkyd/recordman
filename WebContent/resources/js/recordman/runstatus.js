@@ -5,7 +5,7 @@ $(function(){
 
 function RefreshStatus(){
 	var param={};
-	
+
 	var dataParam = {
 			url : rootPath + "/runstatus/all",
 			param : param,
@@ -89,7 +89,7 @@ function updateOverview(data){
 		default:
 			{
 				html += "<span class='unknown'>" + $.i18n.prop('runstatus_overview_timesync') + ":" + $.i18n.prop('status_unknown') + "</span>";
-			}	
+			}
 		}
 	}
 	$('#overview .content').html(html);
@@ -116,7 +116,7 @@ function updateSubsystem(data){
 			html += "<span class='unknown'>" + $.i18n.prop('runstatus_subsys_ipc') + ":" + $.i18n.prop('status_unknown') + "</span>";
 			break;
 		}
-			
+
 		}
 	}
 	if( !(data.trigger_record === undefined)  ){
@@ -136,7 +136,7 @@ function updateSubsystem(data){
 			html += "<span class='unknown'>" + $.i18n.prop('runstatus_subsys_trigger') + ":" + $.i18n.prop('status_unknown') + "</span>";
 			break;
 		}
-			
+
 		}
 	}
 	if( !(data.continue_record === undefined)  ){
@@ -156,7 +156,7 @@ function updateSubsystem(data){
 			html += "<span class='unknown'>" + $.i18n.prop('runstatus_subsys_continue') + ":" + $.i18n.prop('status_unknown') + "</span>";
 			break;
 		}
-			
+
 		}
 	}
 	if( !(data.collectors === undefined)  ){
@@ -178,11 +178,11 @@ function updateSubsystem(data){
 				html += "<span class='unknown'>" + $.i18n.prop('runstatus_subsys_gather') + (parseInt(i)+1) + ":" + $.i18n.prop('status_unknown') + "</span>";
 				break;
 			}
-				
+
 			}
-		}		
+		}
 	}
-	
+
 	$('#subsystem .content').html(html);
 }
 
@@ -220,11 +220,11 @@ function updateFunction(data){
 				html += "<span class='unknown'>" + $.i18n.prop('runstatus_func_eth') + parseInt(i) + ":" + $.i18n.prop('status_unknown') + "</span>";
 				break;
 			}
-				
+
 			}
-		}		
+		}
 	}
-	
+
 	$('#function .content').html(html);
 }
 
@@ -247,6 +247,6 @@ function updateInfo(data){
 	if( !(data.hardware_version === undefined)  ){
 		html += "<span>" + $.i18n.prop('runstatus_info_hwver') + ":" + data.hardware_version + "</span>";
 	}
-	
+
 	$('#info .content').html(html);
 }
