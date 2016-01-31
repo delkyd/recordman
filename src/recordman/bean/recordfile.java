@@ -2,6 +2,9 @@ package recordman.bean;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class recordfile {
 	private String name;
 	private Date triggerTime;

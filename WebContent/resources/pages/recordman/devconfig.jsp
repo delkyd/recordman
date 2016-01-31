@@ -19,35 +19,31 @@
 							<div class="form-group">
 								<label class="control-label"><fmt:message key="devconf_stationname" bundle="${bundle }"/></label>
 								<div class="">
-									<input id='station_name' type="text" class="form-control" >
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label"><fmt:message key="devconf_companyname" bundle="${bundle }"/></label>
-								<div class="">
-									<input id='company_name' type="text" class="form-control" >
+									<input id='station_name' type="text" class="form-control" value="${infos.station}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label"><fmt:message key="devconf_devname" bundle="${bundle }"/></label>
 								<div class="">
-									<input id='dev_name' type="text" class="form-control" >
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label"><fmt:message key="devconf_serialno" bundle="${bundle }"/></label>
-								<div class="">
-									<input id='dev_serial' type="text" class="form-control" >
+									<input id='dev_name' type="text" class="form-control" value="${infos.name}">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label"><fmt:message key="devconf_devmodel" bundle="${bundle }"/></label>
 								<div class="">
-									<select id='dev_type' class="form-control">
-										<option>Ben5000</option>
-										<option>Ben8000</option>
-										<option>Ben10086</option>
-									</select>
+									<input id='dev_model' type="text" class="form-control" value="${infos.model}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label"><fmt:message key="devconf_version" bundle="${bundle }"/></label>
+								<div class="">
+									<input id='dev_version' type="text" class="form-control" value="${infos.version}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label"><fmt:message key="devconf_remark" bundle="${bundle }"/></label>
+								<div class="">
+									<input id='dev_remark' type="text" class="form-control" value="${infos.remark}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -63,7 +59,7 @@
 							
 							<div class="form-group">
 							   <div class="">
-							     <button class="btn btn-lg btn-block btn-primary">Update</button>
+							     <button class="btn btn-lg btn-block btn-primary" onclick='update()'>Update</button>
 							   </div>
 							</div>
 						</form>

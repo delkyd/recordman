@@ -1,5 +1,8 @@
 package recordman.bean;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class user {
 	public static int USER_TYPE_GUEST = 1;
 	public static int USER_TYPE_ADMIN = 2;

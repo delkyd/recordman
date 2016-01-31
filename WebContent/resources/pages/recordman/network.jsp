@@ -15,30 +15,12 @@
 			<div id="content" class="container-fluid bluebk">
 				<div class="netconfig conf-container">
 					<div class="list-group ethernets left">
-						<a class="list-group-item">
-							<h4 class="list-group-item-heading">eth0</h4>
-    						<p class="list-group-item-text">11.123.87.5/255.255.255.0</p>
-						</a>
-						<a class="list-group-item">
-							<h4 class="list-group-item-heading">eth1</h4>
-    						<p class="list-group-item-text">192.168.120.125/255.255.0.0</p>
-						</a>
-						<a class="list-group-item active">
-							<h4 class="list-group-item-heading">eth2</h4>
-    						<p class="list-group-item-text">192.168.116.5/255.255.255.0</p>
-						</a>
-						<a class="list-group-item">
-							<h4 class="list-group-item-heading">eth3</h4>
-    						<p class="list-group-item-text">10.41.15.5/255.255.0.0</p>
-						</a>
-						<a class="list-group-item">
-							<h4 class="list-group-item-heading">eth4</h4>
-    						<p class="list-group-item-text">未启用</p>
-						</a>
-						<a class="list-group-item">
-							<h4 class="list-group-item-heading">eth5</h4>
-    						<p class="list-group-item-text">未启用</p>
-						</a>
+						<c:forEach var="v" items="${ethernets}" varStatus="s">
+							<a class="list-group-item" id="${v.index }">
+								<h4 class="list-group-item-heading">${v.name }</h4>
+	    						<p class="list-group-item-text">${v.ip }/${v.mask }</p>
+							</a>
+						</c:forEach>
 					</div>
 					<div class="config right formstyle">
 						<form class="form" onsubmit="return false;">
@@ -52,16 +34,6 @@
 								<label class=" control-label">名称</label>
 								<div class="">
 									<input id='name' type="text" class="form-control" placeholder="建议填入有意义的名字">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class=" control-label">引导协议</label>
-								<div class="">
-									<select id='bootproto' class="form-control">
-										<option>static</option>
-										<option>dhcp</option>
-										<option>none</option>
-									</select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -79,17 +51,6 @@
 								<label class=" control-label">子网掩码</label>
 								<div class="">
 									<div id='netmask' class="form-control ip_input">
-										<input type="text" class="item">.
-										<input type="text" class="item">.
-										<input type="text" class="item">.
-										<input type="text" class="item">
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class=" control-label">广播地址</label>
-								<div class="">
-									<div id='broadcast' class="form-control ip_input">
 										<input type="text" class="item">.
 										<input type="text" class="item">.
 										<input type="text" class="item">.
