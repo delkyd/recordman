@@ -17,6 +17,12 @@ CONST.PERIOD.HALFYEAR=4;
 CONST.PERIOD.YEAR=5;
 
 /* const end */
+
+/* global variable define*/
+
+/* global variable end*/
+
+
 $(function(){
 	setContentMinHeight();
 	$(window).resize(setContentMinHeight);
@@ -364,7 +370,7 @@ function wave_graph(data, height){
 function setipvalue(obj, ip){
 	var ips = ip.split('.');
 	var inputs = $(obj).children('.item');
-	if( inputs.length == 4 && ips.length == 4 ){
+	if( 4 == inputs.length && 4 == ips.length ){
 		for(var i=0; i < 4 ; i++ ){
 			$(inputs[i]).val(ips[i]);
 		}
@@ -374,12 +380,23 @@ function setipvalue(obj, ip){
 function getipvalue(obj){
 	var ret = '';
 	var inputs = $(obj).children('.item');
-	if( inputs.length == 4 ){
+	if( 4 == inputs.length ){
 		for(var i=0; i < 4 ; i++ ){
 			ret += $(inputs[i]).val();
 			if( i != 3 ){
 				ret += '.';
 			}
+		}
+	}
+	return ret;
+}
+
+function clearipvalue(obj){
+	var ret = '';
+	var inputs = $(obj).children('.item');
+	if( 4 == inputs.length ){
+		for(var i=0; i < 4 ; i++ ){
+			$(inputs[i]).val('');
 		}
 	}
 	return ret;
@@ -427,5 +444,30 @@ function onipitemkeyup(e){
 
 function relogin(){
 	window.location.href= rootPath;
+}
+
+function setCookie(c_name,value,expiredays)
+{
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expiredays);
+	document.cookie=c_name+ "=" +escape(value)+
+		((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+}
+
+function getCookie(c_name)
+{
+	if (document.cookie.length>0)
+	{
+	  c_start=document.cookie.indexOf(c_name + "=");
+	  if (c_start!=-1)
+	  { 
+	    c_start=c_start + c_name.length+1; 
+	    c_end=document.cookie.indexOf(";",c_start);
+	    if (c_end==-1) 
+	    	c_end=document.cookie.length;
+	    return unescape(document.cookie.substring(c_start,c_end));
+	  } 
+	}
+	return "";
 }
 

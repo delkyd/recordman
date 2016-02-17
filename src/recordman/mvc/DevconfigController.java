@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 import recordman.bean.devconf;
+import recordman.bean.errorcode;
 import recordman.datahandle.DFUConfHandle;
 
 @Controller
@@ -38,9 +39,9 @@ public class DevconfigController {
 			boolean rs = handle.editBaseinfo(info);
 			finalMap.put("result", rs);
 			if( false == rs ){
-				finalMap.put("reason", "错误");
+				finalMap.put("reason", errorcode.savetofile);
 			}else{
-				finalMap.put("reason", "成功");
+				finalMap.put("reason", errorcode.noerror);
 			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);
@@ -50,7 +51,5 @@ public class DevconfigController {
 			logger.error( e.toString() );
 			return null;
 		}
-	}
-	
-	
+	}	
 }

@@ -25,12 +25,6 @@
 					<div class="config right formstyle">
 						<form class="form" onsubmit="return false;">
 							<div class="form-group">
-								<label class=" control-label">是否启用</label>
-								<div class="">
-									<input id='toggle' type="checkbox" data-toggle="toggle">
-								</div>
-							</div>
-							<div class="form-group">
 								<label class=" control-label">名称</label>
 								<div class="">
 									<input id='name' type="text" class="form-control" placeholder="建议填入有意义的名字">
@@ -61,7 +55,7 @@
 							<div class="form-group">
 								<label class=" control-label">网关</label>
 								<div class="">
-									<div id='network' class="form-control ip_input">
+									<div id='gate' class="form-control ip_input">
 										<input type="text" class="item">.
 										<input type="text" class="item">.
 										<input type="text" class="item">.
@@ -71,7 +65,7 @@
 							</div>
 							<div class="form-group">
 							   <div class=" ">
-							     <button class="btn btn-lg btn-block btn-primary">Update</button>
+							     <button class="btn btn-lg btn-block btn-primary" onclick='update()'>Update</button>
 							   </div>
 							</div>
 						</form>
@@ -81,7 +75,6 @@
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>
-	<script src="<%=request.getContextPath()%>/resources/js/bootstrap-toggle.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/recordman/network.js"></script>
 </body>
 </html>

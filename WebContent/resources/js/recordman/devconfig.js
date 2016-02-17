@@ -15,9 +15,9 @@ function update(){
 			call: function(data) {
 				if(data!=null && data.result != null) {
 					if( data.result ){
-						showAlert($.i18n.prop('oper_success'), data.reason);
+						showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));
 					}else{
-						showAlert($.i18n.prop('oper_fail'), data.reason);
+						showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
 					}					
 				}else{
 					showAlert($.i18n.prop('oper_fail'), $.i18n.prop('exceptionerror'));

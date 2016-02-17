@@ -10,10 +10,25 @@ import java.util.Date;
  */
 public class DTF {
 	public static final int ERROR_INT = 0;
+	public static final int INVALID_INT = -999999;
 	public static final float ERROR_FLOAT = 0;
+	public static final float INVALID_FLOAT = -9999.999f;
+	public static final float FLOAT_DEVIATION = 0.001f;
 	public static String defaultDateFormat = "yyyy-MM-dd HH:mm:ss";
 	public static String utcFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
 	public static final String defaultFloatFormat = "##.##";
+	
+	public static boolean isValid(float a){
+		return !equalFloat(a, INVALID_FLOAT);
+	}
+	public static boolean isValid(int a){
+		return a-INVALID_INT!=0;
+	}
+	public static boolean equalFloat(float a, float b){
+		if( Math.abs(a-b) < FLOAT_DEVIATION )
+			return true;
+		return false;
+	}
 	public static Integer StringToInt( String str ){
 		if( str == null || str.isEmpty() ){
 			return null;

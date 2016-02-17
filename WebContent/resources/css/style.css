@@ -788,7 +788,18 @@ fieldset[disabled] .customBtn {
 	}
 }
 
-.di .onlyAi{
+.bi .onlyAi{
+	display:none;
+}
+.bo .onlyAi{
+	display:none;
+}
+
+.ai .onlyBi{
+	display:none;
+}
+
+.bo .onlyBi{
 	display:none;
 }
 
