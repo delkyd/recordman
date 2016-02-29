@@ -15,7 +15,7 @@ public class channel {
 	private String unit1=null;
 	private float rate2=DTF.INVALID_FLOAT;
 	private String unit2=null;
-	private int val=DTF.INVALID_INT;
+	private int val=0;
 	public String getId() {
 		return id;
 	}

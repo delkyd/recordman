@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
@@ -39,8 +40,10 @@ public class XMLDao {
 		try {
 			if( null == m_doc )
 				return false;
+			//创建输出格式  
+	        OutputFormat format = OutputFormat.createPrettyPrint(); 
 			XMLWriter output = new XMLWriter(new FileWriter(new File(
-					filepath)));
+					filepath)), format);
 			output.write(m_doc);
 			output.close();
 			return true;

@@ -174,11 +174,11 @@ public class DFUConfHandle {
 			t.setKind(e.getName());
 			t.setName( e.attributeValue("name"));
 			t.setType( e.attributeValue("class"));
-			if( terminal.KIND_AI == t.getKind() ){
+			if( terminal.KIND_AI.equals(t.getKind()) ){
 				if( null != e.attributeValue("rate")){
 					t.setRate( DTF.StringToFloat(e.attributeValue("rate")));
 				}
-			}else if( terminal.KIND_BI == t.getKind() ){
+			}else if( terminal.KIND_BI.equals(t.getKind()) ){
 				if( null != e.attributeValue("debounce")){
 					t.setDebounce( DTF.StringToInt(e.attributeValue("debounce")));
 				}
@@ -205,12 +205,12 @@ public class DFUConfHandle {
 			}
 			e.addAttribute("name", t.getName());
 			e.addAttribute("class", t.getType());
-			if( terminal.KIND_AI == t.getKind() ){
+			if( terminal.KIND_AI.equals(t.getKind()) ){
 				if( DTF.isValid(t.getRate())){
 					e.addAttribute("rate", String.valueOf(t.getRate()));
 				}
 				
-			}else if( terminal.KIND_BI == t.getKind() ){
+			}else if( terminal.KIND_BI.equals(t.getKind()) ){
 				if( DTF.isValid(t.getDebounce())){
 					e.addAttribute("debounce", String.valueOf(t.getDebounce()));
 				}
@@ -238,7 +238,7 @@ public class DFUConfHandle {
 			c.setKind( e.getName() );
 			c.setId( e.attributeValue("id"));
 			c.setName( e.attributeValue("name"));
-			if( channel.KIND_AI == c.getKind() ){
+			if( channel.KIND_AI.equals(c.getKind()) ){
 				c.setUnit( e.attributeValue("unit"));
 				if( null != e.attributeValue("rate1") ){
 					c.setRate1( DTF.StringToFloat(e.attributeValue("rate1")));
@@ -248,7 +248,7 @@ public class DFUConfHandle {
 					c.setRate2( DTF.StringToFloat(e.attributeValue("rate2")));
 				}
 				c.setUnit2( e.attributeValue("unit2"));
-			}else if( channel.KIND_BI == c.getKind() ){
+			}else if( channel.KIND_BI.equals(c.getKind()) ){
 				if( null != e.attributeValue("val")){
 					c.setVal( DTF.StringToInt(e.attributeValue("val")));
 				}
@@ -274,7 +274,7 @@ public class DFUConfHandle {
 				return false;
 			e.addAttribute("id", c.getId());
 			e.addAttribute("name", c.getName());
-			if( channel.KIND_AI == c.getKind() ){
+			if( channel.KIND_AI.equals(c.getKind()) ){
 				e.addAttribute("unit", c.getUnit());
 				if( DTF.isValid(c.getRate1())){
 					e.addAttribute("rate1", String.valueOf(c.getRate1()));
@@ -284,7 +284,7 @@ public class DFUConfHandle {
 					e.addAttribute("rate2", String.valueOf(c.getRate2()));
 				}
 				e.addAttribute("unit2", c.getUnit2());
-			}else if( channel.KIND_BI == c.getKind() ){
+			}else if( channel.KIND_BI.equals(c.getKind()) ){
 				e.addAttribute("val", String.valueOf(c.getVal()));
 			}
 			return true;
@@ -318,7 +318,7 @@ public class DFUConfHandle {
 	public boolean editChannelMap(int board, int index, String id){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
-			String xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@id='%s' and @index='%d']", id);
+			String xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@id='%s']", id);
 			Element ele = (Element)doc.selectSingleNode(xpath);
 			if( ele != null ){
 				if( null == ele.getParent() ){
@@ -696,7 +696,7 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public boolean deleteSetting(String group, String sid){
+	public boolean deleteSetting(String group, int sid){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
 			String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set[@sid='%d']", group, sid);
@@ -736,10 +736,10 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public String getSettingMapBySid(String sid){
+	public String getSettingMapBySid(int sid){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
-			String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%s']", sid);
+			String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%d']", sid);
 			Element e = (Element)doc.selectSingleNode(xpath);
 			if( null == e ){
 				return null;
@@ -752,10 +752,10 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public boolean editSettingMap(String paramId, String sid){
+	public boolean editSettingMap(String paramId, int sid){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
-			String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%s']", sid);
+			String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%d']", sid);
 			Element ele = (Element)doc.selectSingleNode(xpath);
 			if( ele != null ){
 				if( null == ele.getParent() ){
@@ -775,7 +775,7 @@ public class DFUConfHandle {
 				return false;
 			}
 			e.addAttribute("id", paramId);
-			e.addAttribute("sid", sid);
+			e.addAttribute("sid", String.valueOf(sid));
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -784,7 +784,7 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public boolean deleteSettingMap(String paramId, String sid){
+	public boolean deleteSettingMap(String paramId, int sid){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
 			if( null != paramId ){
@@ -798,8 +798,8 @@ public class DFUConfHandle {
 					}
 				}
 			}
-			if( null != sid ){
-				String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%s']", sid);
+			
+				String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%d']", sid);
 				Element e = (Element)doc.selectSingleNode(xpath);
 				if( null != e ){
 					if( e.getParent() != null ){
@@ -808,7 +808,7 @@ public class DFUConfHandle {
 						}
 					}
 				}
-			}
+			
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();

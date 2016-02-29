@@ -10,7 +10,7 @@ public class terminal {
 	private String type=null;
 	private float rate = DTF.INVALID_FLOAT;
 	private int debounce = DTF.INVALID_INT;
-	private int reverse = DTF.INVALID_INT;
+	private int reverse = 0;
 	
 	public final static String KIND_AI="AI";
 	public final static String KIND_BI="BI";

@@ -39,9 +39,14 @@ public class DevconfigController {
 			boolean rs = handle.editBaseinfo(info);
 			finalMap.put("result", rs);
 			if( false == rs ){
-				finalMap.put("reason", errorcode.savetofile);
+				finalMap.put("reason", errorcode.update);
 			}else{
-				finalMap.put("reason", errorcode.noerror);
+				if( !handle.save() ){
+					rs = false;
+					finalMap.put("reason", errorcode.savetofile);
+				}else{
+					finalMap.put("reason", errorcode.noerror);
+				}
 			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);

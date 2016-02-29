@@ -16,6 +16,11 @@ CONST.PERIOD.MONTH=3;
 CONST.PERIOD.HALFYEAR=4;
 CONST.PERIOD.YEAR=5;
 
+CONST.TERMINAL_KIND={};
+CONST.TERMINAL_KIND.AI='AI';
+CONST.TERMINAL_KIND.BI='BI';
+CONST.TERMINAL_KIND.BO='BO';
+
 /* const end */
 
 /* global variable define*/
@@ -115,6 +120,9 @@ function showAlert(t, c, Func){
 	$("#alertModal .modal-body p").text(c);
 	$("#alertModal").modal('show');
 	
+	$('#alertModel').on('shown.bs.modal', function(){
+		$('#alertModel .modal-footer .btn').focus();
+	});
 	$('#alertModal').on('hidden.bs.modal', function(event){
 		if(Func){
 			Func();

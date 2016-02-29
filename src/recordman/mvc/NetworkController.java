@@ -57,6 +57,7 @@ public class NetworkController {
 			if( false == rs ){
 				finalMap.put("reason", errorcode.savetofile);
 			}else{
+				handle.save();
 				finalMap.put("reason", errorcode.noerror);
 			}
 			String finalJSON = JSON.toJSONString(finalMap);
