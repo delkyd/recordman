@@ -20,9 +20,14 @@
 					<ul class="dropdown-menu">
 						<li><a href="<%=request.getContextPath()%>/devparam/devconfig/"><fmt:message key="nav_setup_dev" bundle="${bundle }"/></a></li>
 						<li><a href="<%=request.getContextPath()%>/devparam/network/"><fmt:message key="nav_setup_network" bundle="${bundle }"/></a></li>
-						<li><a href="<%=request.getContextPath()%>/devparam/primarydev/"><fmt:message key="nav_setup_primarydev" bundle="${bundle }"/></a></li>
 						<li><a href="<%=request.getContextPath()%>/devparam/channels/"><fmt:message key="nav_setup_channel" bundle="${bundle }"/></a></li>
-						<li><a href=""><fmt:message key="nav_setup_setting" bundle="${bundle }"/></a></li>
+						<li><a href="<%=request.getContextPath()%>/devparam/modules/"><fmt:message key="nav_setup_modules" bundle="${bundle }"/></a></li>						
+						<li><a href="<%=request.getContextPath()%>/devparam/settings/"><fmt:message key="nav_setup_setting" bundle="${bundle }"/></a></li>
+					</ul>
+				</li>
+				<li id='nav_mgr' class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+						aria-haspopup="true" aria-expanded="true"><fmt:message key="nav_mgr" bundle="${bundle }"/><span class="caret"></span></a>
+					<ul class="dropdown-menu">
 					</ul>
 				</li>
 				

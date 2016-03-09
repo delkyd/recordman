@@ -327,6 +327,7 @@ footer p {
   background-position: center;
   background-repeat: no-repeat;
   background-color: transparent;
+  background-size:80%;
 }
 
 .customBtn:hover,
@@ -334,13 +335,14 @@ footer p {
 .customBtn.focus {
   color: #333;
   text-decoration: none;
-  background-size:80%;
+  background-size:100%;
 }
 .customBtn:active,
 .customBtn.active {
   outline: 0;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
           box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+  background-size:80%;
 }
 .customBtn.disabled,
 .customBtn[disabled],
@@ -350,6 +352,12 @@ fieldset[disabled] .customBtn {
   -webkit-box-shadow: none;
           box-shadow: none;
   opacity: .65;
+}
+
+.createBtn{
+	width:32px;
+	height: 32px;
+	background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEl0lEQVRYR8WXXWwUVRTH/+fO9lOUNighUREJHw+mTWOhu6u1O1sKCt1Zm2IN4aHBKAkl8St+JOoDyoOaSAzGaBowaUAflAZTdpZUobizaLI7C0gbNdGAGIxaY9RAG2xL995jZmxJWdr9aCPM6z33nN/9nzPnnkso4FsVDK/UwGsAqgGruwk039nO4Isg8RPA/RJ07GQs8kO+bimXoa7rpaN8y2NppLdppFUrhV8FwYagHxl8wdlPoApiLJOK64TA7WAMMHHngjLZ1dvbO5YtRlYAb9DYCKbdgJwH0vZKlvtPWoe/zebQ3/BwlRKqHQpbIeQQkeeZZCzy6Ux7pgXw+9vKVPFYpyLeLIB3UJbeaff2DuVSa+p6bVPb/CI5ukNK9ZQQ+FCMlW9PJLpHMn1cA1Cjt1QUc/owkVjMrB5NxaOJQgJn2vqC4fulkgeIxLnL0Ix+q8dN2+R3FYBzclk80kfAApBssq3eX+YSfHJvbZOx2DNOR5n4j3IMr7Usa3RaAG8gvA+ERmDcn09wXzDcqphVyjJ7coE6EGJcJQToMzseffwaAKfgFONjYm7IV/Y6PfyRAKeTlrklF4Cz7tWNeqWURUI8MgntpmD9+vUlf48UnQX4E9syn8/HmWNTKICzZ7Ue2k2SWi4tKl3xXXf3ZRfAFwh3MPMbuCm9uJBqnw2AU+QlLM9D0At2LLLHBVgV2DCgCc/ndizyYr6nn60CE6nYxeDGlBW9l9z2yvy9hKrK1WQy4WajgAuwJlwNyQNQvIK8QWM7mF6yrcidhZx+Lgr8p0LoNwa9Rt5geA8UL7Dj5sbrCtDQ3ENCGySvHjoKEqcLzf/cFTDeAqOafLqRUoSeVMx8faoC3mBoA7PYnE0VgrwPLJiJsrZrIu62Y+ahqb58uvEKM8IzAvj18EMM3pQNgBkPsAILDV9lTR/zwWQ8ak4LcANTsAuMKrcIiXFr0oq03pgiDBrblcTLJ46bd1xXAN0YZODVK41IKFGdOH7om0IgZtuIVusbagS00wK03G3F3oDRD0JfIRfRXH5DX9B4WyoETsTNWhegTg9tI0VvpotL7zrV130xXxVmo0B9fXPlmAfnNabnkvHo3inXMZ0BtIO2ZT77fwL49NC7Ehz657bylVeuY/dKDoZbpZQHhBC6bZnZ/+sJwkIV8AeNQFqqY5qmtSZjkYjj5qqZ0Ks3dynGOlUk/Kf6zJ9zKVEXbH6QiNj+Inokl61Pb1nCkAkGoinL3Dppf+1QWjJ6hJgWpot4bT4QuQK76uotSyTkEQH6vQxD62YcSh1jdyyHNJnVUgI2peKHv8wnyEw2juzOrAnQmbSnxMgs8mkfJs5z7BLd/D6kahck3hsjbUfmPJ8Lyqn2tId2SsUdJERXOYafnHryaVOQ6bRON1ogsZsEKhn0AYTan4pFB7IFd5qMRlq7ZPUEgL800p6eLLjp9uV8nN7T1lY878+xLWB0AFwD8CAUpyDEGQLcVw4DlVBqGYTwAlikGF9r4M7hhWX7nF8t+5WeS8sp696G0HIW1ChANcy8FEDFxPIFIjqnwP0a6FjCipzN1+2/BfBkLjKBHcMAAAAASUVORK5CYII=);
 }
 
 .deleteBtn{
@@ -362,6 +370,12 @@ fieldset[disabled] .customBtn {
 	width:32px;
 	height:32px;
 	background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB20lEQVRYR+2Xv0sbYRjHv897QkFxEbSLOAnu2lzjYi6QQTQXFHeDBKFtUgdHUbCCo+APDLiVqlO2XHZPCTaXzUGXlv4BXbqUQkvzPuWiJ8eReKG+lym33t37+Tzf5+F97whdvnTDXCBgiYFq3bZOqJv8eCLzlomPAXak5BgJLdc1AQ9OoJ2aXd5+lZi70aBVuyIQhMeM9D4kFzRBqcgFnoBna3blnKZS5pj42xhSPQu/hgfuBr//zrk992L3Vd6Eu0yKG+ZHBrKqBQDsAVj3wwXzeyJa9uA+AZ5ogFdVSfRByzP4DYE+uAPnVu7CQVrWsctnfk4zAUiM1q6slAoB3cgUCHzkwV8nzANAFlrBHxNQJdASTlgD08bPkRd7t6XSn2CRyhJoW7mgXTBtAZh2bKsWiUA7OAta0VhcS/CXyASCcD1pHpKUeRdev6h8mjYy45EJhMHduCMT6AQemUCn8EgEgvC4kT5i5ndez4NTrrQFDwdL0dtkwuDKE9BnTJsEfji2tdgJPCqBl8z4RpCz7WL3t0FpC/RkuogGJpt7ONGxc2mdhp0fSgXCYK3u9wR6CfQS6CXQUQIMzEPC+Z+NJvQdgX4AyfafZPd/rInQhZ75gABtfrbLX4PL/AOlpRC+5APUbgAAAABJRU5ErkJggg==);
+}
+
+.relateBtn{
+	width:32px;
+	height:32px;
+	background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADYElEQVRYR+3WaejnUxQG8M9Ys0vWsqQMY8kyyL5FJGlE9rKUNMiWJMoySF7I2AohW8MQQiJEY8maLdmTSCmmyG5iRo/urTu379ffG/3nxZw3v9/3PPee+9xz733OmWKSbcokr2+JI3AprsRfI5k5ES/j8xF8M+yOe0bw5XARLq94m4H98DxOx80DAdbAZ3gVM0YWeBy7YCp+HBhzJm7A3ngpeCWwLN7GtpiPzfF9F+BanFt8B+LZDo/v6eK7Bud3+FplA/l9BzthYSUws9t1WJ7dBNgC72P54vsA2+PP8p3UvoetyvcCbFMWrGFuwhlNzFNxWwisWQau3YAJvB0+LL4ncXC3o7NwY/Hl//Ud/gQOLb6QeRfJdLXvclQhMBvnDJzXMzgIhyDBessR5awTI3cjG+kt8xMnx3XAAD47k3MhVhgA43qx3If1R/AcRWzrEfybQi5rDNmCJU4HRoj+f+4+A/le9C/LTYRn6kRjFsN7Ag/gZPw6QuLicqleH8F3LZctajpkq+bp4dgKtgSOwxxcgUsGZm+Ej4se7DaQqcR6rbz/6MbXAzGuwoU4Gg/WdOV3ZXyCDfEbtsSXXYD7cUzxpSb0eh/fXQW/D8d38zfFR1gRX2Fa1qoZmNXt+iEc2QTYs2p38eV5Ra5/Lt+r4VO0zzVFKXWj2sM4vPm+DLNCYOOS2pU6xvviBSyDNzG9w68u6Yw7/y/o8MxJYcqlroWuHZJ7Ni0EcvGOGjivaPuO5VLm4vT2RyNAEaSktrdc6HubQtfjc0NgvaYq9gOi16uPBM/YWnIzZsh+x09YZwRftFQJ+wysgl9G0hX3RPh/GbNYjJZAmo1XSvn9doTELXgKj43gh5USftoIvgEexR61mWkJnIe0UnfglIEAaVDStn1Rbn9eQWt5BWlgNsEORTH7MHfipNLaXRewEli3CEkaz4XYuSzWBpiHfYojcpq331p8kdpYmtv9Ozw94BtlzR9KMzO/Esg7b3ed1nuvJkBU8R/tLhYFjBJGEWNJbZQwxabaEXik+c7xpoZUuxUzQyDN5VtF8VrSqVhzEYWMhie1rd1d0hlf/p/Q4Tmq1JQcVS107ZBkenoIRKNratsBKRgpr+mYh6pjAtQ0PzewgcTKvNuR8p1q2tu8pUI06Rn4G8qAq7LG/9NCAAAAAElFTkSuQmCC);
 }
 
 #waveModal .modal-header{
@@ -666,10 +680,11 @@ fieldset[disabled] .customBtn {
     background-size: contain;
     background-position: center;
     display:inline-block;
+    background-size: 80%;
 }
 
 .gallery .item:hover .toolbar .icon:hover{
-	background-size: 80%;
+	background-size: 100%;
 }
 
 .gallery .item:hover .toolbar .export{
@@ -709,6 +724,18 @@ fieldset[disabled] .customBtn {
 	}
 }
 
+@media (min-width:  1400px){
+	.conf-container {
+    	width: 1370px;
+	}
+}
+
+@media (min-width:  1600px){
+	.conf-container {
+    	width: 1570px;
+	}
+}
+
 @media (min-width:  820px){
 	.conf-container .left{
 		width:41.666666%;
@@ -722,7 +749,7 @@ fieldset[disabled] .customBtn {
 	}
 
 	.conf-container .onepage{
-		width: 600px;
+		width: 100%;
 		margin-left:auto;
 		margin-right:auto;
 	}
@@ -732,7 +759,7 @@ fieldset[disabled] .customBtn {
 	background: #ffffff;
 	border: 1px solid #c3c4c4;
 	border-radius: 4px;
-	padding:40px 40px 20px 40px;
+	padding:20px 20px 20px 20px;
 	margin-bottom:20px;
 }
 
@@ -773,6 +800,10 @@ fieldset[disabled] .customBtn {
     border-width: 1px 0px 1px 0px;
 }
 
+.list-group-item p, .list-group-item h4{
+	cursor: default;
+}
+
 /*ip_input*/
 .ip_input .item{
 	width:40px;
@@ -809,3 +840,37 @@ fieldset[disabled] .customBtn {
 }
 
 /*primary dev*/
+
+/*modules*/
+.editableListgroup .list-group .list-group-item{
+	padding:5px 15px;
+}
+.editableListgroup .list-group .list-group-item span{
+	cursor: default;
+	line-height:32px;
+}
+.editableListgroup .list-group .list-group-item button{	
+	float:right;
+	display:none;
+}
+.editableListgroup .list-group .active button{	
+	display:inline-block;
+}
+
+#stgroups{
+	min-width:240px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.modal-dialog {
+    width: 660px;
+}
+
+#settings caption span{
+	line-height=32px;
+	margin-right:10px;
+	vertical-align: middle;
+}

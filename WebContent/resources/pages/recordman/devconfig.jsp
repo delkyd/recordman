@@ -59,7 +59,7 @@
 							
 							<div class="form-group">
 							   <div class="">
-							     <button class="btn btn-lg btn-block btn-primary" onclick='update()'>Update</button>
+							     <button class="btn btn-block btn-primary" onclick='update()'><fmt:message key="update" bundle="${bundle }"/></button>
 							   </div>
 							</div>
 						</form>

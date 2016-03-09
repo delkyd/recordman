@@ -240,13 +240,9 @@ public class DFUConfHandle {
 			c.setName( e.attributeValue("name"));
 			if( channel.KIND_AI.equals(c.getKind()) ){
 				c.setUnit( e.attributeValue("unit"));
-				if( null != e.attributeValue("rate1") ){
-					c.setRate1( DTF.StringToFloat(e.attributeValue("rate1")));
-				}
+				c.setRate1( e.attributeValue("rate1"));
 				c.setUnit1( e.attributeValue("unit1"));
-				if( null != e.attributeValue("rate2") ){
-					c.setRate2( DTF.StringToFloat(e.attributeValue("rate2")));
-				}
+				c.setRate2( e.attributeValue("rate2"));
 				c.setUnit2( e.attributeValue("unit2"));
 			}else if( channel.KIND_BI.equals(c.getKind()) ){
 				if( null != e.attributeValue("val")){
@@ -276,13 +272,9 @@ public class DFUConfHandle {
 			e.addAttribute("name", c.getName());
 			if( channel.KIND_AI.equals(c.getKind()) ){
 				e.addAttribute("unit", c.getUnit());
-				if( DTF.isValid(c.getRate1())){
-					e.addAttribute("rate1", String.valueOf(c.getRate1()));
-				}
+				e.addAttribute("rate1", c.getRate1());
 				e.addAttribute("unit1", c.getUnit1());
-				if( DTF.isValid(c.getRate2())){
-					e.addAttribute("rate2", String.valueOf(c.getRate2()));
-				}
+				e.addAttribute("rate2", c.getRate2());
 				e.addAttribute("unit2", c.getUnit2());
 			}else if( channel.KIND_BI.equals(c.getKind()) ){
 				e.addAttribute("val", String.valueOf(c.getVal()));
@@ -350,10 +342,13 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public List<module> getAllModules(){
+	public List<module> getModules(String kind){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
 			String xpath = "/LeyunDevices/Modules/Module";
+			if( null != kind && !kind.isEmpty()){
+				xpath = String.format("/LeyunDevices/Modules/Module[@class='%s']", kind);
+			}
 			List<module> arr = new ArrayList<module>();
 			List list = doc.selectNodes(xpath);
 			for( Object o : list){
@@ -365,6 +360,27 @@ public class DFUConfHandle {
 				arr.add( m );
 			}
 			return arr;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
+	
+	public module getModuleAttr( String id ){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Modules/Module[@id='%s']", id);
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null == e )
+				return null;
+			module m = new module();
+			m.setId( e.attributeValue("id"));
+			m.setName( e.attributeValue("name"));
+			m.setKind( e.attributeValue("class"));
+			
+			return m;
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.toString());
@@ -394,12 +410,13 @@ public class DFUConfHandle {
 					item.setKind( ele.attributeValue("class"));
 					item.setValType( ele.attributeValue("type"));
 					item.setVal( ele.attributeValue("val"));
+					item.setType(moduleItem.TYPE_CONF);
 					m.configs.add( item );
 				}
 			}
 			Element params = e.element("Params");
 			if( null != params ){
-				List list = configs.elements("Item");
+				List list = params.elements("Item");
 				for( Object o : list ){
 					moduleItem item = new moduleItem();
 					Element ele = (Element)o;
@@ -408,6 +425,7 @@ public class DFUConfHandle {
 					item.setKind( ele.attributeValue("class"));
 					item.setValType( ele.attributeValue("type"));
 					item.setVal( ele.attributeValue("val"));
+					item.setType(moduleItem.TYPE_PARAM);
 					m.params.add( item );
 				} 
 			}
@@ -416,6 +434,75 @@ public class DFUConfHandle {
 			e.printStackTrace();
 			logger.error(e.toString());
 			return null;
+		}
+	}
+	
+	public moduleItem getModuleItem( String moduleId, String itemId ){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Modules/Module[@id='%s']/*/Item[@id='%s']", moduleId, itemId);
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null == e )
+				return null;
+			moduleItem item = new moduleItem();
+			Element ele = e;
+			item.setId( ele.attributeValue("id") );
+			item.setName( ele.attributeValue("name"));
+			item.setKind( ele.attributeValue("class"));
+			item.setValType( ele.attributeValue("type"));
+			item.setVal( ele.attributeValue("val"));
+			
+			Element parent = e.getParent();
+			if( null != parent ){
+				item.setType( parent.getName());
+			}			
+			
+			return item;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
+	public boolean editModuleItem( String moduleId, moduleItem item ){
+		Document doc = XMLDao.getInstance().getDocument();
+		String xpath = String.format("/LeyunDevices/Modules/Module[@id='%s']/%s/Item[@id='%s']", moduleId, item.getType(), item.getId());
+		Element e = (Element)doc.selectSingleNode(xpath);
+		if( null == e ){
+			xpath = String.format("/LeyunDevices/Modules/Module[@id='%s']/%s/Item", moduleId, item.getType());
+			e = XMLDao.getInstance().createXPathElement(xpath);
+		}
+		if( null == e )
+			return false;
+		e.addAttribute("id", item.getId());
+		e.addAttribute("name", item.getName());
+		e.addAttribute("class", item.getKind());
+		e.addAttribute("type", item.getValType());
+		e.addAttribute("val", item.getVal());
+		return true;
+	}
+	
+	public boolean editModuleAttribute( module m ){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Modules/Module[@id='%s']", m.getId());
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null == e ){
+				xpath = "/LeyunDevices/Modules/Module";
+				e = XMLDao.getInstance().createXPathElement(xpath);
+			}
+			if( null == e )
+				return false;
+			e.addAttribute("id", m.getId());
+			e.addAttribute("name", m.getName());
+			e.addAttribute("class", m.getKind());
+			
+			return true;
+		}catch( Exception e ){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
 		}
 	}
 	
@@ -472,7 +559,34 @@ public class DFUConfHandle {
 			if( null == e ){
 				return false;
 			}
-			xpath = "/LeyunDevices/Modules";
+
+			Element parent = (Element)e.getParent();
+			if( null == parent ){
+				return false;
+			}
+			if( !XMLDao.getInstance().deleteChildren(e) ){
+				return false;
+			}
+			if( !parent.remove(e) ){
+				return false;
+			}
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	public boolean deleteModuleItem( String id ){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Modules/Module/*/Item[@id='%s']", id);
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null == e ){
+				return false;
+			}
+
 			Element parent = (Element)e.getParent();
 			if( null == parent ){
 				return false;
@@ -506,6 +620,22 @@ public class DFUConfHandle {
 			e.printStackTrace();
 			logger.error(e.toString());
 			return null;
+		}
+	}
+	
+	public boolean existSettingGroup(String id){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']", id);
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null != e ){
+				return true;
+			}
+			return false;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
 		}
 	}
 	
@@ -568,32 +698,18 @@ public class DFUConfHandle {
 			for( Object o : list){
 				Element ele = (Element)o;
 				setting s = new setting();
-				s.setSid( DTF.StringToInt(ele.attributeValue("sid")) );
-				s.setName( e.attributeValue("name"));
+				s.setSid( ele.attributeValue("sid"));
+				s.setName( ele.attributeValue("name"));
 				s.setUnit( ele.attributeValue("unit"));
 				s.setType( ele.attributeValue("type"));
 				s.setVal( ele.attributeValue("val"));
-				if( null != ele.attributeValue("max") ){
-					s.setMax( DTF.StringToFloat(ele.attributeValue("max")));
-				}
-				if( null != ele.attributeValue("min") ){
-					s.setMin( DTF.StringToFloat(ele.attributeValue("min")));
-				}
-				if( null != ele.attributeValue("step") ){
-					s.setStep( DTF.StringToFloat(ele.attributeValue("step")));
-				}
-				if( null != ele.attributeValue("rate1") ){
-					s.setRate1( DTF.StringToFloat(ele.attributeValue("rate1")));
-				}
-				if( null != ele.attributeValue("unit1") ){
-					s.setUnit1( ele.attributeValue("unit1"));
-				}
-				if( null != ele.attributeValue("rate2") ){
-					s.setRate2( DTF.StringToFloat(ele.attributeValue("rate2")));
-				}
-				if( null != ele.attributeValue("unit2") ){
-					s.setUnit2( ele.attributeValue("unit2"));
-				}
+				s.setMax( ele.attributeValue("max"));
+				s.setMin( ele.attributeValue("min"));
+				s.setStep( ele.attributeValue("step"));
+				s.setRate1( ele.attributeValue("rate1"));
+				s.setUnit1( ele.attributeValue("unit1"));
+				s.setRate2( ele.attributeValue("rate2"));
+				s.setUnit2( ele.attributeValue("unit2"));
 				
 				s.setGroup(group);
 				arr.add(s);
@@ -606,24 +722,7 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public List<setting> getSettings(String group){
-		try{
-			Document doc = XMLDao.getInstance().getDocument();
-			String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']", group);
-			
-			Element e = (Element)doc.selectSingleNode(xpath);
-			if( null == e )
-				return null;
-			
-			return getSettings(e);
-		}catch(Exception e){
-			e.printStackTrace();
-			logger.error(e.toString());
-			return null;
-		}
-	}
-	
-	public List<setting> getSettings(){
+	private List<setting> getSettings(){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
 			String xpath = "/LeyunDevices/Settings/Group";
@@ -644,6 +743,29 @@ public class DFUConfHandle {
 		}
 	}
 	
+	public List<setting> getSettings(String group){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			
+			if( null == group || group.isEmpty() ){
+				return getSettings();
+			}
+			
+			String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']", group);
+			
+			
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null == e )
+				return null;
+			
+			return getSettings(e);
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+
 	public boolean editSettings(List<setting> sets){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
@@ -670,22 +792,12 @@ public class DFUConfHandle {
 				e.addAttribute("unit", s.getUnit());
 				e.addAttribute("type", s.getType());
 				e.addAttribute("val", s.getVal());
-				if( DTF.isValid(s.getMax())){
-					e.addAttribute("max", String.valueOf(s.getMax()));
-				}
-				if( DTF.isValid(s.getMin())){
-					e.addAttribute("min", String.valueOf(s.getMin()));
-				}
-				if( DTF.isValid(s.getStep())){
-					e.addAttribute("step", String.valueOf(s.getStep()));
-				}
-				if( DTF.isValid(s.getRate1())){
-					e.addAttribute("rate1", String.valueOf(s.getRate1()));
-				}
+				e.addAttribute("max", s.getMax());
+				e.addAttribute("min", s.getMin());
+				e.addAttribute("step", s.getStep());
+				e.addAttribute("rate1", s.getRate1());
 				e.addAttribute("unit1", s.getUnit1());
-				if( DTF.isValid(s.getRate2())){
-					e.addAttribute("rate2", String.valueOf(s.getRate2()));
-				}
+				e.addAttribute("rate2", s.getRate2());
 				e.addAttribute("unit2", s.getUnit2());
 			}
 			return true;
@@ -695,16 +807,84 @@ public class DFUConfHandle {
 			return false;
 		}
 	}
-	
-	public boolean deleteSetting(String group, int sid){
+	public boolean editSetting(setting s){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
-			String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set[@sid='%d']", group, sid);
+			String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set[@sid='%s']", s.getGroup(), s.getSid());
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null == e ){
+				xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']", s.getGroup());
+				Element g = (Element)doc.selectSingleNode(xpath);
+				if( null == g ){
+					if( !editSettingGroup(s.getGroup(), s.getGroup()) ){
+						return false;
+					}
+				}
+				xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set", s.getGroup());
+				e = XMLDao.getInstance().createXPathElement(xpath);
+			}
+			if( null == e ){
+				return false;
+			}
+			e.addAttribute("sid", String.valueOf(s.getSid()));
+			e.addAttribute("name", s.getName());
+			e.addAttribute("unit", s.getUnit());
+			e.addAttribute("type", s.getType());
+			e.addAttribute("val", s.getVal());
+			e.addAttribute("max", s.getMax());
+			e.addAttribute("min", s.getMin());
+			e.addAttribute("step", s.getStep());
+			e.addAttribute("rate1", s.getRate1());
+			e.addAttribute("unit1", s.getUnit1());
+			e.addAttribute("rate2", s.getRate2());
+			e.addAttribute("unit2", s.getUnit2());
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	public setting getSetting(String group, String sid){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set[@sid='%s']", group, sid);
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null == e ){
+				return null;
+			}
+			setting s = new setting();
+			s.setSid( e.attributeValue("sid"));
+			s.setName( e.attributeValue("name"));
+			s.setUnit( e.attributeValue("unit"));
+			s.setType( e.attributeValue("type"));
+			s.setVal( e.attributeValue("val"));
+			s.setMax( e.attributeValue("max"));
+			s.setMin( e.attributeValue("min"));
+			s.setStep( e.attributeValue("step"));
+			s.setRate1( e.attributeValue("rate1"));
+			s.setUnit1( e.attributeValue("unit1"));
+			s.setRate2( e.attributeValue("rate2"));
+			s.setUnit2( e.attributeValue("unit2"));
+			
+			s.setGroup(e.getParent().attributeValue("name"));
+			return s;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
+	public boolean deleteSetting(String group, String sid){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set[@sid='%s']", group, sid);
 			Element e = (Element)doc.selectSingleNode(xpath);
 			if( null == e ){
 				return false;
 			}
-			xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']", group);
 			Element parent = (Element)e.getParent();
 			if( null == parent ){
 				return false;
@@ -736,10 +916,10 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public String getSettingMapBySid(int sid){
+	public String getSettingMapBySid(String sid){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
-			String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%d']", sid);
+			String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%s']", sid);
 			Element e = (Element)doc.selectSingleNode(xpath);
 			if( null == e ){
 				return null;
@@ -752,10 +932,10 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public boolean editSettingMap(String paramId, int sid){
+	public boolean editSettingMap(String paramId, String sid){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
-			String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%d']", sid);
+			String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%s']", sid);
 			Element ele = (Element)doc.selectSingleNode(xpath);
 			if( ele != null ){
 				if( null == ele.getParent() ){
@@ -784,7 +964,7 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public boolean deleteSettingMap(String paramId, int sid){
+	public boolean deleteSettingMap(String paramId, String sid){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
 			if( null != paramId ){
@@ -799,7 +979,7 @@ public class DFUConfHandle {
 				}
 			}
 			
-				String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%d']", sid);
+				String xpath = String.format("/LeyunDevices/SettingMap/Item[@sid='%s']", sid);
 				Element e = (Element)doc.selectSingleNode(xpath);
 				if( null != e ){
 					if( e.getParent() != null ){
@@ -816,4 +996,52 @@ public class DFUConfHandle {
 			return false;
 		}
 	}
+	
+	public int getMaxSettingId(){
+		try{
+			int max = 0;
+			List<setting> sets = getSettings();
+			for( setting s : sets ){
+				int id = DTF.StringToInt( s.getSid() );
+				if( max < id )
+					max = id;
+			}
+			return max;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return 0;
+		}
+	}
+	
+	public boolean createSettingsFromModule(String moduleId){
+		try{
+			module m = getModuleInfo(moduleId);
+			if( null == m )
+				return false;
+			deleteSettingGroup(m.getName());
+			if( !editSettingGroup( m.getName(), m.getName() ) )
+				return false;
+			int curId = getMaxSettingId();
+			for( moduleItem item : m.params){
+				curId++;
+				setting s = new setting();
+				s.setSid(String.valueOf(curId));
+				s.setName(item.getName());
+				s.setType(item.getValType());
+				s.setVal(item.getVal());
+				s.setGroup(m.getName());
+				if( editSetting(s) ){
+					editSettingMap(item.getId(), s.getSid());
+				}	
+			}
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	
 }

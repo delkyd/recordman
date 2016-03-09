@@ -6,7 +6,6 @@
 <html class="no-js" lang="en">
 <head>
 <%@ include file="../include/html_head.jsp"%>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap-toggle.min.css" />
 </head>
 <body>
 	<%@ include file="../include/slidemenu.jsp"%>
@@ -14,16 +13,20 @@
 		<%@ include file="../include/nav.jsp"%>	
 			<div id="content" class="container-fluid bluebk">
 				<div class="netconfig conf-container">
-					<div class="list-group ethernets left">
-						<c:forEach var="v" items="${ethernets}" varStatus="s">
-							<a class="list-group-item" id="${v.index }">
-								<h4 class="list-group-item-heading">${v.name }</h4>
-	    						<p class="list-group-item-text">${v.ip }/${v.mask }</p>
-							</a>
-						</c:forEach>
+					<div class="formstyle left ethernets ">
+						<h3 class="heading"><fmt:message key="ethernet_list" bundle="${bundle }"/></h3>
+						<div class="list-group ">							
+							<c:forEach var="v" items="${ethernets}" varStatus="s">
+								<a class="list-group-item" id="${v.index }">
+									<h5 class="list-group-item-heading">${v.name }</h5>
+		    						<p class="list-group-item-text">${v.ip }/${v.mask }</p>
+								</a>
+							</c:forEach>
+						</div>
 					</div>
 					<div class="config right formstyle">
 						<form class="form" onsubmit="return false;">
+							<h3 class="heading"><fmt:message key="ethernet_param" bundle="${bundle }"/></h3>
 							<div class="form-group">
 								<label class=" control-label">名称</label>
 								<div class="">
@@ -65,7 +68,7 @@
 							</div>
 							<div class="form-group">
 							   <div class=" ">
-							     <button class="btn btn-lg btn-block btn-primary" onclick='update()'>Update</button>
+							     <button class="btn btn-block btn-primary" onclick='update()'><fmt:message key="update" bundle="${bundle }"/></button>
 							   </div>
 							</div>
 						</form>

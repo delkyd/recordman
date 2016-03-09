@@ -6,6 +6,10 @@ public class moduleItem {
 	private String kind=null;
 	private String valType=null;
 	private String val=null;
+	private String type=null;
+	
+	public final static String TYPE_CONF="Configs";
+	public final static String TYPE_PARAM="Params";
 	
 	public String getId() {
 		return id;
@@ -36,6 +40,12 @@ public class moduleItem {
 	}
 	public void setVal(String val) {
 		this.val = val;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

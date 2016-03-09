@@ -450,6 +450,13 @@ function onipitemkeyup(e){
 	}
 }
 
+function vaildateVar(v){
+	if (typeof v === 'undefined' || v === null) {
+	    return false;
+	}
+	return true;
+}
+
 function relogin(){
 	window.location.href= rootPath;
 }
