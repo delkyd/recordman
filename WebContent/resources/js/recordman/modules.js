@@ -54,7 +54,7 @@ $(function(){
 					if(data!=null && data.result != null) {
 						if( data.result ){
 							showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));
-							fillModuleList();
+							fillModuleItms();
 							$("#editModuleConfigModal").modal('hide');
 						}else{
 							showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
@@ -84,7 +84,7 @@ $(function(){
 					if(data!=null && data.result != null) {
 						if( data.result ){
 							showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));
-							fillModuleList();
+							fillModuleItms();
 							$("#editModuleParamModal").modal('hide');
 						}else{
 							showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
@@ -176,7 +176,7 @@ function fillModuleList(){
 						}						
 						html += "<a id='"+m.id+"' class='list-group-item'>";
 						html += "<span class='list-group-item-text'>"+m.name+"</span>";
-						html += "<button class='customBtn relateBtn' title='"+$.i18n.prop('relate')+"' onclick='findGroup(\""+m.id+"\",\""+m.name+"\")'></button>";
+						html += "<button class='customBtn relateBtn' title='"+$.i18n.prop('relate')+"' onclick='findGroup(\""+m.id+"\",\""+m.name+"\",event)'></button>";
 						html += "<button class='customBtn deleteBtn' title='"+$.i18n.prop('delete')+"'></button>";
 						html += "<button class='customBtn editBtn' title='"+$.i18n.prop('edit')+"'></button></a>";
 					}
@@ -424,7 +424,7 @@ function createModuleParam(){
 	$("#editModuleParamModal").modal('show');
 }
 
-function findGroup(moduleId, moduleName){
+function findGroup(moduleId, moduleName, e){
 	var param={};
 	param.group=moduleName;
 	var dataParam = {
@@ -433,9 +433,9 @@ function findGroup(moduleId, moduleName){
 			call: function(data) {
 				if(data!=null && data.result != null) {
 					if( data.result ){
-						showConfirm($.i18n.prop('create_settings'), $.i18n.prop('stgroup_exist'), createSettings(moduleId));
+						showConfirm($.i18n.prop('create_settings'), $.i18n.prop('stgroup_exist'), function(){createSettings(moduleId);}, null);
 					}else{
-						showConfirm($.i18n.prop('create_settings'), $.i18n.prop('stgroup_no_exist'), createSettings(moduleId));
+						showConfirm($.i18n.prop('create_settings'), $.i18n.prop('stgroup_no_exist'), function(){createSettings(moduleId);}, null);
 					}					
 				}else{
 					showAlert($.i18n.prop('oper_fail'), $.i18n.prop('exceptionerror'));
@@ -443,6 +443,7 @@ function findGroup(moduleId, moduleName){
 			}
 	};
 	getAjaxData(dataParam,false);
+	e.stopPropagation();
 }
 
 function createSettings(moduleId){
