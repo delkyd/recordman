@@ -28,13 +28,13 @@
 						<form class="form" onsubmit="return false;">
 							<h3 class="heading"><fmt:message key="ethernet_param" bundle="${bundle }"/></h3>
 							<div class="form-group">
-								<label class=" control-label"><fmt:message key="ethernet_name" bundle="${bundle }"/></label>
+								<label class=" control-label">名称</label>
 								<div class="">
-									<input id='name' type="text" class="form-control" >
+									<input id='name' type="text" class="form-control" placeholder="建议填入有意义的名字">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class=" control-label"><fmt:message key="ethernet_ip" bundle="${bundle }"/></label>
+								<label class=" control-label">IP地址</label>
 								<div class="">
 									<div id='ip' class="form-control ip_input">
 										<input type="text" class="item">.
@@ -45,7 +45,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class=" control-label"><fmt:message key="ethernet_mask" bundle="${bundle }"/></label>
+								<label class=" control-label">子网掩码</label>
 								<div class="">
 									<div id='netmask' class="form-control ip_input">
 										<input type="text" class="item">.
@@ -56,7 +56,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class=" control-label"><fmt:message key="ethernet_gate" bundle="${bundle }"/></label>
+								<label class=" control-label">网关</label>
 								<div class="">
 									<div id='gate' class="form-control ip_input">
 										<input type="text" class="item">.

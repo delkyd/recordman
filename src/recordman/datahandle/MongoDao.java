@@ -1,19 +1,15 @@
 package recordman.datahandle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.bson.Document;
 
 import codeman.util.DTF;
-import codeman.util.KeyValueConfig;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
@@ -25,6 +21,7 @@ public class MongoDao {
 
 	// 输出日志文件
 	private static Logger logger = Logger.getLogger(MongoDao.class);
+	
 
 	private MongoDao() {
 
@@ -51,30 +48,32 @@ public class MongoDao {
 
 	public static boolean Connect() {
 		try {
+			ConfigHandle confHandle = new ConfigHandle();
 			if (m_client == null) {
 				MongoCredential cred = MongoCredential.createCredential(
-						KeyValueConfig.getValue("mongodb.user"), KeyValueConfig
-								.getValue("mongodb.dbname"), KeyValueConfig
-								.getValue("mongodb.password").toCharArray());
+						confHandle.getValue("mongo_db_config/user"), confHandle
+								.getValue("mongo_db_config/name"), confHandle
+								.getValue("mongo_db_config/pwd").toCharArray());
 				List<MongoCredential> lc = new ArrayList<MongoCredential>();
 				lc.add(cred);
 				ServerAddress sa = new ServerAddress(
-						KeyValueConfig.getValue("mongodb.ip"),
-						DTF.StringToInt(KeyValueConfig.getValue("mongodb.port")));
+						confHandle.getValue("mongo_db_config/addr"),
+						DTF.StringToInt(confHandle.getValue("mongo_db_config/port")));
 
 				m_client = new MongoClient(sa, lc);
 
-				m_database = m_client.getDatabase(KeyValueConfig
-						.getValue("mongodb.dbname"));
+				m_database = m_client.getDatabase(confHandle
+						.getValue("mongo_db_config/name"));
 			}
 
 			return true;
 		} catch (Exception e) {
+			ConfigHandle confHandle = new ConfigHandle();
 			logger.error("connect mongo database failed:"
-					+ KeyValueConfig.getValue("mongodb.name") + "@"
-					+ KeyValueConfig.getValue("mongodb.ip") + ":"
-					+ KeyValueConfig.getValue("mongodb.port") + "/"
-					+ KeyValueConfig.getValue("mongodb.dbname"));
+					+ confHandle.getValue("mongo_db_config/user") + "@"
+					+ confHandle.getValue("mongo_db_config/addr") + ":"
+					+ confHandle.getValue("mongo_db_config/port") + "/"
+					+ confHandle.getValue("mongo_db_config/name"));
 			e.printStackTrace();
 			logger.error(e.toString());
 			return false;

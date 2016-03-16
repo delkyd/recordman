@@ -23,11 +23,15 @@
 						<li><a href="<%=request.getContextPath()%>/devparam/channels/"><fmt:message key="nav_setup_channel" bundle="${bundle }"/></a></li>
 						<li><a href="<%=request.getContextPath()%>/devparam/modules/"><fmt:message key="nav_setup_modules" bundle="${bundle }"/></a></li>						
 						<li><a href="<%=request.getContextPath()%>/devparam/settings/"><fmt:message key="nav_setup_setting" bundle="${bundle }"/></a></li>
+						<li><a href="<%=request.getContextPath()%>/devparam/dfuapply/"><fmt:message key="nav_setup_apply" bundle="${bundle }"/></a></li>
 					</ul>
 				</li>
 				<li id='nav_mgr' class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
 						aria-haspopup="true" aria-expanded="true"><fmt:message key="nav_mgr" bundle="${bundle }"/><span class="caret"></span></a>
 					<ul class="dropdown-menu">
+						<li><a href="<%=request.getContextPath()%>/mgrparam/network/"><fmt:message key="nav_mgr_network" bundle="${bundle }"/></a></li>
+						<li><a href="<%=request.getContextPath()%>/mgrparam/lineparam/"><fmt:message key="nav_mgr_Line" bundle="${bundle }"/></a></li>
+						<li><a href="<%=request.getContextPath()%>/mgrparam/runparam/"><fmt:message key="nav_mgr_run" bundle="${bundle }"/></a></li>						
 					</ul>
 				</li>
 				

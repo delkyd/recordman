@@ -112,6 +112,19 @@
 	    </div>
 	  </div>
 	</div>
+	
+	<div class="waitwrap">
+		<div class="waitanimation">
+			<div class="loader-inner ball-pulse-rise">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+	</div>
+	
 <script src="<%=request.getContextPath()%>/resources/js/jquery-1.11.3.min.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/jquery.i18n.properties-min-1.0.9.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/jquery.mobile.custom.min.js"></script>

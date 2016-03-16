@@ -1,7 +1,17 @@
 $(function(){
 	setNavActive('nav_setup');
 	fill(1,3);
+	document.getElementById("svgEle").addEventListener('load', setSvgFunc, false);
 });
+
+function setSvgFunc(){
+	var svgDoc = document.getElementById("svgEle").getSVGDocument();
+	svgDoc.getElementsByClassName('terminal_svg').onclick(function(e){
+		var tid=e.relatedTarget.getAttribute('id');
+		var bid=e.relatedTarget.parentNode().getAttribute('id');
+		fill(bid, tid);
+	});
+}
 
 function fill(board, index){
 	var param={};

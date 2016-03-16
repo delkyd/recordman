@@ -1,5 +1,8 @@
 package recordman.mvc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.alibaba.fastjson.JSON;
+
 import recordman.bean.user;
+import recordman.datahandle.CommandMgr;
 import recordman.datahandle.UserDataHandle;
 
 @Controller

@@ -874,3 +874,36 @@ fieldset[disabled] .customBtn {
 	margin-right:10px;
 	vertical-align: middle;
 }
+
+.waitwrap{
+	position:fixed;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+	background-color: rgba(66, 66, 66, 0.5);
+	z-index: 2998;
+	display:none;
+}
+
+.waitanimation{
+	position:fixed;
+	left:0px;
+	top:50%;
+	width:100%;
+	height:44px;
+	margin:auto 0px;
+	background-color: none;
+}
+
+.waitanimation .loader-inner{
+	height:44px;
+	width:140px;
+	margin:0px auto;
+	background-color: none;
+	color:#000000;
+}
+
+.ball-pulse-rise > div {
+    background-color: #ed5565;
+}

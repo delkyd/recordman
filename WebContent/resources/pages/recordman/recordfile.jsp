@@ -31,8 +31,8 @@
 							<select id='period' class="form-control">
 								<option value='1'>一天</option>
 								<option value='2'>一周</option>
-								<option value='3'>一月</option>
-								<option value='4'>半年</option>
+								<option value='3' >一月</option>
+								<option value='4' selected="selected">半年</option>
 								<option value='5'>一年</option>
 								<option value='0'>自定义</option>
 							</select>
@@ -54,7 +54,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<button id="query" class="btn btn-default">Query</button>
+							<button id="query" class="btn btn-default" style="display: none;">Query</button>
 						</div>
 					</form>				
 				</div>

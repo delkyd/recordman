@@ -19,7 +19,7 @@ public class XMLDao {
 	private XMLDao(){
 		try {
 			SAXReader reader = new SAXReader();
-			m_doc = reader.read(new File("F:/stdown/tmp/deviceConfig.xml"));
+			m_doc = reader.read(new File("D:/stdown/tmp/deviceConfig.xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.toString());

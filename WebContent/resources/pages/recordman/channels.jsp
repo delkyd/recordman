@@ -15,7 +15,7 @@
 			<div id="content" class="container-fluid bluebk">
 				<div class="channels conf-container">	
 					<div class="image">
-							<svg enable-background="new 0 0 128 128" height="128px" id="Layer_1" version="1.1" viewBox="0 0 128 128" width="128px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><g><path d="M20,72h8v-8h-8V72z M20,88h8v-8h-8V88z M20,104h8v-8h-8V104z M44,64h-8v8h8V64z M44,80h-8v8h8V80z M60,64    h-8v8h8V64z M60,80h-8v8h8V80z M68,72h8v-8h-8V72z M68,88h8v-8h-8V88z M84,72h8v-8h-8V72z M84,88h8v-8h-8V88z M84,104h8v-8h-8V104    z M100,64v8h8v-8H100z M100,88h8v-8h-8V88z M100,104h8v-8h-8V104z M36,104h40v-8H36V104z" fill="#B0BEC5"/></g></g><path d="M108,48H68c12-13.332-12-26.668,0-40c-2.668,0-5.332,0-8,0c-12,13.332,12,26.668,0,40H20  c-8.836,0-16,7.164-16,16v40c0,8.836,7.164,16,16,16h88c8.836,0,16-7.164,16-16V64C124,55.164,116.836,48,108,48z M116,104  c0,4.41-3.59,8-8,8H20c-4.41,0-8-3.59-8-8V64c0-4.41,3.59-8,8-8h88c4.41,0,8,3.59,8,8V104z" fill="#546E7A"/></svg>
+						<embed id="svgEle" src="<%=request.getContextPath()%>/resources/images/terminal.svg" type="image/svg+xml" width="560" height="158">
 					</div>				
 					<div class="left terminal-info formstyle">
 							<form class="form" onsubmit="return false;">

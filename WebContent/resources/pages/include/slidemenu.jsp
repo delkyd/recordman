@@ -20,6 +20,9 @@
 			<li class="dropdownmenu">
 					<a href="#" class="dropdownmenu-toggle"><fmt:message key="nav_mgr" bundle="${bundle }"/> <span class="caret"></span></a>
 					<ul class="sub-menu">
+						<li><a href="<%=request.getContextPath()%>/mgrparam/network/"><fmt:message key="nav_mgr_network" bundle="${bundle }"/></a></li>
+						<li><a href="<%=request.getContextPath()%>/mgrparam/lineparam/"><fmt:message key="nav_mgr_Line" bundle="${bundle }"/></a></li>
+						<li><a href="<%=request.getContextPath()%>/mgrparam/runparam/"><fmt:message key="nav_mgr_run" bundle="${bundle }"/></a></li>						
 					</ul>
 			</li>
 			<c:if test="${user.type==2}">

@@ -52,6 +52,7 @@ public class loginValidateFilter extends HttpServlet implements Filter {
 				if( null == httpReq.getSession().getAttribute("user")){
 					System.out.println(httpReq.getRemoteAddr() + ",login is expired");
 					request.getRequestDispatcher("/resources/pages/login.jsp").forward(request, response);
+					
 				}else{
 					if( (httpReq.getServletPath().indexOf("/system") != -1 ) && (null == httpReq.getSession().getAttribute("user") || user.USER_TYPE_ADMIN != ((user)httpReq.getSession().getAttribute("user")).getType())){
 						System.out.println(httpReq.getRemoteAddr() + ",quest system page,permission denied");

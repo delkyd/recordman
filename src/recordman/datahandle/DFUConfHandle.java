@@ -24,7 +24,7 @@ public class DFUConfHandle {
 	
 	public boolean save(){
 		try{
-			return XMLDao.getInstance().SaveTo("F:/stdown/tmp/deviceConfig-m.xml");
+			return XMLDao.getInstance().SaveTo("D:/stdown/tmp/deviceConfig-m.xml");
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.toString());

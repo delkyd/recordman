@@ -14,12 +14,12 @@
 			<div id="content" class="container-fluid bluebk">
 				<div class="conf-container">					
 					<div class="onepage formstyle">
-						<form class="form" onsubmit="return false;">
-						<h3 class="heading"><fmt:message key="sysreboot_heading" bundle="${bundle }"/></h3>
-						<span><fmt:message key="sysreboot_desc" bundle="${bundle }"/></span>
+						<form class="form" onsubmit="return false;">						
 							<div class="form-group">
+								<h3 class="heading"><fmt:message key="apply_dfu_heading" bundle="${bundle }"/></h3>
+							   <span><fmt:message key="apply_dfu_config" bundle="${bundle }"/></span>
 							   <div class="">
-							     <button class="btn btn-lg btn-block btn-primary"><fmt:message key="btn_ok" bundle="${bundle }"/></button>
+							     <button id="okbtn" onclick="apply()"  class="btn btn-lg btn-block btn-primary"><fmt:message key="btn_ok" bundle="${bundle }"/></button>
 							   </div>
 							</div>
 						</form>
@@ -29,6 +29,6 @@
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>
-	<script src="<%=request.getContextPath()%>/resources/js/recordman/syspwd.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/recordman/applydfu.js"></script>
 </body>
 </html>

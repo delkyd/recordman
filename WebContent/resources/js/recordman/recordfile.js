@@ -9,6 +9,7 @@ $(function(){
 		format:'YYYY-MM-DD HH:mm:ss'
 	});
 	setdate();
+	$('#source').change(find);
 	$("#period").change(setdate);
 	$("#query").click(find);
 });
@@ -18,6 +19,7 @@ function setdate(){
 	if( period == CONST.PERIOD.NONE ){
 		$('#datetimepicker1').show();
 		$('#datetimepicker2').show();
+		$('#query').show();
 	}else{
 		var n = new Date();
 		var s = new moment(n);
@@ -51,6 +53,8 @@ function setdate(){
 		$('#datetimepicker2').data("DateTimePicker").date(n);
 		$('#datetimepicker1').hide();
 		$('#datetimepicker2').hide();
+		$('#query').hide();
+		find();
 	}
 }
 

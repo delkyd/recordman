@@ -21,6 +21,20 @@ CONST.TERMINAL_KIND.AI='AI';
 CONST.TERMINAL_KIND.BI='BI';
 CONST.TERMINAL_KIND.BO='BO';
 
+CONST.COMMU={};
+CONST.COMMU.QUERYINTERVAL=2000;
+
+var COMMAND={};
+COMMAND.STATE={};
+COMMAND.STATE.ERROR=0;
+COMMAND.STATE.WAITING=1;
+COMMAND.STATE.FINISHED=2;
+
+COMMAND.RESULT={};
+COMMAND.RESULT.OK=0;
+COMMAND.RESULT.SENDFAIL=1;
+COMMAND.RESULT.TIMEOUT=2;
+
 /* const end */
 
 /* global variable define*/
@@ -486,3 +500,47 @@ function getCookie(c_name)
 	return "";
 }
 
+function startWaitAnim(){
+	$('.waitwrap').show();
+}
+
+function stopWaitAnim(){
+	$('.waitwrap').hide();
+}
+
+function queryTaskResult(taskNum, succFunc) {	
+	var taskresult = -2;
+	var param = {};
+	param.rri = taskNum;
+	var dataParam = {
+		    url: rootPath + "/public/commandresult",
+			param:param,
+			call: function(data) {
+				if(data!=null && data.state != null) {
+					var state = parseInt(data.state);
+					if( COMMAND.STATE.ERROR == state ){
+						stopWaitAnim();
+						showAlert($.i18n.prop('oper_fail'), $.i18n.prop('err_comm_error'));
+					}else if( COMMAND.STATE.FINISHED == state){
+						var result = parseInt(data.result);
+						stopWaitAnim();
+						if( COMMAND.RESULT.OK == result ){
+							if( null != succFunc ){
+								succFunc(result, data.response);
+							}
+						}else if( COMMAND.RESULT.SENDFAIL == result ){
+							showAlert($.i18n.prop('oper_fail'), $.i18n.prop('err_comm_sendfail'));
+						}else if( COMMAND.RESULT.TIMEOUT == result ){
+							showAlert($.i18n.prop('oper_fail'), $.i18n.prop('err_comm_timeout'));
+						}						
+					}else if( COMMAND.STATE.WAITING == state ){
+						setTimeout("queryTaskResult(" + taskNum + ","+succFunc+ ")",
+								parseInt(CONST.COMMU.QUERYINTERVAL));
+					}					
+				}else{
+					showAlert($.i18n.prop('oper_fail'), $.i18n.prop('exceptionerror'));
+				}
+			}
+	};
+	getAjaxData(dataParam,false);
+}
