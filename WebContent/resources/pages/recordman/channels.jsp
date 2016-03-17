@@ -15,7 +15,7 @@
 			<div id="content" class="container-fluid bluebk">
 				<div class="channels conf-container">	
 					<div class="image">
-						<embed id="svgEle" src="<%=request.getContextPath()%>/resources/images/terminal.svg" type="image/svg+xml" width="560" height="158">
+						<embed id="svgEle" src="<%=request.getContextPath()%>/resources/images/terminal.svg" type="image/svg+xml" width=100% height="158px">
 					</div>				
 					<div class="left terminal-info formstyle">
 							<form class="form" onsubmit="return false;">
