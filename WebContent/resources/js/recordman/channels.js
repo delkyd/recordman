@@ -1,16 +1,20 @@
 $(function(){
 	setNavActive('nav_setup');
-	fill(1,3);
-	document.getElementById("svgEle").addEventListener('load', setSvgFunc, false);
+	//fill(1,3);
+	setSvgFunc();
 });
 
-function setSvgFunc(){
-	var svgDoc = document.getElementById("svgEle").getSVGDocument();
-	svgDoc.getElementsByClassName('terminal_svg').onclick(function(e){
-		var tid=e.relatedTarget.getAttribute('id');
-		var bid=e.relatedTarget.parentNode().getAttribute('id');
-		fill(bid, tid);
-	});
+function getElesLength(objs){
+	   var len;
+	     try{
+	    	  //支持HTML5 中的处理
+	    	 len=objs.getLength();
+	      }catch(e){
+	    	  //处理IE 浏览器底版本处理
+	    	  len=objs.length;
+	    }
+	   
+	    return len;
 }
 
 function fill(board, index){
@@ -49,6 +53,19 @@ function fill(board, index){
 			}
 	};
 	getAjaxData(dataParam,false);
+}
+
+function setSvgFunc(){
+	var svgDoc = document.getElementById("svgEle").getSVGDocument();
+	var terminalEles = svgDoc.getElementsByClassName('terminal_svg');
+	var len = getElesLength(terminalEles);
+	for( var i = 0; i<len; i++){
+		var t = terminalEles.item(i);
+		var tid = t.getAttribute("id");
+		var bid = t.parentNode.getAttribute("id");
+		
+		t.setAttribute("onclick", "function a(){fill("+bid+","+tid+");}");
+	}
 }
 
 function update(){
