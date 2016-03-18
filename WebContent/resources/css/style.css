@@ -907,3 +907,18 @@ fieldset[disabled] .customBtn {
 .ball-pulse-rise > div {
     background-color: #ed5565;
 }
+
+.cber div{
+	padding:0 10px 0 10px;
+}
+.cber header{
+	padding:0 0 0 10px;
+	color:#fff;
+	font-size:14px;
+}
+.blue_bar{
+	background-color:#447EB9;
+	height:31px;
+	line-height:31px;
+	
+}

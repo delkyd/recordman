@@ -53,12 +53,17 @@ function clickFunc(e){
 		}
 		var tid = t.getAttribute("id");
 		var bid = t.parentNode.getAttribute("id");
-		var isAT = (c.indexOf('at')>=0);
-		fill(bid, tid, isAT);
+		var tkind = 'AI';
+		if(c.indexOf('BI')>=0){
+			tkind = 'BI';
+		}else if(c.indexOf('BO')>=0){
+			tkind = 'BO';
+		}
+		fill(bid, tid, tkind);
 	}
 }
 
-function fill(board, index, isAT){
+function fill(board, index, tkind){
 	clear();
 	var param={};
 	param.board=board;
@@ -94,6 +99,7 @@ function fill(board, index, isAT){
 				}else{
 					$('#terminal_board').val(board);
 					$('#terminal_index').val(index);
+					customizeByKind(tkind);
 				}
 			}
 	};
