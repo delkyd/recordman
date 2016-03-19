@@ -257,6 +257,36 @@ public class DFUConfHandle {
 		}
 	}
 	
+	/**
+	 * @param type A表示电流通道，V表示电压通道
+	 * @return
+	 */
+	public List<channel> getAIChannels(String type){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = "/LeyunDevices/Channels/AIs/AI";
+			
+			List<channel> arr = new ArrayList<channel>();
+			List list = doc.selectNodes(xpath);
+			for( Object o : list){
+				Element e = (Element)o;
+				String unit = e.attributeValue("unit");
+				unit = unit.toUpperCase();
+				if( unit.indexOf(type) >= 0 ){
+					channel c = new channel();
+					c.setId( e.attributeValue("id"));
+					c.setName( e.attributeValue("name"));
+					arr.add(c);
+				}
+			}
+			return arr;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
 	public boolean editChannelInfo( channel c ){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
@@ -668,7 +698,7 @@ public class DFUConfHandle {
 			if( null == e ){
 				return false;
 			}
-			xpath = "/LeyunDevices/Settings";
+			
 			Element parent = (Element)e.getParent();
 			if( null == parent ){
 				return false;

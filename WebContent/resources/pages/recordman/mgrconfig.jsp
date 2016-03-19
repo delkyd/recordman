@@ -14,20 +14,61 @@
 			<div id="content" class="container-fluid bluebk">
 				<div class="devconfig conf-container">					
 					<div class="config left formstyle">
-						<h1 class="heading"><fmt:message key="devconf_heading" bundle="${bundle }"/></h1>
-						<form class="form" onsubmit="return false;">
+						<h1 class="heading"><fmt:message key="nav_mgr_config" bundle="${bundle }"/></h1>
+						<form class="form-horizontal" onsubmit="return false;">
 							<section class="cber">
-								<header class="blue_bar">故障录波文件</header>
+								<header class="blue_bar"><fmt:message key="faultfile_head" bundle="${bundle }"/></header>
 								<div class="form-group">
-									<label class="control-label"><fmt:message key="devconf_stationname" bundle="${bundle }"/></label>
-									<div class="">
-										<input id='station_name' type="text" class="form-control" value="${infos.station}">
+									<label class="col-sm-3 control-label"><fmt:message key="filesavepath" bundle="${bundle }"/></label>
+									<div class="col-sm-9">
+										<input id='fault_savepath' type="text" class="form-control" value="${fileconf.fault_path}">
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label"><fmt:message key="devconf_devname" bundle="${bundle }"/></label>
-									<div class="">
-										<input id='dev_name' type="text" class="form-control" value="${infos.name}">
+									<label class="col-sm-3 control-label"><fmt:message key="filesavedays" bundle="${bundle }"/></label>
+									<div class="col-sm-9">
+										<input id='fault_savedays' type="number" class="form-control" value="${fileconf.fault_days}">
+									</div>
+								</div>
+							</section>
+							<section class="cber">
+								<header class="blue_bar"><fmt:message key="continuefile_head" bundle="${bundle }"/></header>
+								<div class="form-group">
+									<label class="col-sm-3 control-label"><fmt:message key="filesavepath" bundle="${bundle }"/></label>
+									<div class="col-sm-9">
+										<input id='contin_savepath' type="text" class="form-control" value="${fileconf.continue_path}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label"><fmt:message key="filesavedays" bundle="${bundle }"/></label>
+									<div class="col-sm-9">
+										<input id='contin_savedays' type="number" class="form-control" value="${fileconf.continue_days}">
+									</div>
+								</div>
+							</section>
+							<section class="cber">
+								<header class="blue_bar"><fmt:message key="syslog_head" bundle="${bundle }"/></header>
+								<div class="form-group">
+									<label class="col-sm-3 control-label"><fmt:message key="filesavepath" bundle="${bundle }"/></label>
+									<div class="col-sm-9">
+										<input id='log_path' type="text" class="form-control" value="${logconf.path}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label"><fmt:message key="loglevel" bundle="${bundle }"/></label>
+									<div class="col-sm-9">
+										<select id='log_level' class="form-control">
+										<option value="0" <c:if test="${logconf.level==0}">selected</c:if> ><fmt:message key="loglevel_no" bundle="${bundle }"/></option>
+										<option value="1" <c:if test="${logconf.level==1}">selected</c:if> ><fmt:message key="loglevel_error" bundle="${bundle }"/></option>
+										<option value="2" <c:if test="${logconf.level==2}">selected</c:if> ><fmt:message key="loglevel_alarm" bundle="${bundle }"/></option>
+										<option value="3" <c:if test="${logconf.level==3}">selected</c:if> ><fmt:message key="loglevel_trace" bundle="${bundle }"/></option>
+									</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label"><fmt:message key="filesavedays" bundle="${bundle }"/></label>
+									<div class="col-sm-9">
+										<input id='log_days' type="number" class="form-control" value="${logconf.days}">
 									</div>
 								</div>
 							</section>
@@ -47,6 +88,6 @@
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>
-	<script src="<%=request.getContextPath()%>/resources/js/recordman/devconfig.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/recordman/mgrconfig.js"></script>
 </body>
 </html>

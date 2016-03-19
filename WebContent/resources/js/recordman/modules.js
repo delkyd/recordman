@@ -26,6 +26,9 @@ $(function(){
 							showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));
 							fillModuleList();
 							$("#editModuleModal").modal('hide');
+							activeModule(param.id);
+							clearModuleItems();
+							fillModuleItms();
 						}else{
 							showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
 						}					

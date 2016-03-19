@@ -16,10 +16,10 @@
 					<div class="formstyle left ethernets ">
 						<h3 class="heading"><fmt:message key="ethernet_list" bundle="${bundle }"/></h3>
 						<div class="list-group ">							
-							<c:forEach var="v" items="${ethernets}" varStatus="s">
-								<a class="list-group-item" id="${v.index }">
-									<h5 class="list-group-item-heading">${v.name }</h5>
-		    						<p class="list-group-item-text">${v.ip }/${v.mask }</p>
+							<c:forEach var="v" items="${protocols}" varStatus="s">
+								<a class="list-group-item" id="${v.id }">
+									<h5 class="list-group-item-heading">${v.netcard }</h5>
+		    						<p class="list-group-item-text">${v.addr }/${v.mask }</p>
 								</a>
 							</c:forEach>
 						</div>
@@ -28,13 +28,13 @@
 						<form class="form" onsubmit="return false;">
 							<h3 class="heading"><fmt:message key="ethernet_param" bundle="${bundle }"/></h3>
 							<div class="form-group">
-								<label class=" control-label">名称</label>
+								<label class=" control-label"><fmt:message key="ethernet_name" bundle="${bundle }"/></label>
 								<div class="">
-									<input id='name' type="text" class="form-control" placeholder="建议填入有意义的名字">
+									<input id='name' type="text" class="form-control" >
 								</div>
 							</div>
 							<div class="form-group">
-								<label class=" control-label">IP地址</label>
+								<label class=" control-label"><fmt:message key="ethernet_ip" bundle="${bundle }"/></label>
 								<div class="">
 									<div id='ip' class="form-control ip_input">
 										<input type="text" class="item">.
@@ -45,7 +45,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class=" control-label">子网掩码</label>
+								<label class=" control-label"><fmt:message key="ethernet_mask" bundle="${bundle }"/></label>
 								<div class="">
 									<div id='netmask' class="form-control ip_input">
 										<input type="text" class="item">.
@@ -56,7 +56,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class=" control-label">网关</label>
+								<label class=" control-label"><fmt:message key="ethernet_gate" bundle="${bundle }"/></label>
 								<div class="">
 									<div id='gate' class="form-control ip_input">
 										<input type="text" class="item">.
@@ -64,6 +64,20 @@
 										<input type="text" class="item">.
 										<input type="text" class="item">
 									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label"><fmt:message key="devconf_commuprotocol" bundle="${bundle }"/></label>
+								<div class="">
+									<select id='protocolname' class="form-control">
+										<option value="zj103"><fmt:message key="protocol_zj103" bundle="${bundle }"/></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class=" control-label"><fmt:message key="protocol_port" bundle="${bundle }"/></label>
+								<div class="">
+									<input id='protocolport' type="number" class="form-control" >
 								</div>
 							</div>
 							<div class="form-group">
@@ -78,6 +92,6 @@
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/html_footer.jsp"%>
-	<script src="<%=request.getContextPath()%>/resources/js/recordman/network.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/recordman/mgrnetwork.js"></script>
 </body>
 </html>

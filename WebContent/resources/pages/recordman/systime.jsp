@@ -14,7 +14,7 @@
 		<%@ include file="../include/nav.jsp"%>	
 			<div id="content" class="container-fluid bluebk">
 				<div class="conf-container">					
-					<div class="onepage formstyle">
+					<div class="centerpage formstyle">
 						<h1 class="heading"><fmt:message key="systime_heading" bundle="${bundle }"/></h1>
 						<form class="form" onsubmit="return false;">
 							<div class="form-group">
@@ -76,7 +76,7 @@
 							</div>
 						</form>
 					</div>
-					<div class="onepage formstyle">
+					<div class="centerpage formstyle">
 						<h1 class="heading"><fmt:message key="systime_synchronization" bundle="${bundle }"/></h1>
 						<form class="form" onsubmit="return false;">
 							<div class="form-group">

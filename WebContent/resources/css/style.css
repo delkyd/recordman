@@ -753,6 +753,14 @@ fieldset[disabled] .customBtn {
 		margin-left:auto;
 		margin-right:auto;
 	}
+	
+	.conf-container .centerpage{
+		width: 80%;
+		margin-left:auto;
+		margin-right:auto;
+		min-width: 500px;
+		max-width: 700px;
+	}
 }
 
 .formstyle{
@@ -865,10 +873,6 @@ fieldset[disabled] .customBtn {
     margin-bottom: 10px;
 }
 
-.modal-dialog {
-    width: 660px;
-}
-
 #settings caption span{
 	line-height=32px;
 	margin-right:10px;
@@ -915,10 +919,14 @@ fieldset[disabled] .customBtn {
 	padding:0 0 0 10px;
 	color:#fff;
 	font-size:14px;
+	margin-bottom:4px;
 }
 .blue_bar{
 	background-color:#447EB9;
 	height:31px;
 	line-height:31px;
-	
+}
+
+#line{
+	min-width:240px;
 }

@@ -31,7 +31,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="<%=request.getContextPath()%>/mgrparam/mgrconfig/"><fmt:message key="nav_mgr_config" bundle="${bundle }"/></a></li>
 						<li><a href="<%=request.getContextPath()%>/mgrparam/network/"><fmt:message key="nav_mgr_network" bundle="${bundle }"/></a></li>
-						<li><a href="<%=request.getContextPath()%>/mgrparam/lineparam/"><fmt:message key="nav_mgr_Line" bundle="${bundle }"/></a></li>						
+						<li><a href="<%=request.getContextPath()%>/mgrparam/line/"><fmt:message key="nav_mgr_Line" bundle="${bundle }"/></a></li>						
 					</ul>
 				</li>
 				

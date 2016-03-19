@@ -61,11 +61,11 @@
 	      <div class="modal-body">
 	        <form>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_id" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_id" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_module_id" >
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_name" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_name" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_module_name" >
 	        	</div>
 	        	<div class="form-group">
@@ -99,23 +99,23 @@
 	      <div class="modal-body">
 	        <form>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_id" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_id" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_config_id" >
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_name" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_name" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_config_name" >
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_kind" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_kind" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_config_kind" >
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_valType" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_valType" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_config_valtype" >
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_val" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_val" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_config_val" >
 	        	</div>
 	        </form>
@@ -137,19 +137,19 @@
 	      <div class="modal-body">
 	        <form>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_id" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_id" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_param_id" >
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_name" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_name" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_param_name" >
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_kind" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_kind" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_param_kind" >
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_valType" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_valType" bundle="${bundle }"/></label>
 	        		<div class="">
 						<select id='mm_param_valtype' class="form-control">
 							<option value='Bool'>Bool</option>
@@ -160,7 +160,7 @@
 					</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="module_item_val" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="module_item_val" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="mm_param_val" >
 	        	</div>
 	        </form>

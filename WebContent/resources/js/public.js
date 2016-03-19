@@ -452,17 +452,36 @@ function onipitemkeyup(e){
 
 	if( (3 == this.value.length && ( e.keyCode >= 48 && e.keyCode <=57)) ||
 			(( e.keyCode == 190 && this.value != '') && e.keyCode != 8)){
-		if( $(this).next() ){
-			$(this).next().focus();
+		if( this.nextSibling.nextSibling ){
+			//$(this).next().focus();
+			setFocus(this.nextSibling.nextSibling);
 		}
 	}
 
-	if( (e.keyCode == 8) && this.value.length==0){
-		if( $(this).prev() ){
-			$(this).prev().focus();
+	if( (e.keyCode == 8) && this.value.length==0){ //backspace
+		if( this.previousSibling.previousSibling ){
+			setFocus(this.previousSibling.previousSibling);
 		}
 	}
 }
+
+function myFocus(sel, start, end) {
+	  if (sel.setSelectionRange) {
+	   sel.focus();
+	   sel.setSelectionRange(start,end);
+	  }
+	  else if (sel.createTextRange) {
+	    var range = sel.createTextRange();
+	    range.collapse(true);
+	    range.moveEnd('character', end);
+	    range.moveStart('character', start);
+	    range.select();
+	  }
+	}
+function setFocus (sel) {
+	  length=sel.value.length;
+	  myFocus(sel, length, length);
+	}
 
 function vaildateVar(v){
 	if (typeof v === 'undefined' || v === null) {

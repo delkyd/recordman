@@ -14,6 +14,8 @@ $(function(){
 							showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));
 							fillStgroupList();
 							$("#editStgroupModal").modal('hide');
+							$('#stgroups').val(param.newId);
+							fillSettingList();
 						}else{
 							showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
 						}					

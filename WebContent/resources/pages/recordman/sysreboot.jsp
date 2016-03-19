@@ -13,7 +13,7 @@
 		<%@ include file="../include/nav.jsp"%>	
 			<div id="content" class="container-fluid bluebk">
 				<div class="conf-container">					
-					<div class="onepage formstyle">
+					<div class="centerpage formstyle">
 						<form class="form" onsubmit="return false;">
 						<h3 class="heading"><fmt:message key="sysreboot_heading" bundle="${bundle }"/></h3>
 						<span><fmt:message key="sysreboot_desc" bundle="${bundle }"/></span>

@@ -46,16 +46,6 @@
 									<input id='dev_remark' type="text" class="form-control" value="${infos.remark}">
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="control-label"><fmt:message key="devconf_commuprotocol" bundle="${bundle }"/></label>
-								<div class="">
-									<select id='commu_protocol' class="form-control">
-										<option>浙江103</option>
-										<option>61850</option>
-										<option>Ben10086</option>
-									</select>
-								</div>
-							</div>
 							
 							<div class="form-group">
 							   <div class="">

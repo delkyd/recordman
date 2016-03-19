@@ -16,7 +16,7 @@
 					<div class='onepage'>
 						<div class="formstyle form-inline ">
 							<div class='form-group'>
-								<label class="control-lable"><fmt:message key="stgroup" bundle="${bundle }"/></label>
+								<label class="control-label"><fmt:message key="stgroup" bundle="${bundle }"/></label>
 								<select id='stgroups' class="form-control">									
 								</select>
 								<button class='customBtn createBtn' onclick='createStgroup()' title='<fmt:message key="create" bundle="${bundle }"/>'></button>
@@ -64,7 +64,7 @@
 	        <form>
 	        	<input type="hidden" id="stm_stgroup_oldname" value=''/>
 	        	<div class="form-group">
-	        		<label class="control-lable"><fmt:message key="stgroup_name" bundle="${bundle }"/></label>
+	        		<label class="control-label"><fmt:message key="stgroup_name" bundle="${bundle }"/></label>
 	        		<input type="text" class="form-control" id="stm_stgroup_name" >
 	        	</div>	        	
 	        </form>
@@ -85,35 +85,35 @@
 	        <h4 class="modal-title"><fmt:message key="setting" bundle="${bundle }"/></h4>
 	      </div>
 	      <div class="modal-body">
-	        <form class='form-horizontal'>
+	        <form class="form-horizontal">
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_group" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_group" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<select id='sm_set_group' class="form-control">
 						</select>
 	        		</div>	        		
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_id" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_id" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_id" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_name" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_name" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_name" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_unit" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_unit" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_unit" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_type" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_type" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<select id='sm_set_type' class="form-control">
 							<option value='Bool'>Bool</option>
 							<option value='Float'>Float</option>
@@ -123,50 +123,50 @@
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_val" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_val" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_val" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_max" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_max" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_max" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_min" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_min" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_min" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_step" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_step" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_step" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_rate1" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_rate1" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_rate1" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_unit1" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_unit1" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_unit1" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_rate2" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_rate2" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_rate2" >
 	        		</div>
 	        	</div>
 	        	<div class="form-group">
-	        		<label class="col-sm-2 control-lable"><fmt:message key="set_unit2" bundle="${bundle }"/></label>
-	        		<div class="col-sm-10">
+	        		<label class="col-sm-3 control-label"><fmt:message key="set_unit2" bundle="${bundle }"/></label>
+	        		<div class="col-sm-9">
 	        			<input type="text" class="form-control" id="sm_set_unit2" >
 	        		</div>
 	        	</div>

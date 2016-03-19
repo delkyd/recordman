@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
@@ -28,10 +27,18 @@ import recordman.bean.command;
 
 public class CommandMgr {
 	private static Logger logger = Logger.getLogger(CommandMgr.class);
-	@Inject
-	private ConfigHandle confHandle;
+	
+	private String SEND_QUEUE="DATA_COLLECTOR_COMMAND_QUEUE";
+	private String RECEIVE_QUEUE="WEB_RECEIVE_RESULT_QUEUE";
+	private String rabbit_addr=null;
+	private int rabbit_port=5672;
 	
 	private CommandMgr(){
+		ConfigHandle confHandle = new ConfigHandle();
+		SEND_QUEUE = confHandle.getValue("rabbit_mq_advance_config/collector_recv_queue");
+		RECEIVE_QUEUE = confHandle.getValue("rabbit_mq_advance_config/web_result_queue");
+		rabbit_addr = confHandle.getValue("rabbit_mq_base_config/addr");
+		rabbit_port = DTF.StringToInt(confHandle.getValue("rabbit_mq_base_config/port"));
 		ReceiveCommandResult();
 		cleanTimer.schedule(new CleanTask(), cleanPeriod, cleanPeriod);
 	}
@@ -57,9 +64,8 @@ public class CommandMgr {
 		}
 	}
 	
-	public static final String SEND_QUEUE="DATA_COLLECTOR_COMMAND_QUEUE";
-	public static final String RECEIVE_QUEUE="WEB_RECEIVE_RESULT_QUEUE";
-	private long curRRI=110;
+	
+	private long curRRI=1;
 
 	private Timer cleanTimer = new Timer();
 	private static final long cleanPeriod = 60000;
@@ -77,8 +83,8 @@ public class CommandMgr {
 		try {
 			long cid = getNewRRI();
 			ConnectionFactory factory = new ConnectionFactory();
-			factory.setHost(confHandle.getValue("rabbit_mq_base_config/addr"));
-			factory.setPort(DTF.StringToInt(confHandle.getValue("rabbit_mq_base_config/port")));
+			factory.setHost(rabbit_addr);
+			factory.setPort(rabbit_port);
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
 			channel.queueDeclare(SEND_QUEUE, false, false, false, null);
@@ -94,12 +100,12 @@ public class CommandMgr {
 			connection.close();
 			return cid;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error(e.toString());
 			return -1;
 		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error(e.toString());
 			return -1;
 		}
 	}
@@ -109,8 +115,8 @@ public class CommandMgr {
 	public String ReceiveCommandResult(){
 		try{
 			ConnectionFactory factory = new ConnectionFactory();
-			factory.setHost(confHandle.getValue("rabbit_mq_base_config/addr"));
-			factory.setPort(DTF.StringToInt(confHandle.getValue("rabbit_mq_base_config/port")));
+			factory.setHost(rabbit_addr);
+			factory.setPort(rabbit_port);
 		    recv_connection = factory.newConnection();
 		    recv_channel = recv_connection.createChannel();
 

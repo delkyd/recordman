@@ -13,9 +13,9 @@
 		<%@ include file="../include/nav.jsp"%>	
 			<div id="content" class="container-fluid bluebk">
 				<div class="conf-container">										
-					<div class="onepage formstyle">
-						<h1 class="heading"><fmt:message key="syspwd_heading" bundle="${bundle }"/></h1>
+					<div class="centerpage formstyle">
 						<form class="form" onsubmit="return false;">
+							<h3 class="heading"><fmt:message key="syspwd_heading" bundle="${bundle }"/></h3>
 							<div class="form-group">
 								<label class="control-label"><fmt:message key="syspwd_name" bundle="${bundle }"/></label>
 								<div>
