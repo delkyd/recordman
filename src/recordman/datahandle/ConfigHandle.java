@@ -1,6 +1,7 @@
 package recordman.datahandle;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -8,10 +9,12 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.springframework.stereotype.Component;
 
+import codeman.util.DTF;
 import recordman.bean.fileconf;
 import recordman.bean.lineparam;
 import recordman.bean.logconf;
 import recordman.bean.protocol;
+import recordman.bean.sysconstant;
 
 @Component
 public class ConfigHandle {
@@ -21,7 +24,26 @@ public class ConfigHandle {
 	
 	public boolean save(){
 		try{
-			return ConfigDao.getInstance().SaveTo("D:/stdown/tmp/recordman_manager_config-m.xml");
+			return ConfigDao.getInstance().SaveTo(sysconstant.CONF_TMPDIR+sysconstant.MGR_CONF+".xml");
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	public boolean rewirte(){
+		try{
+			if( !ConfigDao.getInstance().SaveTo(sysconstant.CONF_ROOTDIR+sysconstant.MGR_CONF+".xml") ){
+				return false;
+			}
+			String filename = sysconstant.MGR_CONF;
+			Date now = new Date();
+			filename = filename +"-"+ DTF.DateToString(now, "yyyyMMddHHmmss") + ".xml";
+			if( !ConfigDao.getInstance().SaveTo(sysconstant.CONF_HISDIR+filename) ){
+				return false;
+			}
+			return true;
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.toString());

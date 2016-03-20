@@ -179,6 +179,9 @@ function fillModuleList(){
 						}						
 						html += "<a id='"+m.id+"' class='list-group-item'>";
 						html += "<span class='list-group-item-text'>"+m.name+"</span>";
+						if( m.kind == 'RecLine' ){
+							html += "<button class='customBtn craetelineBtn' title='"+$.i18n.prop('createline')+"' onclick='findLine(\""+m.id+"\",\""+m.name+"\",event)'></button>";
+						}
 						html += "<button class='customBtn relateBtn' title='"+$.i18n.prop('relate')+"' onclick='findGroup(\""+m.id+"\",\""+m.name+"\",event)'></button>";
 						html += "<button class='customBtn deleteBtn' title='"+$.i18n.prop('delete')+"'></button>";
 						html += "<button class='customBtn editBtn' title='"+$.i18n.prop('edit')+"'></button></a>";
@@ -454,6 +457,49 @@ function createSettings(moduleId){
 	param.id=moduleId;
 	var dataParam = {
 		    url: rootPath + "/devparam/modules/craetesettings",
+			param:param,
+			call: function(data) {
+				if(data!=null && data.result != null) {
+					if( data.result ){
+						showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));
+					}else{
+						showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
+					}					
+				}else{
+					showAlert($.i18n.prop('oper_fail'), $.i18n.prop('exceptionerror'));
+				}
+			}
+	};
+	getAjaxData(dataParam,false);
+}
+
+function findLine(moduleId, moduleName, e){
+	var param={};
+	param.id=moduleName;
+	var dataParam = {
+		    url: rootPath + "/mgrparam/line/findline",
+			param:param,
+			call: function(data) {
+				if(data!=null && data.result != null) {
+					if( data.result ){
+						showConfirm($.i18n.prop('create_line'), $.i18n.prop('line_exist'), function(){createLine(moduleId);}, null);
+					}else{
+						showConfirm($.i18n.prop('create_line'), $.i18n.prop('line_no_exist'), function(){createLine(moduleId);}, null);
+					}					
+				}else{
+					showAlert($.i18n.prop('oper_fail'), $.i18n.prop('exceptionerror'));
+				}
+			}
+	};
+	getAjaxData(dataParam,false);
+	e.stopPropagation();
+}
+
+function createLine(moduleId){
+	var param={};
+	param.id=moduleId;
+	var dataParam = {
+		    url: rootPath + "/devparam/modules/craeteline",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {

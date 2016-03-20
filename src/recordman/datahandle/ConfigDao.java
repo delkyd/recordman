@@ -12,6 +12,8 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import recordman.bean.sysconstant;
+
 public class ConfigDao {
 	// 输出日志文件
 		private static Logger logger = Logger.getLogger(XMLDao.class);
@@ -19,7 +21,7 @@ public class ConfigDao {
 		private ConfigDao(){
 			try {
 				SAXReader reader = new SAXReader();
-				m_doc = reader.read(new File("D:/stdown/tmp/recordman_manager_config.xml"));
+				m_doc = reader.read(new File(sysconstant.CONF_ROOTDIR+sysconstant.MGR_CONF+".xml"));
 			} catch (Exception e) {
 				e.printStackTrace();
 				logger.error(e.toString());

@@ -18,6 +18,7 @@ import recordman.bean.devconf;
 import recordman.bean.errorcode;
 import recordman.bean.module;
 import recordman.bean.moduleItem;
+import recordman.datahandle.ConfigHandle;
 import recordman.datahandle.DFUConfHandle;
 
 @Controller
@@ -218,6 +219,37 @@ public class ModulesController {
 			
 			if( rs ){
 				if( !handle.save() ){
+					rs = false;
+					reason = errorcode.savetofile;
+				}
+			}else{
+				reason = errorcode.update;
+			}
+			finalMap.put("result", rs);
+			finalMap.put("reason", reason);
+			String finalJSON = JSON.toJSONString(finalMap);
+			logger.info(finalJSON);
+			return finalJSON;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
+	@Inject
+	ConfigHandle mgrHandle;
+	
+	@RequestMapping(value="/craeteline", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String createLine(@RequestParam String id){
+		try{
+			Map<String, Object> finalMap = new HashMap<String, Object>();
+			boolean rs = handle.createLineparamFromModule(id);
+			String reason = errorcode.noerror;
+			
+			if( rs ){
+				if( !mgrHandle.save() ){
 					rs = false;
 					reason = errorcode.savetofile;
 				}

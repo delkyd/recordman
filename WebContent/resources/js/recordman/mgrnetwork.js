@@ -73,7 +73,6 @@ function fillDetail(){
 	getAjaxData(dataParam,false);
 }
 
-
 function update(){
 	var index = parseInt(getActiveIndex());
 	var param={};
@@ -90,7 +89,8 @@ function update(){
 			call: function(data) {
 				if(data!=null && data.result != null) {
 					if( data.result ){
-						showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));
+						var changes = new Array('outward_commu_protocol_config');
+						applymgr(changes, doResult);
 					}else{
 						showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
 					}					
@@ -100,4 +100,12 @@ function update(){
 			}
 	};
 	getAjaxData(dataParam,false);
+}
+
+function doResult(result, data){
+	if( data.result == 0 ){
+		showAlert($.i18n.prop('oper_fail'), $.i18n.prop('mgrnetwork_apply_fail'));
+	}else if( data.result == 1 ){
+		showAlert($.i18n.prop('oper_success'), $.i18n.prop('mgrnetwork_apply_success'));
+	}
 }

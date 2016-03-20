@@ -52,6 +52,22 @@ public class MgrlineController {
 		}
 	}
 	
+	@RequestMapping(value="/findline", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String findline(@RequestParam String id){
+		try{
+			Map<String, Object> finalMap = new HashMap<String, Object>();
+			finalMap.put("result", handle.getLineParam(id) != null );
+			String finalJSON = JSON.toJSONString(finalMap);
+			logger.info(finalJSON);
+			return finalJSON;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
 	@RequestMapping(value="/editline", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String editLine(@RequestParam String oldId, @RequestParam String newId){

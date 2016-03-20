@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
+import com.mongodb.util.JSON;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -24,6 +25,7 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 
 import codeman.util.DTF;
 import recordman.bean.command;
+import recordman.bean.sysconstant;
 
 public class CommandMgr {
 	private static Logger logger = Logger.getLogger(CommandMgr.class);
@@ -130,8 +132,10 @@ public class CommandMgr {
 		        String message = new String(body, properties.getContentEncoding()==null?defaultEncoding:properties.getContentEncoding());
 		        logger.info(" [x] Received, RRI:" + properties.getCorrelationId() + ". message:"+ message + ".");
 		        if( null != properties.getCorrelationId()){
-		        	CommandMgr.getInstance().putResponse(DTF.StringToInt(properties.getCorrelationId()), message);
-		        	}
+		        	long rri=DTF.StringToInt(properties.getCorrelationId());
+		        	CommandMgr.getInstance().putResponse(rri, message);
+		        	handleResponse(rri);
+		        }
 		        }
 		    };
 		    recv_channel.basicConsume(RECEIVE_QUEUE, true, consumer);
@@ -158,6 +162,7 @@ public class CommandMgr {
 			c.setSendTime(new Date());
 			c.setState(command.STATE_WAITING);;
 			m_commands.put(rri, c);
+			logger.info("Command "+rri+" is added.map size:"+m_commands.size());
 		}catch(Exception e ){
 			e.printStackTrace();
 			logger.error(e.toString());
@@ -174,6 +179,7 @@ public class CommandMgr {
 			c.setResult(command.RESULT_OK);
 			c.setState(command.STATE_FINISHED);
 			m_commands.put(rri, c);
+			logger.info("Command "+rri+" is responsed.map size:"+m_commands.size());
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -219,7 +225,6 @@ public class CommandMgr {
 			command c = m_commands.get(rri);
 			if( null == c )
 				return null;
-			removeCommand(rri);
 			return c.getResponse();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -257,4 +262,36 @@ public class CommandMgr {
 		}
 	}
 
+	public synchronized void handleResponse(long rri){
+		try{
+			command c = m_commands.get(rri);
+			if( null == c )
+				return;
+			Map<String, Object> map = (HashMap<String, Object>) JSON.parse( c.getResponse() );
+			int commandid =  (int) map.get("command_id");
+			switch(commandid){
+			case sysconstant.CMD_APPLYDFU_RE:
+			{
+				int rs = (int)map.get("result");
+				if( 1 == rs ){
+					DFUConfHandle dfuHandle = new DFUConfHandle();
+					dfuHandle.rewrite();
+				}
+				break;
+			}
+			case sysconstant.CMD_APPLYMGR_RE:
+			{
+				int rs = (int)map.get("result");
+				if( 1 == rs ){
+					ConfigHandle mgrHandle = new ConfigHandle();
+					mgrHandle.rewirte();
+				}
+				break;
+			}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+		}
+	}
 }

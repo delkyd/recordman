@@ -1,7 +1,10 @@
 package recordman.datahandle;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
@@ -12,9 +15,11 @@ import codeman.util.DTF;
 import recordman.bean.channel;
 import recordman.bean.devconf;
 import recordman.bean.ethernet;
+import recordman.bean.lineparam;
 import recordman.bean.module;
 import recordman.bean.moduleItem;
 import recordman.bean.setting;
+import recordman.bean.sysconstant;
 import recordman.bean.terminal;
 
 @Component
@@ -24,7 +29,26 @@ public class DFUConfHandle {
 	
 	public boolean save(){
 		try{
-			return XMLDao.getInstance().SaveTo("D:/stdown/tmp/deviceConfig-m.xml");
+			return XMLDao.getInstance().SaveTo(sysconstant.CONF_TMPDIR+sysconstant.DFU_CONF+".xml");
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	public boolean rewrite(){
+		try{
+			if( !XMLDao.getInstance().SaveTo(sysconstant.CONF_ROOTDIR+sysconstant.DFU_CONF+".xml") ){
+				return false;
+			}
+			String filename = sysconstant.DFU_CONF;
+			Date now = new Date();
+			filename = filename +"-"+ DTF.DateToString(now, "yyyyMMddHHmmss") + ".xml";
+			if( !XMLDao.getInstance().SaveTo(sysconstant.CONF_HISDIR+filename) ){
+				return false;
+			}
+			return true;
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.toString());
@@ -1073,5 +1097,50 @@ public class DFUConfHandle {
 		}
 	}
 	
+	@Inject
+	ConfigHandle mgrHandle;
+	public boolean createLineparamFromModule(String moduleId){
+		try{
+			module m = getModuleInfo(moduleId);
+			if( null == m )
+				return false;
+			mgrHandle.deleteLine( m.getName() );
+			if( !mgrHandle.editLine( m.getName(), m.getName())){
+				return false;
+			}
+			lineparam p = mgrHandle.getLineParam( m.getName() );
+			for( moduleItem item : m.configs ){
+				if( item.getKind().equals("IA") ){
+					p.setIa( item.getVal() );
+				}
+				if( item.getKind().equals("IB") ){
+					p.setIb( item.getVal() );
+				}
+				if( item.getKind().equals("IC") ){
+					p.setIc( item.getVal() );
+				}
+				if( item.getKind().equals("I0") ){
+					p.setI0( item.getVal() );
+				}
+				if( item.getKind().equals("UA") ){
+					p.setUa( item.getVal() );
+				}
+				if( item.getKind().equals("UB") ){
+					p.setUb( item.getVal() );
+				}
+				if( item.getKind().equals("UC") ){
+					p.setUc( item.getVal() );
+				}
+				if( item.getKind().equals("U0") ){
+					p.setU0( item.getVal() );
+				}
+			}
+			return mgrHandle.editLineParam(p);
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
 	
 }

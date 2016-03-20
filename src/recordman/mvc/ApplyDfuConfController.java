@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 import recordman.bean.errorcode;
+import recordman.bean.sysconstant;
 import recordman.datahandle.CommandMgr;
 
 @Controller
@@ -28,9 +29,9 @@ public class ApplyDfuConfController {
 	public String apply(){
 		try{
 			Map<String, Object> cmdMap = new HashMap<String, Object>();
-			cmdMap.put("COMMAND_ID", 20060);
-			cmdMap.put("FILE_DIR", "/var/recordman/dfu/");
-			cmdMap.put("FILE_NAME", "dfuconfig.xml");
+			cmdMap.put("command_id", sysconstant.CMD_APPLYDFU);
+			cmdMap.put("file_dir", sysconstant.CONF_TMPDIR);
+			cmdMap.put("file_name", sysconstant.DFU_CONF+".xml");
 			long rri = CommandMgr.getInstance().SendCommand(JSON.toJSONString(cmdMap));
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = rri>0;

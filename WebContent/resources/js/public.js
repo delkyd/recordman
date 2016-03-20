@@ -563,3 +563,29 @@ function queryTaskResult(taskNum, succFunc) {
 	};
 	getAjaxData(dataParam,false);
 }
+
+function applymgr(changes, resultFunc){
+	stopWaitAnim();
+	var param = {};
+	param.changes=changes;
+	var dataParam = {
+		url : rootPath + "/public/applymgrconf",
+		param : param,
+		call : function(data) {
+			if (data != null && data.result != null) {
+				if (data.result) {
+					startWaitAnim();
+					setTimeout("queryTaskResult(" + data.RRI + "," + resultFunc
+							+ ")", parseInt(CONST.COMMU.QUERYINTERVAL));
+				} else {
+					showAlert($.i18n.prop('oper_fail'), $.i18n
+							.prop(data.reason));
+				}
+			} else {
+				showAlert($.i18n.prop('oper_fail'), $.i18n
+						.prop('exceptionerror'));
+			}
+		}
+	};
+	getAjaxData(dataParam, false);
+}

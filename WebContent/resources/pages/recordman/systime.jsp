@@ -47,7 +47,7 @@
 										<option value="1080"><fmt:message key="gmt6" bundle="${bundle }"/></option>								
 										<option value="1110"><fmt:message key="gmt630" bundle="${bundle }"/></option>								
 										<option value="1140"><fmt:message key="gmt7" bundle="${bundle }"/></option>
-										<option value="1200"><fmt:message key="gmt8" bundle="${bundle }"/></option>
+										<option value="1200" selected><fmt:message key="gmt8" bundle="${bundle }"/></option>
 										<option value="1260"><fmt:message key="gmt9" bundle="${bundle }"/></option>								
 										<option value="1290"><fmt:message key="gmt930" bundle="${bundle }"/></option>								
 										<option value="1320"><fmt:message key="gmt10" bundle="${bundle }"/></option>
@@ -71,7 +71,7 @@
 							</div>
 							<div class="form-group">
 							   <div class="">
-							     <button class="btn btn-lg btn-block btn-primary"><fmt:message key="btn_ok" bundle="${bundle }"/></button>
+							     <button class="btn btn-lg btn-block btn-primary" onclick='updatetime()'><fmt:message key="update" bundle="${bundle }"/></button>
 							   </div>
 							</div>
 						</form>
@@ -111,7 +111,7 @@
 							</div>
 							<div class="form-group">
 							   <div class="">
-							     <button class="btn btn-lg btn-block btn-primary"><fmt:message key="btn_ok" bundle="${bundle }"/></button>
+							     <button class="btn btn-lg btn-block btn-primary"><fmt:message key="update" bundle="${bundle }"/></button>
 							   </div>
 							</div>
 						</form>
