@@ -1,9 +1,11 @@
 package recordman.mvc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,9 @@ import codeman.util.DTF;
 import com.alibaba.fastjson.JSON;
 
 import recordman.bean.errorcode;
+import recordman.bean.logmsg;
 import recordman.bean.setting;
+import recordman.datahandle.CommandMgr;
 import recordman.datahandle.DFUConfHandle;
 
 @Controller
@@ -34,10 +38,17 @@ public class SettingsController {
 	
 	@RequestMapping(value="/stgroups", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String getStgroupList(){
+	public String getStgroupList(HttpServletRequest request){
 		try{
+			List<String> gs = handle.getSettingGroups();
+			if( null == gs || gs.size() == 0){
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_WARNING, 
+						String.format("缺少定值组信息"), 
+						request);
+			}
 			Map<String, Object> finalMap = new HashMap<String, Object>();
-			finalMap.put("stgroups", handle.getSettingGroups());
+			finalMap.put("stgroups", gs);
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);
 			return finalJSON;
@@ -50,7 +61,7 @@ public class SettingsController {
 	
 	@RequestMapping(value="/deletestgroup", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String deleteStgroup(@RequestParam String id){
+	public String deleteStgroup(@RequestParam String id, HttpServletRequest request){
 		try{
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = handle.deleteSettingGroup(id);
@@ -60,9 +71,22 @@ public class SettingsController {
 				if( !handle.save() ){
 					rs = false;
 					reason = errorcode.savetofile;
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_ERROR, 
+							String.format("删除定值组[%s]失败", id), 
+							request);
+				}else{
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_WARNING, 
+							String.format("删除定值组[%s]成功", id), 
+							request);
 				}
 			}else{
 				reason = errorcode.update;
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_ERROR, 
+						String.format("删除定值组[%s]失败", id), 
+						request);
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
@@ -78,7 +102,7 @@ public class SettingsController {
 	
 	@RequestMapping(value="/editstgroup", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String editStgroup(@RequestParam String oldId, @RequestParam String newId){
+	public String editStgroup(@RequestParam String oldId, @RequestParam String newId, HttpServletRequest request){
 		try{
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = handle.editSettingGroup(oldId, newId);
@@ -88,9 +112,22 @@ public class SettingsController {
 				if( !handle.save() ){
 					rs = false;
 					reason = errorcode.savetofile;
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_ERROR, 
+							String.format("保存定值组[%s]信息失败", newId), 
+							request);
+				}else{
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_INFO, 
+							String.format("更新定值组[%s]信息成功", newId), 
+							request);
 				}
 			}else{
 				reason = errorcode.update;
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_ERROR, 
+						String.format("更新定值组[%s]信息失败", newId), 
+						request);
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
@@ -122,10 +159,17 @@ public class SettingsController {
 	
 	@RequestMapping(value="/settings", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String getSettingList(@RequestParam String group){
+	public String getSettingList(@RequestParam String group, HttpServletRequest request){
 		try{
+			List<setting> ss = handle.getSettings(group);
+			if( null == ss || ss.size() == 0){
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_WARNING, 
+						String.format("定值组[%s]中缺少定值配置", group), 
+						request);
+			}
 			Map<String, Object> finalMap = new HashMap<String, Object>();
-			finalMap.put("settings", handle.getSettings(group));
+			finalMap.put("settings", ss);
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);
 			return finalJSON;
@@ -138,10 +182,17 @@ public class SettingsController {
 	
 	@RequestMapping(value="/getsetting", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String getSetting(@RequestParam String group, @RequestParam String sid){
+	public String getSetting(@RequestParam String group, @RequestParam String sid, HttpServletRequest request){
 		try{
+			setting s = handle.getSetting(group, sid);
+			if( null == s ){
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_WARNING, 
+						String.format("缺少定值组[%s]中定值[%s]的配置", group, sid), 
+						request);
+			}
 			Map<String, Object> finalMap = new HashMap<String, Object>();
-			finalMap.put("setting", handle.getSetting(group, sid));
+			finalMap.put("setting", s);
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);
 			return finalJSON;
@@ -154,7 +205,7 @@ public class SettingsController {
 	
 	@RequestMapping(value="/deletesetting", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String deleteSetting(@RequestParam String group, @RequestParam String sid){
+	public String deleteSetting(@RequestParam String group, @RequestParam String sid, HttpServletRequest request){
 		try{
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = handle.deleteSetting(group, sid);
@@ -164,9 +215,22 @@ public class SettingsController {
 				if( !handle.save() ){
 					rs = false;
 					reason = errorcode.savetofile;
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_ERROR, 
+							String.format("删除定值组[%s]中定值[%s]的配置失败", group, sid), 
+							request);
+				}else{
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_WARNING, 
+							String.format("删除定值组[%s]中定值[%s]的配置成功", group, sid), 
+							request);
 				}
 			}else{
 				reason = errorcode.update;
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_ERROR, 
+						String.format("删除定值组[%s]中定值[%s]的配置失败", group, sid), 
+						request);
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
@@ -182,7 +246,7 @@ public class SettingsController {
 	
 	@RequestMapping(value="/editsetting", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String editSetting(@ModelAttribute setting s){
+	public String editSetting(@ModelAttribute setting s, HttpServletRequest request){
 		try{
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = handle.editSetting(s);
@@ -192,9 +256,22 @@ public class SettingsController {
 				if( !handle.save() ){
 					rs = false;
 					reason = errorcode.savetofile;
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_ERROR, 
+							String.format("更新定值组[%s]中定值[%s]的配置失败", null==s?"":s.getGroup(), null==s?"":s.getName()), 
+							request);
+				}else{
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_INFO, 
+							String.format("更新定值组[%s]中定值[%s]的配置成功", null==s?"":s.getGroup(), null==s?"":s.getName()), 
+							request);
 				}
 			}else{
 				reason = errorcode.update;
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_ERROR, 
+						String.format("更新定值组[%s]中定值[%s]的配置失败", null==s?"":s.getGroup(), null==s?"":s.getName()), 
+						request);
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);

@@ -9,11 +9,11 @@ import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.concurrent.TimeoutException;
 
-import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import com.mongodb.util.JSON;
+import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -25,11 +25,13 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 
 import codeman.util.DTF;
 import recordman.bean.command;
+import recordman.bean.logmsg;
 import recordman.bean.sysconstant;
 
 public class CommandMgr {
 	private static Logger logger = Logger.getLogger(CommandMgr.class);
 	
+	private String LOG_EXCHANGE_NAME="DIRECT_LOGS";
 	private String SEND_QUEUE="DATA_COLLECTOR_COMMAND_QUEUE";
 	private String RECEIVE_QUEUE="WEB_RECEIVE_RESULT_QUEUE";
 	private String rabbit_addr=null;
@@ -37,11 +39,12 @@ public class CommandMgr {
 	
 	private CommandMgr(){
 		ConfigHandle confHandle = new ConfigHandle();
+		LOG_EXCHANGE_NAME=confHandle.getValue("rabbit_mq_advance_config/log_exchange");
 		SEND_QUEUE = confHandle.getValue("rabbit_mq_advance_config/collector_recv_queue");
 		RECEIVE_QUEUE = confHandle.getValue("rabbit_mq_advance_config/web_result_queue");
 		rabbit_addr = confHandle.getValue("rabbit_mq_base_config/addr");
 		rabbit_port = DTF.StringToInt(confHandle.getValue("rabbit_mq_base_config/port"));
-		ReceiveCommandResult();
+		receiveCommandResult();
 		cleanTimer.schedule(new CleanTask(), cleanPeriod, cleanPeriod);
 	}
 	
@@ -72,7 +75,7 @@ public class CommandMgr {
 	private Timer cleanTimer = new Timer();
 	private static final long cleanPeriod = 60000;
 	private static final long liveTime = 600000;
-	private static final String defaultEncoding="GBK";
+	private static final String defaultEncoding="UTF-8";
 	
 	private long getNewRRI(){
 		if( curRRI > 999999999 ){
@@ -81,7 +84,7 @@ public class CommandMgr {
 		return curRRI++;
 	}
 	
-	public long SendCommand(String msg){
+	public long sendCommand(String msg){
 		try {
 			long cid = getNewRRI();
 			ConnectionFactory factory = new ConnectionFactory();
@@ -111,10 +114,55 @@ public class CommandMgr {
 			return -1;
 		}
 	}
+	
+	public void sendLog(String loglevel, String logmsg){
+		try{
+			ConnectionFactory factory = new ConnectionFactory();
+			factory.setHost(rabbit_addr);
+			factory.setPort(rabbit_port);
+			Connection connection = factory.newConnection();
+			Channel channel = connection.createChannel();
+			
+			channel.exchangeDeclare(LOG_EXCHANGE_NAME, "direct");
+			
+			channel.basicPublish(LOG_EXCHANGE_NAME, loglevel, null, logmsg.getBytes(defaultEncoding));
+			logger.info(" [x] Sent log [" + loglevel + "]:" + logmsg + ".");
+			
+			channel.close();
+	        connection.close();
+		}catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.toString());
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+			logger.error(e.toString());
+		}
+	}
+	
+	public void sendLog(logmsg log){
+		try{
+			sendLog(log.getLevel(), JSON.toJSONString(log) );
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+		}
+	}
+	
+	public void sendLog(String loglevel, String logmsg, HttpServletRequest request){
+		try{
+			logmsg log = new logmsg(loglevel, request, logmsg);
+			sendLog(log.getLevel(), JSON.toJSONString(log));
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+		}
+	}
+		
+	
 	private Connection recv_connection = null;
 	private Channel recv_channel = null;
 	
-	public String ReceiveCommandResult(){
+	public String receiveCommandResult(){
 		try{
 			ConnectionFactory factory = new ConnectionFactory();
 			factory.setHost(rabbit_addr);
@@ -198,6 +246,7 @@ public class CommandMgr {
 		    if( t >= (c.getTimeout()*1000) ){
 		    	c.setResult(command.RESULT_TIMEOUT);
 		    	c.setState(command.STATE_FINISHED);
+		    	sendLog(logmsg.LOG_INFO, String.format("命令长时间未收到回复,已超时,命令序号:[%d]", rri));
 		    }
 			return c.getState();
 		}catch(Exception e){
@@ -267,8 +316,9 @@ public class CommandMgr {
 			command c = m_commands.get(rri);
 			if( null == c )
 				return;
-			Map<String, Object> map = (HashMap<String, Object>) JSON.parse( c.getResponse() );
+			Map<String, Object> map = (Map<String, Object>) JSON.parse( c.getResponse() );
 			int commandid =  (int) map.get("command_id");
+			sendLog(logmsg.LOG_INFO, String.format("接收到命令回复,命令号:[%d],序号:[%d]", commandid, rri));
 			switch(commandid){
 			case sysconstant.CMD_APPLYDFU_RE:
 			{

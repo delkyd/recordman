@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
 
+import recordman.bean.logmsg;
 import recordman.bean.user;
 import recordman.datahandle.CommandMgr;
 import recordman.datahandle.UserDataHandle;
@@ -30,23 +31,26 @@ public class LoginController {
 	
 	@RequestMapping(value="/login")
 	public String login(@RequestParam String name,
-						@RequestParam String pwd,Model model, HttpServletRequest request){
+						@RequestParam(required=false) String pwd,
+						Model model, HttpServletRequest request){
 		try{						
 			System.out.println("login method");
 			
 			user u = userdatahandle.find(name, pwd);
 			if( null != u ){
 				request.getSession().setAttribute("user", u);
-				System.out.println("login successed");
 				
 				String rootpath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+request.getContextPath();
 				model.addAttribute("rootPath", rootpath);
 				request.getSession().setAttribute("rootPath", rootpath );
 				
+				CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("用户[%s]登录成功", name), request);
+				
 				return "redirect:/runstatus/";
 			}else{
 				System.out.println("login failed");
 				model.addAttribute("loginFail", true);
+				CommandMgr.getInstance().sendLog(logmsg.LOG_WARNING, String.format("用户[%s]登录失败", name), request);
 				return "login";
 			}
 		}catch( Exception e ){

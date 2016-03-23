@@ -32,8 +32,12 @@
 					</div>					
 					<div class="form-group input-group input-group-lg col-xs-10 col-xs-offset-1">
 						<label class="control-label sr-only" for="name">name</label>
-						<span class="input-group-addon glyphicon glyphicon-user"></span>			
-						<input type="text" id="name" name="name" autofocus="autofocus" class="form-control" placeholder="<fmt:message key="Inputaccount_tip" bundle="${bundle }"/>" />
+						<span class="input-group-addon glyphicon glyphicon-user"></span>
+						<select class="form-control" id="name" name="name">
+							<option value="admin" selected><fmt:message key="user_admin" bundle="${bundle }"/></option>
+							<option value="guest"><fmt:message key="user_guest" bundle="${bundle }"/></option>						
+						</select>			
+						<%-- <input type="text" id="name" name="name" autofocus="autofocus" class="form-control" placeholder="<fmt:message key="Inputaccount_tip" bundle="${bundle }"/>" /> --%>
 					</div>
 					<div class="form-group input-group input-group-lg col-xs-10 col-xs-offset-1 ">
 						<label class="control-label sr-only" for="pwd">password</label>

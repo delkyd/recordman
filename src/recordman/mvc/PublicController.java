@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 
 import recordman.bean.command;
 import recordman.bean.errorcode;
+import recordman.bean.logmsg;
 import recordman.bean.sysconstant;
 import recordman.datahandle.CommandMgr;
 
@@ -51,21 +54,29 @@ public class PublicController {
 	
 	@RequestMapping(value="/applymgrconf", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String apply(@RequestParam("changes[]") List<String> changes){
+	public String apply(@RequestParam("changes[]") List<String> changes, HttpServletRequest request){
 		try{
 			Map<String, Object> cmdMap = new HashMap<String, Object>();
 			cmdMap.put("command_id", sysconstant.CMD_APPLYMGR);
 			cmdMap.put("file_dir", sysconstant.CONF_TMPDIR);
 			cmdMap.put("file_name", sysconstant.MGR_CONF+".xml");
 			cmdMap.put("changes", changes);
-			long rri = CommandMgr.getInstance().SendCommand(JSON.toJSONString(cmdMap));
+			long rri = CommandMgr.getInstance().sendCommand(JSON.toJSONString(cmdMap));
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = rri>0;
 			finalMap.put("result", rs);
 			if( rs ){
 				finalMap.put("RRI", rri);
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_INFO, 
+						String.format("下发更新管理板卡[%s]配置命令成功", changes.toString()), 
+						request);
 			}else{
 				finalMap.put("reason", errorcode.sendmsg);
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_ERROR, 
+						String.format("下发更新管理板卡[%s]配置命令失败", changes.toString()), 
+						request);
 			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);
@@ -80,21 +91,29 @@ public class PublicController {
 	@RequestMapping(value="/applytime", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String applytime(@RequestParam long second,  @RequestParam long nanosecond, 
-			@RequestParam long time_zone){
+			@RequestParam long time_zone, HttpServletRequest request){
 		try{
 			Map<String, Object> cmdMap = new HashMap<String, Object>();
 			cmdMap.put("command_id", sysconstant.CMD_APPLYTIME);
 			cmdMap.put("cur_second", second);
 			cmdMap.put("cur_nanosecond", nanosecond);
 			cmdMap.put("time_zone", time_zone);
-			long rri = CommandMgr.getInstance().SendCommand(JSON.toJSONString(cmdMap));
+			long rri = CommandMgr.getInstance().sendCommand(JSON.toJSONString(cmdMap));
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = rri>0;
 			finalMap.put("result", rs);
 			if( rs ){
 				finalMap.put("RRI", rri);
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_INFO, 
+						String.format("下发更新时间及时区的命令成功,时间:[%d],时区:[%d]", nanosecond, time_zone), 
+						request);
 			}else{
 				finalMap.put("reason", errorcode.sendmsg);
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_ERROR, 
+						String.format("下发更新时间及时区的命令失败,时间:[%d],时区:[%d]", nanosecond, time_zone), 
+						request);
 			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);

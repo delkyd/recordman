@@ -2,6 +2,20 @@
 	centerLoginForm();
 	$(window).resize(centerLoginForm);
 	loadProperties();
+	$('#pwd').removeAttr('disabled');
+	$('#pwd').focus();
+	
+	$('#name').change(function(){
+		var user=$('#name').val();
+		if( user == 'admin' ){
+			$('#tipMsg').text($.i18n.prop('tip_login'));
+			$('#pwd').removeAttr('disabled');
+			$('#pwd').focus();
+		}else if( user == 'guest'){
+			$('#tipMsg').text($.i18n.prop('tip_guest'));
+			$('#pwd').attr('disabled','disabled');
+		}
+	});
 })();
 
 function centerLoginForm(){	
@@ -19,12 +33,13 @@ function centerLoginForm(){
 }
 
 function validLogin(){
-	if( $('#name').val().length == 0 ){
+	/*if( $('#name').val().length == 0 ){
 		$('#name').focus();
 		$('#tipMsg').text($.i18n.prop('tip_inputname'));		
 		return false;
-	}
-	if( $('#pwd').val().length == 0 ){
+	}*/
+	var user=$('#name').val();
+	if( $('#pwd').val().length == 0 && user == 'admin'){
 		$('#pwd').focus();
 		$('#tipMsg').text($.i18n.prop('tip_inputpwd'));		
 		return false;
