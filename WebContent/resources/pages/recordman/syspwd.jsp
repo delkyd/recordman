@@ -19,7 +19,10 @@
 							<div class="form-group">
 								<label class="control-label"><fmt:message key="syspwd_name" bundle="${bundle }"/></label>
 								<div>
-									<input id='name' type="text" class="form-control">
+									<select class="form-control" id="name" disabled>
+										<option value="admin" selected><fmt:message key="user_admin" bundle="${bundle }"/></option>
+										<option value="guest"><fmt:message key="user_guest" bundle="${bundle }"/></option>						
+									</select>
 								</div>								
 							</div>
 							<div class="form-group">

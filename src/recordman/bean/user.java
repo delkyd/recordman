@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 public class user {
 	public static int USER_TYPE_GUEST = 1;
 	public static int USER_TYPE_ADMIN = 2;
+	public static int USER_TYPE_ENGINEER = 3;
 	
 	private Long id=(long) 0;
 	private String name = null;

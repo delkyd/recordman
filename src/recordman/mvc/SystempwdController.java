@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
 
+import recordman.bean.logmsg;
 import recordman.bean.user;
+import recordman.datahandle.CommandMgr;
 import recordman.datahandle.UserDataHandle;
 
 @Controller
@@ -42,17 +44,29 @@ public class SystempwdController {
 			if( null == f ){
 				map.put("result", false);
 				map.put("errorCode", 1);
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_ERROR, 
+						String.format("用户[%s]的密码修改失败,因为原密码输入错误", name), 
+						request);
 			}else{
-
 				u.setName(name);
 				u.setPwd(pwd);
 				if( handle.edit(u) ){
 					map.put("result", true);
 					map.put("errorCode", 0);
 					request.getSession().removeAttribute("user");
+					
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_INFO, 
+							String.format("用户[%s]的密码修改成功", name), 
+							request);
 				}else{
 					map.put("result", false);
 					map.put("errorCode", 2);
+					CommandMgr.getInstance().sendLog(
+							logmsg.LOG_ERROR, 
+							String.format("用户[%s]的密码修改失败,因为保存失败", name), 
+							request);
 				}
 				
 			}			

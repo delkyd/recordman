@@ -76,7 +76,7 @@
 							</div>
 						</form>
 					</div>
-					<div class="centerpage formstyle">
+					<%-- <div class="centerpage formstyle">
 						<h1 class="heading"><fmt:message key="systime_synchronization" bundle="${bundle }"/></h1>
 						<form class="form" onsubmit="return false;">
 							<div class="form-group">
@@ -115,7 +115,7 @@
 							   </div>
 							</div>
 						</form>
-					</div>
+					</div> --%>
 				</div>
 			</div>
 		<%@ include file="../include/footer.jsp"%>

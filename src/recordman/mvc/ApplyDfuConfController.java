@@ -3,6 +3,8 @@ package recordman.mvc;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 import recordman.bean.errorcode;
+import recordman.bean.logmsg;
 import recordman.bean.sysconstant;
 import recordman.datahandle.CommandMgr;
 
@@ -26,20 +29,22 @@ public class ApplyDfuConfController {
 	
 	@RequestMapping(value="/apply", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String apply(){
+	public String apply( HttpServletRequest request){
 		try{
 			Map<String, Object> cmdMap = new HashMap<String, Object>();
 			cmdMap.put("command_id", sysconstant.CMD_APPLYDFU);
 			cmdMap.put("file_dir", sysconstant.CONF_TMPDIR);
 			cmdMap.put("file_name", sysconstant.DFU_CONF+".xml");
-			long rri = CommandMgr.getInstance().SendCommand(JSON.toJSONString(cmdMap));
+			long rri = CommandMgr.getInstance().sendCommand(JSON.toJSONString(cmdMap));
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = rri>0;
 			finalMap.put("result", rs);
 			if( rs ){
 				finalMap.put("RRI", rri);
+				CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, "发送下装通信板配置命令成功", request);
 			}else{
 				finalMap.put("reason", errorcode.sendmsg);
+				CommandMgr.getInstance().sendLog(logmsg.LOG_ERROR, "发送下装通信板配置命令失败", request);
 			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);

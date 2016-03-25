@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
@@ -17,6 +18,8 @@ import com.alibaba.fastjson.JSON;
 
 import recordman.bean.devconf;
 import recordman.bean.errorcode;
+import recordman.bean.logmsg;
+import recordman.datahandle.CommandMgr;
 import recordman.datahandle.DFUConfHandle;
 
 @Controller
@@ -33,19 +36,22 @@ public class DevconfigController {
 	
 	@RequestMapping(value="/update", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String edit(@ModelAttribute devconf info ){
+	public String edit(@ModelAttribute devconf info, HttpServletRequest request){
 		try{
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = handle.editBaseinfo(info);
 			finalMap.put("result", rs);
 			if( false == rs ){
 				finalMap.put("reason", errorcode.update);
+				CommandMgr.getInstance().sendLog(logmsg.LOG_ERROR, "更新通信板基本配置失败", request);
 			}else{
 				if( !handle.save() ){
 					rs = false;
 					finalMap.put("reason", errorcode.savetofile);
+					CommandMgr.getInstance().sendLog(logmsg.LOG_ERROR, "保存通信板基本配置失败", request);
 				}else{
 					finalMap.put("reason", errorcode.noerror);
+					CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, "更新通信板基本配置成功", request);
 				}
 			}
 			String finalJSON = JSON.toJSONString(finalMap);

@@ -60,8 +60,8 @@
 										<select id='log_level' class="form-control">
 										<option value="0" <c:if test="${logconf.level==0}">selected</c:if> ><fmt:message key="loglevel_no" bundle="${bundle }"/></option>
 										<option value="1" <c:if test="${logconf.level==1}">selected</c:if> ><fmt:message key="loglevel_error" bundle="${bundle }"/></option>
-										<option value="2" <c:if test="${logconf.level==2}">selected</c:if> ><fmt:message key="loglevel_alarm" bundle="${bundle }"/></option>
-										<option value="3" <c:if test="${logconf.level==3}">selected</c:if> ><fmt:message key="loglevel_trace" bundle="${bundle }"/></option>
+										<option value="2" <c:if test="${logconf.level==2}">selected</c:if> ><fmt:message key="loglevel_warn" bundle="${bundle }"/></option>
+										<option value="3" <c:if test="${logconf.level==3}">selected</c:if> ><fmt:message key="loglevel_info" bundle="${bundle }"/></option>
 									</select>
 									</div>
 								</div>
