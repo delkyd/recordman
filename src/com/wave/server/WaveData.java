@@ -34,7 +34,7 @@ public class WaveData {
 	 * @return  float
 	 */
 	public float[]  getListARealValue() {
-
+		nMaxValue = 0;
 	   //处理当未查询到真确的值时候的处理
        if(Channel.getListA()==null){
     	   return new float[0]; 
