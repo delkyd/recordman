@@ -62,9 +62,9 @@ public class loginValidateFilter extends HttpServlet implements Filter {
 				}else{
 					if( (httpReq.getServletPath().indexOf("/system") != -1 ||
 							httpReq.getServletPath().indexOf("/devparam") != -1 ||
-							httpReq.getServletPath().indexOf("/devparam") != -1 ) && 
+							httpReq.getServletPath().indexOf("/mgrparam") != -1 ) && 
 							(null == httpReq.getSession().getAttribute("user") || 
-							user.USER_TYPE_ADMIN != ((user)httpReq.getSession().getAttribute("user")).getType())){
+							((user)httpReq.getSession().getAttribute("user")).getType() < user.USER_TYPE_ADMIN)){
 						System.out.println(httpReq.getRemoteAddr() + ",quest system page,permission denied");
 						CommandMgr.getInstance().sendLog(
 								logmsg.LOG_WARNING, 

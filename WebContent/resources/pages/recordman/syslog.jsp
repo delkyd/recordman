@@ -14,71 +14,38 @@
 			<div id="content" class="container-fluid bluebk">
 				<div class="fullpage">										
 					<div class="row">
-						<div class="col-md-3">
+						<div >
 							<div class="formstyle">
 								<form class="form" onsubmit="return false;">
 									<div class="form-group">
-										<label class="control-label">类型</label>
+										<label class="control-label"><fmt:message key="loglevel" bundle="${bundle }"/></label>
 										<div class="">
-											<select id='' class="form-control">
-												<option>所有</option>
-												<option>业务</option>
-												<option>系统</option>
+											<select id='loglevel' class="form-control">
+												<option value=""><fmt:message key="all" bundle="${bundle }"/></option>
+												<option value="error"><fmt:message key="loglevel_error" bundle="${bundle }"/></option>
+												<option value="warning"><fmt:message key="loglevel_warn" bundle="${bundle }"/></option>
+												<option value="info"><fmt:message key="loglevel_info" bundle="${bundle }"/></option>
 											</select>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
-						<div class="col-md-9">
+						<div >
 							<div class="formstyle">
 								<table class="table table-striped">
 									<thead>
 										<tr>
-											<th>#</th>
-											<th>一</th>
-											<th>二</th>
-											<th>三</th>
-											<th>四</th>
-											<th>五</th>
-											<th>六</th>
-											<th>七</th>
+											<th><fmt:message key="log_thead_id" bundle="${bundle }"/></th>
+											<th><fmt:message key="log_thead_level" bundle="${bundle }"/></th>
+											<th><fmt:message key="log_thead_date" bundle="${bundle }"/></th>
+											<th><fmt:message key="log_thead_content" bundle="${bundle }"/></th>
+											<th><fmt:message key="log_thead_user" bundle="${bundle }"/></th>
+											<th><fmt:message key="log_thead_addr" bundle="${bundle }"/></th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											<td>First</td>
-											
-										</tr>
+										
 									</tbody>
 								</table>
 							</div>

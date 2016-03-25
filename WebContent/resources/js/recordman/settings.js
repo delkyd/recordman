@@ -1,5 +1,5 @@
 $(function(){
-	setNavActive('nav_setup');
+	setNavActive('nav_dfu');
 	
 	$('#stm_save').click(function(){
 		var param={};

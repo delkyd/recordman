@@ -41,7 +41,7 @@ public class LoginController {
 				request.getSession().setAttribute("user", u);
 				
 				String rootpath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+request.getContextPath();
-				model.addAttribute("rootPath", rootpath);
+				
 				request.getSession().setAttribute("rootPath", rootpath );
 				
 				CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("用户[%s]登录成功", name), request);

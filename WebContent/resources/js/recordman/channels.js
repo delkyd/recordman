@@ -1,5 +1,5 @@
 $(function(){
-	setNavActive('nav_setup');
+	setNavActive('nav_dfu');
 	document.getElementById("svgEle").addEventListener('load', function(){
 		setSvgFunc();
 	});

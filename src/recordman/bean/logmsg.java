@@ -10,11 +10,16 @@ public class logmsg {
 	public static final String LOG_ERROR="error";
 	public static final String LOG_WARNING="warning";
 	public static final String LOG_INFO="info";
+	private long id=0;
 	private String level = null;
 	private String date = DTF.DateToString(new Date(), "yyyy-MM-dd HH:mm:ss.SSS");
 	private String user = null;
 	private String ipaddr = null;
 	private String content = null;
+	
+	public logmsg(){
+		
+	}
 	
 	public logmsg(String level, HttpServletRequest request, String msg){
 		this.level = level;
@@ -91,6 +96,14 @@ public class logmsg {
 		if( null != u ){
 			this.user = u.getName();
 		}	
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 }

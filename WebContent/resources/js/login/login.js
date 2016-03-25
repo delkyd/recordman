@@ -7,13 +7,13 @@
 	
 	$('#name').change(function(){
 		var user=$('#name').val();
-		if( user == 'admin' ){
+		if( user == 'guest'){
+			$('#tipMsg').text($.i18n.prop('tip_guest'));
+			$('#pwd').attr('disabled','disabled');
+		}else{
 			$('#tipMsg').text($.i18n.prop('tip_login'));
 			$('#pwd').removeAttr('disabled');
 			$('#pwd').focus();
-		}else if( user == 'guest'){
-			$('#tipMsg').text($.i18n.prop('tip_guest'));
-			$('#pwd').attr('disabled','disabled');
 		}
 	});
 })();
@@ -39,7 +39,7 @@ function validLogin(){
 		return false;
 	}*/
 	var user=$('#name').val();
-	if( $('#pwd').val().length == 0 && user == 'admin'){
+	if( $('#pwd').val().length == 0 && user != 'guest'){
 		$('#pwd').focus();
 		$('#tipMsg').text($.i18n.prop('tip_inputpwd'));		
 		return false;
@@ -50,7 +50,7 @@ function validLogin(){
 function loadProperties(){
 	jQuery.i18n.properties({
 		name:'i18nstring',
-		path:'./resources/js/i18n/',
+		path: (rootPath==null)?'./resources/js/i18n/':(rootPath+'/resources/js/i18n/'),
 		mode:'map'	
 	});
 }
