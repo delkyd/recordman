@@ -483,8 +483,8 @@ function setFocus (sel) {
 	  myFocus(sel, length, length);
 	}
 
-function vaildateVar(v){
-	if (typeof v === 'undefined' || v === null) {
+function validateVar(v){
+	if (typeof v === 'undefined' || v === null || v==='undefined') {
 	    return false;
 	}
 	return true;
@@ -564,6 +564,31 @@ function queryTaskResult(taskNum, succFunc) {
 	getAjaxData(dataParam,false);
 }
 
+function applydfu(resultFunc){
+	stopWaitAnim();
+	showConfirm($.i18n.prop('dfuconf_apply'), $.i18n.prop('dfuconf_apply_confirm'), function(){
+		var param={};
+		var dataParam = {
+			    url: rootPath + "/devparam/dfuapply/apply",
+				param:param,
+				call: function(data) {
+					if(data!=null && data.result != null) {
+						if( data.result ){
+							startWaitAnim();
+							setTimeout("queryTaskResult(" + data.RRI + ","+resultFunc+ ")",
+									parseInt(CONST.COMMU.QUERYINTERVAL));
+						}else{
+							showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
+						}					
+					}else{
+						showAlert($.i18n.prop('oper_fail'), $.i18n.prop('exceptionerror'));
+					}
+				}
+		};
+		getAjaxData(dataParam,false);
+});
+}
+
 function applymgr(changes, resultFunc){
 	stopWaitAnim();
 	var param = {};
@@ -588,4 +613,35 @@ function applymgr(changes, resultFunc){
 		}
 	};
 	getAjaxData(dataParam, false);
+}
+
+function checkInt(val){
+	
+	var nNum = parseInt(val);
+	if(nNum.toString() != val)
+	{
+		return false;
+	}
+	return true;
+}
+
+function checkUint(num){
+	return (undefined!==num && num!='' && !/[\.-]/.test(num) && /^[01]{1,31}$/.test(Number(num).toString(2)));
+}
+
+function checkFloat(val){
+	var nFloatNum = parseFloat(val);
+	if(nFloatNum.toString() != val)
+	{
+		return false;
+	}
+	return true;
+}
+
+function checkBool(val){
+	var v = val.toLowerCase();
+	if( v === 'false' || v === 'true'){
+		return true;
+	}
+	return false;
 }

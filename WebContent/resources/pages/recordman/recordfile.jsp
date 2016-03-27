@@ -6,6 +6,7 @@
 <html class="no-js" lang="en">
 <head>
 <%@ include file="../include/html_head.jsp"%>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap-datetimepicker.min.css" />
 </head>
 <body>
 	<%@ include file="../include/slidemenu.jsp"%>
@@ -54,7 +55,16 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<button id="query" class="btn btn-default" style="display: none;">Query</button>
+							<button id="query" class="btn btn-default" style="display: none;"><fmt:message key="query" bundle="${bundle }"/></button>
+						</div>
+						
+						<div class="btn-group rightfloat" data-toggle="buttons">
+						  <label class="btn btn-primary active">
+						    <input type="radio" name="options" id="option1" autocomplete="off" checked> 图形
+						  </label>
+						  <label class="btn btn-primary">
+						    <input type="radio" name="options" id="option2" autocomplete="off"> 列表
+						  </label>
 						</div>
 					</form>				
 				</div>

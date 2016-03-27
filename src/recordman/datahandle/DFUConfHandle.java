@@ -825,7 +825,7 @@ public class DFUConfHandle {
 			Document doc = XMLDao.getInstance().getDocument();
 			
 			for( setting s : sets ){
-				String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set[@sid='%d']", s.getGroup(), s.getSid());
+				String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set[@sid='%s']", s.getGroup(), s.getSid());
 				Element e = (Element)doc.selectSingleNode(xpath);
 				if( null == e ){
 					xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']", s.getGroup());
@@ -861,6 +861,27 @@ public class DFUConfHandle {
 			return false;
 		}
 	}
+	
+	public boolean editSettingsVal(List<setting> sets){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			
+			for( setting s : sets ){
+				String xpath = String.format("/LeyunDevices/Settings/Group[@name='%s']/Set[@sid='%s']", s.getGroup(), s.getSid());
+				Element e = (Element)doc.selectSingleNode(xpath);
+				if( null == e ){
+					continue;
+				}
+				e.addAttribute("val", s.getVal());
+			}
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
 	public boolean editSetting(setting s){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();

@@ -51,6 +51,7 @@ public class RecordfileController {
 						continue;
 					String date = DTF.DateToString(r.getTriggerTime(), "yyyy-MM-dd");
 					r.setShortTime( String.format("%s.%d", DTF.DateToString(r.getTriggerTime(), "HH:mm:ss"), r.getMs()));
+					r.setLongTime( String.format("%s.%d", DTF.DateToString(r.getTriggerTime()), r.getMs()));
 					if( null == curDate || !date.equals(curDate)){
 						if( null != curlist ){
 							Map<String, Object> m = new HashMap<String, Object>();

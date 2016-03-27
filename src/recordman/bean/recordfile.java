@@ -15,6 +15,8 @@ public class recordfile {
 	private int fileSize;
 	private int bFaultfile;
 	private String shortTime;
+	private String longTime;
+	private String distance; 
 	public String getName() {
 		return name;
 	}
@@ -68,6 +70,18 @@ public class recordfile {
 	}
 	public void setShortTime(String shortTime) {
 		this.shortTime = shortTime;
+	}
+	public String getLongTime() {
+		return longTime;
+	}
+	public void setLongTime(String longTime) {
+		this.longTime = longTime;
+	}
+	public String getDistance() {
+		return distance;
+	}
+	public void setDistance(String distance) {
+		this.distance = distance;
 	}
 	
 	

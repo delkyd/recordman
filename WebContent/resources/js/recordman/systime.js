@@ -3,7 +3,8 @@ $(function(){
 	$('.ip_input .item').keyup(onipitemkeyup);
 	$('#datetimepicker1').datetimepicker({
 		format:'YYYY-MM-DD HH:mm:ss',
-		sideBySide: true
+		sideBySide: true,
+		locale: $.i18n.prop('locale')
 	});
 	$('#datetimepicker1').data("DateTimePicker").date(new Date());
 });

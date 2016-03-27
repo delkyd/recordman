@@ -1,17 +1,30 @@
+
+var showStyle='icon';
 $(function(){
 	setNavActive('nav_faultrecord');
 	
 
 	$('#datetimepicker1').datetimepicker({
-		format:'YYYY-MM-DD HH:mm:ss'
+		format:'YYYY-MM-DD HH:mm:ss',
+		locale: $.i18n.prop('locale')
 	});
 	$('#datetimepicker2').datetimepicker({
-		format:'YYYY-MM-DD HH:mm:ss'
+		format:'YYYY-MM-DD HH:mm:ss',
+		locale: $.i18n.prop('locale')
 	});
 	setdate();
 	$('#source').change(find);
 	$("#period").change(setdate);
 	$("#query").click(find);
+	
+	$('#option1').on('change', function(){
+		showStyle='icon';
+		find();
+	});
+	$('#option2').on('change', function(){
+		showStyle='list';
+		find();
+	});
 });
 
 function setdate(){
@@ -95,7 +108,11 @@ function find(){
 			param:param,
 			call: function(data) {
 				if( data.files != null ){
-					fillData( data.files );
+					if( showStyle === "icon"){
+						fillData( data.files );
+					}else if( showStyle === "list"){
+						fillData_tb( data.files );
+					}
 				}
 			}
 	};
@@ -141,4 +158,30 @@ function fillData(data){
 	}
 	$('.result-zone').html(html);
 	$('.result-zone .gallery .item').click(clickitem);
+}
+
+function fillData_tb(data){
+	var html = "<table class=\"table table-condensed table-hover\"><thead><tr>";	
+	html += "<th>"+$.i18n.prop('file_thead_date')+"</th>";
+	html += "<th>"+$.i18n.prop('file_thead_name')+"</th>";
+	html += "<th>"+$.i18n.prop('file_thead_faulttype')+"</th>";
+	html += "<th>"+$.i18n.prop('file_thead_distance')+"</th>";
+	html += "<th></th></tr></thead><tbody>";	
+	for( var i in data ){
+		var day = data[i];
+			 for( var fi in day.f ){
+				 var f = day.f[fi];
+				 var path = f.savePath+f.name;
+				 html += "<tr>";
+				 html += "<td>"+ f.longTime + "</td>";
+				 html += "<td>"+ f.name + "</td>";
+				 html += "<td>"+ f.faultType + "</td>";
+				 html += "<td>"+ f.distance + "</td>";
+				 html += "<td><button class='customBtn showBtn' onclick=\"openitem('"+path+"')\" title='"+$.i18n.prop('view')+"'></button>";
+					html += "<button class='customBtn exportBtn' onclick=\"exportitem('"+path+"')\" title='"+$.i18n.prop('export')+"'></button></td>";
+				 html += "</tr>";
+			 }
+	}
+	html += "</tbody></table>";
+	$('.result-zone').html(html);
 }

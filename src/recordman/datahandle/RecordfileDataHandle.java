@@ -52,6 +52,7 @@ public class RecordfileDataHandle {
 				r.setSavePath( doc.getString("save_path"));
 				r.setTriggerTime( doc.getDate("trigger_time"));
 				r.setTriggerType( doc.getString("trigger_type"));
+				r.setDistance( doc.getString("fault_distance"));
 				list.add(r);
 			}
 			return list;

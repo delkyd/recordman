@@ -125,18 +125,18 @@ function fillSettingList(){
 						html += "<tr>"						
 						html += "<td>"+s.group+"</td>";
 						html += "<td>"+s.name+"</td>";
-						html += "<td>"+(vaildateVar(s.unit)?s.unit:"")+"</td>";
+						html += "<td>"+(validateVar(s.unit)?s.unit:"")+"</td>";
 						html += "<td>"+s.type+"</td>";
 						html += "<td>"+s.val+"</td>";
-						html += "<td>"+(vaildateVar(s.max)?s.max:"")+"</td>";
-						html += "<td>"+(vaildateVar(s.min)?s.min:"")+"</td>";
-						html += "<td>"+(vaildateVar(s.step)?s.step:"")+"</td>";
-						html += "<td>"+(vaildateVar(s.rate1)?s.rate1:"")+"</td>";
-						html += "<td>"+(vaildateVar(s.unit1)?s.unit1:"")+"</td>";
-						html += "<td>"+(vaildateVar(s.rate2)?s.rate2:"")+"</td>";
-						html += "<td>"+(vaildateVar(s.unit2)?s.unit2:"")+"</td>";
-						html += "<td><button class='customBtn editBtn' onclick=\"editSetting('"+s.group+"','"+s.sid+"')\" title='"+$.i18n.prop('edit')+"'>";
-						html += "</button><button class='customBtn deleteBtn' onclick=\"deleteSetting('"+s.group+"','"+s.sid+"')\" title='"+$.i18n.prop('delete')+"'></button></td>";
+						html += "<td>"+(validateVar(s.max)?s.max:"")+"</td>";
+						html += "<td>"+(validateVar(s.min)?s.min:"")+"</td>";
+						html += "<td>"+(validateVar(s.step)?s.step:"")+"</td>";
+						html += "<td>"+(validateVar(s.rate1)?s.rate1:"")+"</td>";
+						html += "<td>"+(validateVar(s.unit1)?s.unit1:"")+"</td>";
+						html += "<td>"+(validateVar(s.rate2)?s.rate2:"")+"</td>";
+						html += "<td>"+(validateVar(s.unit2)?s.unit2:"")+"</td>";
+						html += "<td><button class='customBtn editBtn' onclick=\"editSetting('"+s.group+"','"+s.sid+"')\" title='"+$.i18n.prop('edit')+"'></button>";
+						html += "<button class='customBtn deleteBtn' onclick=\"deleteSetting('"+s.group+"','"+s.sid+"')\" title='"+$.i18n.prop('delete')+"'></button></td>";
 						html += "</tr>"
 					}
 					$('#settings tbody').html(html);
@@ -211,13 +211,13 @@ function editSetting(group, sid){
 					$('#sm_set_type').val(s.type);
 					$('#sm_set_val').val(s.val);
 					$('#sm_set_unit').val(s.unit);
-					$('#sm_set_max').val((vaildateVar(s.max)?s.max:""));
-					$('#sm_set_min').val((vaildateVar(s.min)?s.min:""));
-					$('#sm_set_step').val((vaildateVar(s.step)?s.step:""));
-					$('#sm_set_rate1').val((vaildateVar(s.rate1)?s.rate1:""));
-					$('#sm_set_unit1').val((vaildateVar(s.unit1)?s.unit1:""));
-					$('#sm_set_rate2').val((vaildateVar(s.rate2)?s.rate2:""));
-					$('#sm_set_unit2').val((vaildateVar(s.unit2)?s.unit2:""));
+					$('#sm_set_max').val((validateVar(s.max)?s.max:""));
+					$('#sm_set_min').val((validateVar(s.min)?s.min:""));
+					$('#sm_set_step').val((validateVar(s.step)?s.step:""));
+					$('#sm_set_rate1').val((validateVar(s.rate1)?s.rate1:""));
+					$('#sm_set_unit1').val((validateVar(s.unit1)?s.unit1:""));
+					$('#sm_set_rate2').val((validateVar(s.rate2)?s.rate2:""));
+					$('#sm_set_unit2').val((validateVar(s.unit2)?s.unit2:""));
 					$("#editSettingModal").modal('show');					
 				}
 			}
