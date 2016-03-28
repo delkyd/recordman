@@ -11,6 +11,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.springframework.stereotype.Component;
 
+import codeman.util.Config;
 import codeman.util.DTF;
 import recordman.bean.channel;
 import recordman.bean.devconf;
@@ -29,7 +30,8 @@ public class DFUConfHandle {
 	
 	public boolean save(){
 		try{
-			return XMLDao.getInstance().SaveTo(sysconstant.CONF_TMPDIR+sysconstant.DFU_CONF+".xml");
+			return XMLDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_tmpdir")
+					+ Config.getInstance().get("Config/dfu_conf") +".xml");
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.toString());
@@ -39,13 +41,14 @@ public class DFUConfHandle {
 	
 	public boolean rewrite(){
 		try{
-			if( !XMLDao.getInstance().SaveTo(sysconstant.CONF_ROOTDIR+sysconstant.DFU_CONF+".xml") ){
+			if( !XMLDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_rootdir")
+					+ Config.getInstance().get("Config/dfu_conf") +".xml") ){
 				return false;
 			}
-			String filename = sysconstant.DFU_CONF;
+			String filename = Config.getInstance().get("Config/dfu_conf");
 			Date now = new Date();
 			filename = filename +"-"+ DTF.DateToString(now, "yyyyMMddHHmmss") + ".xml";
-			if( !XMLDao.getInstance().SaveTo(sysconstant.CONF_HISDIR+filename) ){
+			if( !XMLDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_hisdir")+filename) ){
 				return false;
 			}
 			return true;

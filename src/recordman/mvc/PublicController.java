@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import codeman.util.Config;
+
 import com.alibaba.fastjson.JSON;
 
 import recordman.bean.command;
@@ -58,8 +60,8 @@ public class PublicController {
 		try{
 			Map<String, Object> cmdMap = new HashMap<String, Object>();
 			cmdMap.put("command_id", sysconstant.CMD_APPLYMGR);
-			cmdMap.put("file_dir", sysconstant.CONF_TMPDIR);
-			cmdMap.put("file_name", sysconstant.MGR_CONF+".xml");
+			cmdMap.put("file_dir", Config.getInstance().get("Config/conf_tmpdir"));
+			cmdMap.put("file_name", Config.getInstance().get("Config/mgr_conf")+".xml");
 			cmdMap.put("changes", changes);
 			long rri = CommandMgr.getInstance().sendCommand(JSON.toJSONString(cmdMap));
 			Map<String, Object> finalMap = new HashMap<String, Object>();

@@ -3,6 +3,11 @@ var showStyle='icon';
 $(function(){
 	setNavActive('nav_faultrecord');
 	
+	showStyle=getCookie('recordfileShowStyle');
+	if( showStyle===''){
+		showStyle = 'icon';
+	}
+	setCheck(showStyle);
 
 	$('#datetimepicker1').datetimepicker({
 		format:'YYYY-MM-DD HH:mm:ss',
@@ -19,13 +24,29 @@ $(function(){
 	
 	$('#option1').on('change', function(){
 		showStyle='icon';
+		setCookie('recordfileShowStyle', showStyle);
 		find();
 	});
 	$('#option2').on('change', function(){
 		showStyle='list';
+		setCookie('recordfileShowStyle', showStyle);
 		find();
 	});
 });
+
+function setCheck(s){
+	$('#option1').removeAttr('checked');
+	$('#option1').parent().removeClass('active');
+	$('#option2').removeAttr('checked');
+	$('#option2').parent().removeClass('active');
+	if( s === 'icon'){
+		$('#option1').attr('checked');
+		$('#option1').parent().addClass('active');
+	}else if( s === 'list'){
+		$('#option2').attr('checked');
+		$('#option2').parent().addClass('active');
+	}
+}
 
 function setdate(){
 	var period = parseInt($("#period").val());
@@ -92,9 +113,13 @@ function openitem(path){
 	getAjaxData(dataParam,false);
 }
 
-function exportitem(path){
-	alert('export file:' + path);
-	return false;
+function exportitem(path, name){
+	var url = rootPath+"/recordfile/export?filepath="+path+"&filename="+name+"";
+	url = url.replace(/\#/g, "%23");
+	url = url.replace(/\+/g, "%2B");
+	url = url.replace(/\ /g, "%20");
+	url = encodeURI(url);
+	window.location.href=url;
 }
 
 function find(){
@@ -129,10 +154,10 @@ function getColor(index){
 		c = "yellow";
 		break;
 	case 2:
-		c = "pink";
+		c = "green";
 		break;
 	case 3:
-		c = "green";
+		c = "pink";
 		break;
 	}
 	return c;
@@ -149,10 +174,11 @@ function fillData(data){
 				 var f = day.f[fi];
 				 var path = f.savePath+f.name;
 				 html += "<div class='item' id='"+ path + "'><div class='toolbar'><div class='icon open' onclick="+ '"openitem('+ "'" + path + "'"+ ')"></div>' + 
-				 		"<div class='icon export' onclick="+ '"exportitem('+ "'" + path + "'" + ')"></div></div>';
-				 html += "<h4>" + f.shortTime + "</h4>";
-				 html += "<h5>" + f.name + "</h5>";
-				 html += "<h3>" + f.faultType + "</h3></div>";
+				 		"<div class='icon export' onclick=\"exportitem('"+path+"','"+f.name+"')\"></div></div>";
+				 html += "<h5>" + f.shortTime + "</h5>";
+				 html += "<h5 class='filename'>" + f.name + "</h5>";
+				 html += "<h5>" + $.i18n.prop('faulttype_'+f.faultType) + "</h5>";
+				 html += "<h5>" + $.i18n.prop('fault_distance')+":"+(validateVar(f.distance)?(f.distance + "(km)"):"-")+ "</h5></div>";
 			 }
 			html += "</div></div>";
 	}
@@ -175,10 +201,10 @@ function fillData_tb(data){
 				 html += "<tr>";
 				 html += "<td>"+ f.longTime + "</td>";
 				 html += "<td>"+ f.name + "</td>";
-				 html += "<td>"+ f.faultType + "</td>";
-				 html += "<td>"+ f.distance + "</td>";
+				 html += "<td>"+ $.i18n.prop('faulttype_'+f.faultType) + "</td>";
+				 html += "<td>"+ (validateVar(f.distance)?(f.distance + "(km)"):"-")+"</td>";
 				 html += "<td><button class='customBtn showBtn' onclick=\"openitem('"+path+"')\" title='"+$.i18n.prop('view')+"'></button>";
-					html += "<button class='customBtn exportBtn' onclick=\"exportitem('"+path+"')\" title='"+$.i18n.prop('export')+"'></button></td>";
+					html += "<button class='customBtn exportBtn' onclick=\"exportitem('"+path+"','"+f.name+"')\" title='"+$.i18n.prop('export')+"'></button></td>";
 				 html += "</tr>";
 			 }
 	}

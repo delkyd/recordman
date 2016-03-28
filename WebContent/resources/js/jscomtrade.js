@@ -1261,7 +1261,7 @@ defaultOptions = {
 		pxPerMS : 1, //每毫秒占用几个像素，控制图形横向缩放
 		cursorSyn : true, //游标同步
     	channel:{
-    		height : 80, //通道图形的高度,包含了名称文字
+    		height : 60, //通道图形的高度,包含了名称文字
     		color : '#d8d8d8'
     	},
     	channelName : {

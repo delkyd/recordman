@@ -9,6 +9,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.springframework.stereotype.Component;
 
+import codeman.util.Config;
 import codeman.util.DTF;
 import recordman.bean.fileconf;
 import recordman.bean.lineparam;
@@ -24,7 +25,9 @@ public class ConfigHandle {
 	
 	public boolean save(){
 		try{
-			return ConfigDao.getInstance().SaveTo(sysconstant.CONF_TMPDIR+sysconstant.MGR_CONF+".xml");
+			return ConfigDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_tmpdir")
+					+ Config.getInstance().get("Config/mgr_conf")
+					+".xml");
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.toString());
@@ -34,13 +37,14 @@ public class ConfigHandle {
 	
 	public boolean rewirte(){
 		try{
-			if( !ConfigDao.getInstance().SaveTo(sysconstant.CONF_ROOTDIR+sysconstant.MGR_CONF+".xml") ){
+			if( !ConfigDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_rootdir")
+					+Config.getInstance().get("Config/mgr_conf")+".xml") ){
 				return false;
 			}
-			String filename = sysconstant.MGR_CONF;
+			String filename = Config.getInstance().get("Config/mgr_conf");
 			Date now = new Date();
 			filename = filename +"-"+ DTF.DateToString(now, "yyyyMMddHHmmss") + ".xml";
-			if( !ConfigDao.getInstance().SaveTo(sysconstant.CONF_HISDIR+filename) ){
+			if( !ConfigDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_hisdir")+filename) ){
 				return false;
 			}
 			return true;

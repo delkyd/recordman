@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+    <conf_rootdir desc="DFU和管理板配置文件放置的目录(绝对路径)">D:/stdown/recordman/conf/</conf_rootdir>
+    <conf_tmpdir desc="临时DFU和管理板配置文件(修改后还未下发的文件)放置的目录(绝对路径)">D:/stdown/recordman/conf/tmp/</conf_tmpdir>
+    <conf_hisdir desc="DFU和管理板配历史置文件放置的目录(绝对路径)">D:/stdown/recordman/conf/history/</conf_hisdir>
+    <dfu_conf desc="DFU配置文件名称(无需写.xml后缀)">deviceConfig</dfu_conf>
+    <mgr_conf desc="管理板配置文件名称(无需写.xml后缀)">recordman_manager_config</mgr_conf>
+</Config>

@@ -569,15 +569,15 @@ fieldset[disabled] .customBtn {
 }
 
 .day-zone {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding:0px 10px;
 }
 
 .day-zone .heading{
 	position: absolute;
-	height: 50px;
+	height: 40px;
 	background: #fff;
-    padding: 10px 10px 10px 10px;
+    padding: 10px 5px 10px 5px;
     color: #fff;
     font-weight: normal;
 }
@@ -609,11 +609,11 @@ fieldset[disabled] .customBtn {
 }
 
 .result-zone .yellow{
-	border-bottom:5px solid #f3d529;
+	border-bottom:5px solid #ff8000;
 }
 
 .result-zone .yellow .color{
-	background-color: #f3d529;
+	background-color: #ff8000;
 }
 
 .result-zone .pink{
@@ -641,7 +641,7 @@ fieldset[disabled] .customBtn {
 	margin-bottom:10px;
 	background: #ffffff;
 	width:180px;
-	height:160px;
+	height:130px;
 
 	padding:0px 10px;
 	word-wrap:break-word;
@@ -661,7 +661,7 @@ fieldset[disabled] .customBtn {
 }
 
 .result-zone .yellow .gallery .item{
-	border-top:2px solid #f3d529;
+	border-top:2px solid #ff8000;
 }
 
 .result-zone .pink .gallery .item{
@@ -677,14 +677,15 @@ fieldset[disabled] .customBtn {
 	/* border-top-width:8px; */
 }
 
-.result-zone .gallery .item h5{
-	height:48px;
+.result-zone .gallery .item .filename{
+	font-weight: 800;
+	height:36px;
 }
 
 .gallery .item:hover .toolbar{
 	width:100%;
-	height:60px;
-	background: RGBA(206,82,79,0.7);
+	height:100%;
+	background: RGBA(255,255,255,0.5);
 	position: absolute;
 	left:0px;
 	top:0px;

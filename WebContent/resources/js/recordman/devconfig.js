@@ -15,7 +15,7 @@ function update(){
 			call: function(data) {
 				if(data!=null && data.result != null) {
 					if( data.result ){
-						showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));
+						applydfu(doResult);
 					}else{
 						showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
 					}					
@@ -25,4 +25,12 @@ function update(){
 			}
 	};
 	getAjaxData(dataParam,false);
+}
+
+function doResult(result, data){
+	if( data.result == 0 ){
+		showAlert($.i18n.prop('oper_fail'), $.i18n.prop('dfuconf_apply_fail'));
+	}else if( data.result == 1 ){
+		showAlert($.i18n.prop('oper_success'), $.i18n.prop('dfuconf_apply_success'));
+	}
 }

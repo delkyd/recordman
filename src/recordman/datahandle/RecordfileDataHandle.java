@@ -44,10 +44,10 @@ public class RecordfileDataHandle {
 			while( it.hasNext() ){
 				Document doc = it.next();
 				recordfile r = new recordfile();
-				r.setbFaultfile( doc.getInteger("bfaultfile"));
+				r.setbFaultfile( doc.getInteger("bfaultfile")==null?0:doc.getInteger("bfaultfile"));
 				r.setFaultType( doc.getString("fault_type"));
-				r.setFileSize( doc.getInteger("filesize"));
-				r.setMs( doc.getInteger("ms"));
+				r.setFileSize( doc.getInteger("filesize")==null?0:doc.getInteger("filesize"));
+				r.setMs( doc.getInteger("ms")==null?0:doc.getInteger("ms"));
 				r.setName( doc.getString("file_name"));
 				r.setSavePath( doc.getString("save_path"));
 				r.setTriggerTime( doc.getDate("trigger_time"));
