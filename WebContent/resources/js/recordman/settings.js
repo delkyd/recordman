@@ -6,7 +6,7 @@ $(function(){
 		param.oldId = $('#stm_stgroup_oldname').val();
 		param.newId = $('#stm_stgroup_name').val();
 		var dataParam = {
-			    url: rootPath + "/devparam/settings/editstgroup",
+			    url: rootPath + "/mgrparam/settings/editstgroup",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {
@@ -49,7 +49,7 @@ $(function(){
 		param.rate2=$('#sm_set_rate2').val();
 		param.unit2=$('#sm_set_unit2').val();
 		var dataParam = {
-			    url: rootPath + "/devparam/settings/editsetting",
+			    url: rootPath + "/mgrparam/settings/editsetting",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {
@@ -83,7 +83,7 @@ function clearSettings(){
 function fillStgroupList(){
 	var param={};
 	var dataParam = {
-		    url: rootPath + "/devparam/settings/stgroups",
+		    url: rootPath + "/mgrparam/settings/stgroups",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.stgroups != null) {
@@ -115,7 +115,7 @@ function fillSettingList(){
 	var param={};	
 	param.group=$('#stgroups').val();
 	var dataParam = {
-		    url: rootPath + "/devparam/settings/settings",
+		    url: rootPath + "/mgrparam/settings/settings",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.settings != null) {
@@ -170,7 +170,7 @@ function deleteStgroup()
 		var param={};	
 		param.id=id;
 		var dataParam = {
-			    url: rootPath + "/devparam/settings/deletestgroup",
+			    url: rootPath + "/mgrparam/settings/deletestgroup",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {
@@ -194,7 +194,7 @@ function editSetting(group, sid){
 	param.group=group;
 	param.sid=sid;
 	var dataParam = {
-		    url: rootPath + "/devparam/settings/getsetting",
+		    url: rootPath + "/mgrparam/settings/getsetting",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.setting != null) {
@@ -232,7 +232,7 @@ function deleteSetting(group, sid)
 		param.group=group;
 		param.sid=sid;
 		var dataParam = {
-			    url: rootPath + "/devparam/settings/deletesetting",
+			    url: rootPath + "/mgrparam/settings/deletesetting",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {
@@ -254,7 +254,7 @@ function deleteSetting(group, sid)
 function createSetting(){
 	var param={};
 	var dataParam = {
-		    url: rootPath + "/devparam/settings/stgroups",
+		    url: rootPath + "/mgrparam/settings/stgroups",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.stgroups != null) {

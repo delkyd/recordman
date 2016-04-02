@@ -34,25 +34,25 @@ public class LoginController {
 						@RequestParam(required=false) String pwd,
 						Model model, HttpServletRequest request){
 		try{						
-			System.out.println("login method");
-			
-			user u = userdatahandle.find(name, pwd);
-			if( null != u ){
-				request.getSession().setAttribute("user", u);
-				
-				String rootpath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+request.getContextPath();
-				
-				request.getSession().setAttribute("rootPath", rootpath );
-				
-				CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("用户[%s]登录成功", name), request);
-				
-				return "redirect:/runstatus/";
+			if( name.equals("guest")){
+				request.getSession().removeAttribute("user");
+				CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("以游客身份登录系统", name), request);
+				return "redirect:/runview/runstatus/";
 			}else{
-				System.out.println("login failed");
-				model.addAttribute("loginFail", true);
-				CommandMgr.getInstance().sendLog(logmsg.LOG_WARNING, String.format("用户[%s]登录失败", name), request);
-				return "login";
+				user u = userdatahandle.find(name, pwd);
+				if( null != u ){
+					request.getSession().setAttribute("user", u);
+					CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("用户[%s]登录成功", name), request);
+					
+					return "redirect:/runview/runstatus/";
+				}else{
+					System.out.println("login failed");
+					model.addAttribute("loginFail", true);
+					CommandMgr.getInstance().sendLog(logmsg.LOG_WARNING, String.format("用户[%s]登录失败", name), request);
+					return "login";
+				}
 			}
+			
 		}catch( Exception e ){
 			e.printStackTrace();			
 			return "login";

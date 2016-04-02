@@ -54,6 +54,35 @@ public class PublicController {
 		}
 	}
 	
+	@RequestMapping(value="/applydfuconf", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String apply( HttpServletRequest request){
+		try{
+			Map<String, Object> cmdMap = new HashMap<String, Object>();
+			cmdMap.put("command_id", sysconstant.CMD_APPLYDFU);
+			cmdMap.put("file_dir", Config.getInstance().get("Config/conf_tmpdir"));
+			cmdMap.put("file_name", Config.getInstance().get("Config/dfu_conf")+".xml");
+			long rri = CommandMgr.getInstance().sendCommand(JSON.toJSONString(cmdMap));
+			Map<String, Object> finalMap = new HashMap<String, Object>();
+			boolean rs = rri>0;
+			finalMap.put("result", rs);
+			if( rs ){
+				finalMap.put("RRI", rri);
+				CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, "发送下装通信板配置命令成功", request);
+			}else{
+				finalMap.put("reason", errorcode.sendmsg);
+				CommandMgr.getInstance().sendLog(logmsg.LOG_ERROR, "发送下装通信板配置命令失败", request);
+			}
+			String finalJSON = JSON.toJSONString(finalMap);
+			logger.info(finalJSON);
+			return finalJSON;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
 	@RequestMapping(value="/applymgrconf", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String apply(@RequestParam("changes[]") List<String> changes, HttpServletRequest request){
@@ -63,21 +92,20 @@ public class PublicController {
 			cmdMap.put("file_dir", Config.getInstance().get("Config/conf_tmpdir"));
 			cmdMap.put("file_name", Config.getInstance().get("Config/mgr_conf")+".xml");
 			cmdMap.put("changes", changes);
-			long rri = CommandMgr.getInstance().sendCommand(JSON.toJSONString(cmdMap));
+			
+			boolean rs = CommandMgr.getInstance().publishMessage(JSON.toJSONString(cmdMap));
 			Map<String, Object> finalMap = new HashMap<String, Object>();
-			boolean rs = rri>0;
 			finalMap.put("result", rs);
 			if( rs ){
-				finalMap.put("RRI", rri);
 				CommandMgr.getInstance().sendLog(
 						logmsg.LOG_INFO, 
-						String.format("下发更新管理板卡[%s]配置命令成功", changes.toString()), 
+						String.format("发布更新管理板卡[%s]配置命令成功", changes.toString()), 
 						request);
 			}else{
 				finalMap.put("reason", errorcode.sendmsg);
 				CommandMgr.getInstance().sendLog(
 						logmsg.LOG_ERROR, 
-						String.format("下发更新管理板卡[%s]配置命令失败", changes.toString()), 
+						String.format("发布更新管理板卡[%s]配置命令失败", changes.toString()), 
 						request);
 			}
 			String finalJSON = JSON.toJSONString(finalMap);

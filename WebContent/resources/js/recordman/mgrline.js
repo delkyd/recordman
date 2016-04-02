@@ -11,7 +11,7 @@ $(function(){
 		param.oldId = $('#lm_line_oldname').val();
 		param.newId = $('#lm_line_name').val();
 		var dataParam = {
-			    url: rootPath + "/mgrparam/line/editline",
+			    url: rootPath + "/devparam/line/editline",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {
@@ -44,7 +44,7 @@ function saveActiveLine(index){
 function fillLineList(){
 	var param={};
 	var dataParam = {
-		    url: rootPath + "/mgrparam/line/lines",
+		    url: rootPath + "/devparam/line/lines",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.lines != null) {
@@ -99,7 +99,7 @@ function fillLineparam(){
 	var param={};
 	param.id= $('#line').val();
 	var dataParam = {
-		    url: rootPath + "/mgrparam/line/lineparam",
+		    url: rootPath + "/devparam/line/lineparam",
 			param:param,
 			call: function(data) {
 				if(data!=null) {
@@ -147,7 +147,7 @@ function update(){
 	param.uc=$('#line_uc').val();
 	param.u0=$('#line_u0').val();
 	var dataParam = {
-		    url: rootPath + "/mgrparam/line/editlineparam",
+		    url: rootPath + "/devparam/line/editlineparam",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {
@@ -197,7 +197,7 @@ function deleteLine()
 		var param={};	
 		param.id=id;
 		var dataParam = {
-			    url: rootPath + "/mgrparam/line/deleteline",
+			    url: rootPath + "/devparam/line/deleteline",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {

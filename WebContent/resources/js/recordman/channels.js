@@ -69,7 +69,7 @@ function fill(board, index, tkind){
 	param.board=board;
 	param.index=index;
 	var dataParam = {
-		    url: rootPath + "/devparam/channels/query",
+		    url: rootPath + "/mgrparam/channels/query",
 			param:param,
 			call: function(data) {
 				if(data!=null) {
@@ -176,7 +176,7 @@ function update(){
 	param.channel.val=$('#channel_val').val();
 	
 	var dataParam = {
-		    url: rootPath + "/devparam/channels/update",
+		    url: rootPath + "/mgrparam/channels/update",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {

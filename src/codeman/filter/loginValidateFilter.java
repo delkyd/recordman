@@ -48,9 +48,11 @@ public class loginValidateFilter extends HttpServlet implements Filter {
 		// TODO Auto-generated method stub
 		// place your code here
 		HttpServletRequest httpReq = (HttpServletRequest)request;
-		HttpServletResponse httpRes = (HttpServletResponse)response;
 		//System.out.println("request servlet path:"+httpReq.getServletPath());
-		if(	!httpReq.getServletPath().equals("/logon/login") && !httpReq.getServletPath().equals("/") && !(httpReq.getServletPath().indexOf("resources") >=0)){
+		String rootpath = httpReq.getScheme() + "://" + httpReq.getServerName() + ":" + httpReq.getServerPort()+httpReq.getContextPath();		
+		httpReq.getSession().setAttribute("rootPath", rootpath );
+		String servletPath = httpReq.getServletPath();
+		if(	needPermissionLevel(servletPath) > PERMISSION_NONE ){ //需要验证权限
 				if( null == httpReq.getSession().getAttribute("user")){
 					System.out.println(httpReq.getRemoteAddr() + ",login is expired");
 					CommandMgr.getInstance().sendLog(
@@ -58,17 +60,13 @@ public class loginValidateFilter extends HttpServlet implements Filter {
 							String.format("用户登录已过期"), 
 							httpReq);
 					request.getRequestDispatcher("/resources/pages/login.jsp").forward(request, response);
-					
 				}else{
-					if( (httpReq.getServletPath().indexOf("/system") != -1 ||
-							httpReq.getServletPath().indexOf("/devparam") != -1 ||
-							httpReq.getServletPath().indexOf("/mgrparam") != -1 ) && 
-							(null == httpReq.getSession().getAttribute("user") || 
-							((user)httpReq.getSession().getAttribute("user")).getType() < user.USER_TYPE_ADMIN)){
-						System.out.println(httpReq.getRemoteAddr() + ",quest system page,permission denied");
+					if( ( needPermissionLevel(servletPath) == PERMISSION_ADMIN && ((user)httpReq.getSession().getAttribute("user")).getType() < user.USER_TYPE_ADMIN )
+							|| ( needPermissionLevel(servletPath) == PERMISSION_ENGINEER && ((user)httpReq.getSession().getAttribute("user")).getType() < user.USER_TYPE_ENGINEER) ){
+						System.out.println(httpReq.getRemoteAddr() + ",quest '"+servletPath+"',permission denied");
 						CommandMgr.getInstance().sendLog(
 								logmsg.LOG_WARNING, 
-								String.format("试图访问:%s,权限被否定", httpReq.getServletPath()), 
+								String.format("试图访问:%s,权限被否定", servletPath), 
 								httpReq);
 						request.getRequestDispatcher("/resources/pages/login.jsp").forward(request, response);
 					}
@@ -78,6 +76,28 @@ public class loginValidateFilter extends HttpServlet implements Filter {
 			// pass the request along the filter chain
 			chain.doFilter(request, response);
 		}		
+	}
+	
+	private static int PERMISSION_NONE=0;
+	private static int PERMISSION_ADMIN=2;
+	private static int PERMISSION_ENGINEER=3;
+	
+	/** 判断此请求最低需要什么权限
+	 * @param servletPath 请求地址
+	 * @return 需求权限等级。0-无需权限，2-检修人员/管理员，3-工程师
+	 */
+	private int needPermissionLevel(String servletPath){
+		if( servletPath.indexOf("/devparam") != -1 ){
+			return PERMISSION_ADMIN;
+		}
+		if( servletPath.indexOf("/system") != -1 ){
+			return PERMISSION_ADMIN;
+		}
+		if( servletPath.indexOf("/mgrparam") != -1 ){
+			return PERMISSION_ENGINEER;
+		}
+		
+		return PERMISSION_NONE;
 	}
 
 	/**

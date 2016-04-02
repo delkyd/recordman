@@ -40,8 +40,6 @@ public class EncodingFilter implements Filter {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
 		
-		HttpServletRequest httpReq = (HttpServletRequest)request;
-		System.out.println(httpReq.getRequestURI());
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}

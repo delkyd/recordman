@@ -114,7 +114,7 @@ function openitem(path){
 }
 
 function exportitem(path, name){
-	var url = rootPath+"/recordfile/export?filepath="+path+"&filename="+name+"";
+	var url = rootPath+"/runview/recordfile/export?filepath="+path+"&filename="+name+"";
 	url = url.replace(/\#/g, "%23");
 	url = url.replace(/\+/g, "%2B");
 	url = url.replace(/\ /g, "%20");
@@ -129,7 +129,7 @@ function find(){
 	param.startDate = s.format();
 	param.endDate = n.format();
 	var dataParam = {
-		    url: rootPath + "/recordfile/files",
+		    url: rootPath + "/runview/recordfile/files",
 			param:param,
 			call: function(data) {
 				if( data.files != null ){

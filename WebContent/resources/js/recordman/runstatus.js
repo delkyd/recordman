@@ -7,7 +7,7 @@ function RefreshStatus(){
 	var param={};
 
 	var dataParam = {
-			url : rootPath + "/runstatus/all",
+			url : rootPath + "/runview/runstatus/all",
 			param : param,
 			call : function(data){
 				if( data && data.runstatus){

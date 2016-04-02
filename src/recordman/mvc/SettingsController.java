@@ -25,7 +25,7 @@ import recordman.datahandle.CommandMgr;
 import recordman.datahandle.DFUConfHandle;
 
 @Controller
-@RequestMapping("/devparam/settings")
+@RequestMapping("/mgrparam/settings")
 public class SettingsController {
 	private static Logger logger = Logger.getLogger(SettingsController.class);
 	@Inject

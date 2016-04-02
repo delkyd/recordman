@@ -25,7 +25,7 @@ import recordman.datahandle.CommandMgr;
 import recordman.datahandle.DFUConfHandle;
 
 @Controller
-@RequestMapping("/devparam/channels")
+@RequestMapping("/mgrparam/channels")
 public class ChannelsController {
 	private static Logger logger = Logger.getLogger(ChannelsController.class);
 	@Inject

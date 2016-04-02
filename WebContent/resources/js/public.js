@@ -569,7 +569,7 @@ function applydfu(resultFunc){
 	showConfirm($.i18n.prop('dfuconf_apply'), $.i18n.prop('dfuconf_apply_confirm'), function(){
 		var param={};
 		var dataParam = {
-			    url: rootPath + "/devparam/dfuapply/apply",
+			    url: rootPath + "/public/applydfuconf",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {

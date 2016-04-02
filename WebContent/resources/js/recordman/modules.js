@@ -18,7 +18,7 @@ $(function(){
 		param.name = $('#mm_module_name').val();
 		param.kind = $('#mm_module_kind').val();
 		var dataParam = {
-			    url: rootPath + "/devparam/modules/editmoduleattr",
+			    url: rootPath + "/mgrparam/modules/editmoduleattr",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {
@@ -51,7 +51,7 @@ $(function(){
 		param.type='Configs';
 		param.moduleId=getActiveModule();
 		var dataParam = {
-			    url: rootPath + "/devparam/modules/editmoduleitem",
+			    url: rootPath + "/mgrparam/modules/editmoduleitem",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {
@@ -81,7 +81,7 @@ $(function(){
 		param.type='Params';
 		param.moduleId=getActiveModule();
 		var dataParam = {
-			    url: rootPath + "/devparam/modules/editmoduleitem",
+			    url: rootPath + "/mgrparam/modules/editmoduleitem",
 				param:param,
 				call: function(data) {
 					if(data!=null && data.result != null) {
@@ -162,7 +162,7 @@ function fillModuleList(){
 	var param={};
 	param.kind = $('#module_kind').val();
 	var dataParam = {
-		    url: rootPath + "/devparam/modules/modulelist",
+		    url: rootPath + "/mgrparam/modules/modulelist",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.modulelist != null) {
@@ -208,7 +208,7 @@ function fillModuleList(){
 						var param={};
 						param.id = getActiveModule();
 						var dataParam = {
-							    url: rootPath + "/devparam/modules/moduleattr",
+							    url: rootPath + "/mgrparam/modules/moduleattr",
 								param:param,
 								call: function(data) {
 									if(data!=null && data.module != null) {
@@ -246,7 +246,7 @@ function fillModuleItems(){
 	var param={};
 	param.id = getActiveModule();
 	var dataParam = {
-		    url: rootPath + "/devparam/modules/moduleitems",
+		    url: rootPath + "/mgrparam/modules/moduleitems",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.moduleitems != null) {
@@ -342,7 +342,7 @@ function fillModuleItems(){
 							param.moduleId = getActiveModule();
 							param.id = getActiveModuleParam();
 							var dataParam = {
-								    url: rootPath + "/devparam/modules/moduleitem",
+								    url: rootPath + "/mgrparam/modules/moduleitem",
 									param:param,
 									call: function(data) {
 										if(data!=null && data.moduleItem != null) {
@@ -372,7 +372,7 @@ function deleteModule(id){
 	var param={};
 	param.id=id;
 	var dataParam = {
-		    url: rootPath + "/devparam/modules/deletemodule",
+		    url: rootPath + "/mgrparam/modules/deletemodule",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {
@@ -393,7 +393,7 @@ function deleteModuleItem(id){
 	var param={};
 	param.id=id;
 	var dataParam = {
-		    url: rootPath + "/devparam/modules/deletemoduleitem",
+		    url: rootPath + "/mgrparam/modules/deletemoduleitem",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {
@@ -434,7 +434,7 @@ function findGroup(moduleId, moduleName, e){
 	var param={};
 	param.group=moduleName;
 	var dataParam = {
-		    url: rootPath + "/devparam/settings/findgroup",
+		    url: rootPath + "/mgrparam/settings/findgroup",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {
@@ -456,7 +456,7 @@ function createSettings(moduleId){
 	var param={};
 	param.id=moduleId;
 	var dataParam = {
-		    url: rootPath + "/devparam/modules/craetesettings",
+		    url: rootPath + "/mgrparam/modules/craetesettings",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {
@@ -499,7 +499,7 @@ function createLine(moduleId){
 	var param={};
 	param.id=moduleId;
 	var dataParam = {
-		    url: rootPath + "/devparam/modules/craeteline",
+		    url: rootPath + "/mgrparam/modules/craeteline",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {

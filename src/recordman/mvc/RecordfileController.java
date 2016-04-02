@@ -27,7 +27,7 @@ import recordman.datahandle.RecordfileDataHandle;
 import recordman.datahandle.ZipUtil;
 
 @Controller
-@RequestMapping("/recordfile")
+@RequestMapping("/runview/recordfile")
 public class RecordfileController {
 	private static Logger logger = Logger.getLogger(RecordfileController.class);
 	

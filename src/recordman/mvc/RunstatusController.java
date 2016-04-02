@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSON;
 import recordman.datahandle.RunstatusDataHandle;
 
 @Controller
-@RequestMapping("/runstatus")
+@RequestMapping("/runview/runstatus")
 public class RunstatusController {
 	private static Logger logger = Logger.getLogger(RunstatusController.class);
 	

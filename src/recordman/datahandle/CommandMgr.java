@@ -1,6 +1,8 @@
 package recordman.datahandle;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,23 +36,42 @@ public class CommandMgr {
 	private String LOG_EXCHANGE_NAME="DIRECT_LOGS";
 	private String SEND_QUEUE="DATA_COLLECTOR_COMMAND_QUEUE";
 	private String RECEIVE_QUEUE="WEB_RECEIVE_RESULT_QUEUE";
+	private String MESSAGE_PUBLISH_EXCHANGE="MESSAGE_PUBLISH_EXCHANGE";
 	private String rabbit_addr=null;
 	private int rabbit_port=5672;
+	private String APPID="WEBAPP";
 	
 	private CommandMgr(){
 		ConfigHandle confHandle = new ConfigHandle();
 		LOG_EXCHANGE_NAME=confHandle.getValue("rabbit_mq_advance_config/log_exchange");
 		SEND_QUEUE = confHandle.getValue("rabbit_mq_advance_config/collector_recv_queue");
 		RECEIVE_QUEUE = confHandle.getValue("rabbit_mq_advance_config/web_result_queue");
+		MESSAGE_PUBLISH_EXCHANGE = confHandle.getValue("rabbit_mq_advance_config/message_publish_exchange");
 		rabbit_addr = confHandle.getValue("rabbit_mq_base_config/addr");
 		rabbit_port = DTF.StringToInt(confHandle.getValue("rabbit_mq_base_config/port"));
+		Date now = new Date();
+		String hostname="";
+		try {
+			InetAddress net = InetAddress.getLocalHost();
+			hostname = net.getHostName();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		APPID = String.format("%s.%s#%d", APPID, hostname, now.getTime());
 		receiveCommandResult();
+		receivePublishMessage();
 		cleanTimer.schedule(new CleanTask(), cleanPeriod, cleanPeriod);
 	}
 	
 	protected void  finalize(){
 		System.out.println("release command mgr");
 		cleanTimer.cancel();
+		stopReceiveCommandResult();
+		stopReceivePublishMsg();
+	}
+	
+	private void stopReceiveCommandResult(){
 		if( null != recv_channel ){
 			try {
 				recv_channel.close();
@@ -63,6 +84,27 @@ public class CommandMgr {
 		if( null != recv_connection ){
 			try {
 				recv_connection.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void stopReceivePublishMsg(){
+		if( null != mp_channel ){
+			try {
+				mp_channel.close();
+				mp_channel=null;
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TimeoutException e) {
+				e.printStackTrace();
+			}
+		}
+		if( null != mp_connection ){
+			try {
+				mp_connection.close();
+				mp_connection = null;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -100,7 +142,7 @@ public class CommandMgr {
 										.build();
 			CommandMgr.getInstance().addCommand(cid);
 			channel.basicPublish("", SEND_QUEUE, props, msg.getBytes(defaultEncoding));
-			logger.info(" [x] Sent:"+msg+".");			
+			logger.info(" [x] Sent Command:"+msg+".");			
 			channel.close();
 			connection.close();
 			return cid;
@@ -112,6 +154,36 @@ public class CommandMgr {
 			e.printStackTrace();
 			logger.error(e.toString());
 			return -1;
+		}
+	}
+	
+	public boolean publishMessage(String msg){
+		try{
+			ConnectionFactory factory = new ConnectionFactory();
+			factory.setHost(rabbit_addr);
+			factory.setPort(rabbit_port);
+			Connection connection = factory.newConnection();
+			Channel channel = connection.createChannel();
+			
+			channel.exchangeDeclare(MESSAGE_PUBLISH_EXCHANGE, "fanout");
+			BasicProperties props = new BasicProperties.Builder()
+										.appId(APPID)
+										.contentEncoding(defaultEncoding)
+										.build();
+			channel.basicPublish(MESSAGE_PUBLISH_EXCHANGE, "", props, msg.getBytes(defaultEncoding));
+			logger.info(" [x] publish message:" + msg + ".");
+			
+			channel.close();
+	        connection.close();
+	        return true;
+		}catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
 		}
 	}
 	
@@ -187,6 +259,49 @@ public class CommandMgr {
 		        }
 		    };
 		    recv_channel.basicConsume(RECEIVE_QUEUE, true, consumer);
+		    return "";
+		}catch( Exception e ){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private Connection mp_connection = null;
+	private Channel mp_channel = null;
+	
+	public String receivePublishMessage(){
+		try{
+			ConnectionFactory factory = new ConnectionFactory();
+			factory.setHost(rabbit_addr);
+			factory.setPort(rabbit_port);
+			mp_connection = factory.newConnection();
+			mp_channel = mp_connection.createChannel();
+		    
+			mp_channel.exchangeDeclare(MESSAGE_PUBLISH_EXCHANGE, "fanout");
+		    String queueName = mp_channel.queueDeclare().getQueue();
+		    mp_channel.queueBind(queueName, MESSAGE_PUBLISH_EXCHANGE, "");
+		    
+		    logger.info(" [*] Waiting for publish message.");
+
+		    Consumer consumer = new DefaultConsumer(mp_channel) {
+		      @Override
+		      public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
+		          throws IOException {
+		    	  	try{
+		    	  		System.out.println("app id:"+properties.getAppId());
+		    	  		if( APPID.equals(properties.getAppId())){
+		    	  			System.out.println("receive self-published message");
+		    	  		}else{
+		    	  			String message = new String(body, properties.getContentEncoding()==null?defaultEncoding:properties.getContentEncoding());
+				        	logger.info(" [x] Received  publish message:"+ message + ".");	
+		    	  		}		    	  				        	
+		    	  	}catch(Exception e){
+		    	  		e.printStackTrace();
+		    	  		logger.error(e.toString());
+		    	  	}
+		        }
+		    };
+		    mp_channel.basicConsume(queueName, true, consumer);
 		    return "";
 		}catch( Exception e ){
 			e.printStackTrace();
