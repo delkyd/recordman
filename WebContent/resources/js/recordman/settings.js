@@ -83,7 +83,7 @@ function clearSettings(){
 function fillStgroupList(){
 	var param={};
 	var dataParam = {
-		    url: rootPath + "/mgrparam/settings/stgroups",
+		    url: rootPath + "/dataloader/settings/stgroups",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.stgroups != null) {
@@ -115,7 +115,7 @@ function fillSettingList(){
 	var param={};	
 	param.group=$('#stgroups').val();
 	var dataParam = {
-		    url: rootPath + "/mgrparam/settings/settings",
+		    url: rootPath + "/dataloader/settings/settings",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.settings != null) {
@@ -194,7 +194,7 @@ function editSetting(group, sid){
 	param.group=group;
 	param.sid=sid;
 	var dataParam = {
-		    url: rootPath + "/mgrparam/settings/getsetting",
+		    url: rootPath + "/dataloader/settings/getsetting",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.setting != null) {
@@ -254,7 +254,7 @@ function deleteSetting(group, sid)
 function createSetting(){
 	var param={};
 	var dataParam = {
-		    url: rootPath + "/mgrparam/settings/stgroups",
+		    url: rootPath + "/dataloader/settings/stgroups",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.stgroups != null) {

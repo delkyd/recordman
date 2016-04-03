@@ -29,6 +29,7 @@
 				<c:if test="${empty user}">
 					<li id='nav_runstatus'><a href="<%=request.getContextPath()%>/runview/runstatus/"><fmt:message key="nav_runstatus" bundle="${bundle }"/></a></li>				
 					<li id='nav_faultrecord'><a href="<%=request.getContextPath()%>/runview/recordfile/"><fmt:message key="nav_faultrecord" bundle="${bundle }"/></a></li>
+					<li id='nav_manualrecord'><a href="<%=request.getContextPath()%>/runview/manualrecord/"><fmt:message key="nav_manualrecord" bundle="${bundle }"/></a></li>
 				</c:if>
 				<c:if test="${!empty user && user.type==2}">
 					<li><a href="<%=request.getContextPath()%>/devparam/devconfig/"><fmt:message key="nav_setup_dev" bundle="${bundle }"/></a></li>							

@@ -15,36 +15,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import codeman.util.DTF;
+
 import com.alibaba.fastjson.JSON;
 
 import recordman.bean.errorcode;
+import recordman.bean.ethernet;
 import recordman.bean.logmsg;
 import recordman.bean.protocol;
 import recordman.datahandle.CommandMgr;
 import recordman.datahandle.ConfigHandle;
 
 @Controller
-@RequestMapping("/mgrparam/network")
+@RequestMapping("/devparam/mgrnetwork")
 public class MgrnetworkController {
 	private static Logger logger = Logger.getLogger(MgrnetworkController.class);
 	@Inject
 	ConfigHandle handle;
-	
-	@RequestMapping(value="/")
-	public String show(Model model, HttpServletRequest request){
-		List<protocol> ps = handle.getProtocols();
-		if( null == ps || ps.size() == 0){
-			CommandMgr.getInstance().sendLog(logmsg.LOG_WARNING, "管理板缺少网络配置信息", request);
-		}
-		model.addAttribute("protocols", ps );
-		return "recordman/mgrnetwork";
-	}
-	
+
 	@RequestMapping(value="/find", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String getDetail( @RequestParam String id, HttpServletRequest request ){
 		try{
-			protocol p = handle.getProtocol(id);
+			ethernet p = handle.getProtocol(DTF.StringToInt(id) );
 			if( null == p ){
 				CommandMgr.getInstance().sendLog(
 						logmsg.LOG_WARNING, 
@@ -63,7 +56,7 @@ public class MgrnetworkController {
 	
 	@RequestMapping(value="/update", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String update(@ModelAttribute protocol p, HttpServletRequest request){
+	public String update(@ModelAttribute ethernet p, HttpServletRequest request){
 		try{
 			Map<String, Object> finalMap = new HashMap<String, Object>();
 			boolean rs = handle.editProtocol(p);

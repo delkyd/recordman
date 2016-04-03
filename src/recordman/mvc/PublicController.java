@@ -56,7 +56,7 @@ public class PublicController {
 	
 	@RequestMapping(value="/applydfuconf", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String apply( HttpServletRequest request){
+	public String applydfuconf( HttpServletRequest request){
 		try{
 			Map<String, Object> cmdMap = new HashMap<String, Object>();
 			cmdMap.put("command_id", sysconstant.CMD_APPLYDFU);
@@ -85,7 +85,7 @@ public class PublicController {
 	
 	@RequestMapping(value="/applymgrconf", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public String apply(@RequestParam("changes[]") List<String> changes, HttpServletRequest request){
+	public String applymgrconf(@RequestParam("changes[]") List<String> changes, HttpServletRequest request){
 		try{
 			Map<String, Object> cmdMap = new HashMap<String, Object>();
 			cmdMap.put("command_id", sysconstant.CMD_APPLYMGR);
@@ -143,6 +143,39 @@ public class PublicController {
 				CommandMgr.getInstance().sendLog(
 						logmsg.LOG_ERROR, 
 						String.format("下发更新时间及时区的命令失败,时间:[%d],时区:[%d]", nanosecond, time_zone), 
+						request);
+			}
+			String finalJSON = JSON.toJSONString(finalMap);
+			logger.info(finalJSON);
+			return finalJSON;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
+	@RequestMapping(value="/manualrecord", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String manualrecord(HttpServletRequest request){
+		try{
+			Map<String, Object> cmdMap = new HashMap<String, Object>();
+			cmdMap.put("command_id", sysconstant.CMD_MANUALRECORD);
+			long rri = CommandMgr.getInstance().sendCommand(JSON.toJSONString(cmdMap));
+			Map<String, Object> finalMap = new HashMap<String, Object>();
+			boolean rs = rri>0;
+			finalMap.put("result", rs);
+			if( rs ){
+				finalMap.put("RRI", rri);
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_INFO, 
+						String.format("下发手工触发录波命令成功"), 
+						request);
+			}else{
+				finalMap.put("reason", errorcode.sendmsg);
+				CommandMgr.getInstance().sendLog(
+						logmsg.LOG_ERROR, 
+						String.format("下发手工触发录波命令失败"), 
 						request);
 			}
 			String finalJSON = JSON.toJSONString(finalMap);

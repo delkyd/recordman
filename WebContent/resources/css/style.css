@@ -114,7 +114,7 @@ footer p {
 	margin-right: 0.3em;
 }
 
-.desktop-header ul a {
+.desktop-header > ul > a, .desktop-header > ul > li > a {
     color: #555;
     display: inline-block;
     line-height: 48px;
@@ -122,13 +122,13 @@ footer p {
     text-decoration: none;
 }
 
-.desktop-header ul{
+.desktop-header > ul{
 	list-style: outside none none;
 	margin:0px;
 	float:left;
 }
 
-.desktop-header li{
+.desktop-header > ul > li{
 	display:inline;
 }
 
@@ -878,7 +878,7 @@ fieldset[disabled] .customBtn {
 
 /*modules*/
 .editableListgroup .list-group .list-group-item{
-	padding:5px 15px;
+	padding:10px 15px;
 }
 .editableListgroup .list-group .list-group-item span{
 	cursor: default;

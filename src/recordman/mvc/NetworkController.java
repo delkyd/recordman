@@ -25,7 +25,7 @@ import recordman.datahandle.CommandMgr;
 import recordman.datahandle.DFUConfHandle;
 
 @Controller
-@RequestMapping("/devparam/network")
+@RequestMapping("/devparam/dfunetwork")
 public class NetworkController {
 	private static Logger logger = Logger.getLogger(DevconfigController.class);
 	

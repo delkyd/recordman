@@ -1,8 +1,5 @@
 package recordman.mvc;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.alibaba.fastjson.JSON;
 
 import recordman.bean.logmsg;
 import recordman.bean.user;
@@ -43,7 +38,11 @@ public class LoginController {
 				if( null != u ){
 					request.getSession().setAttribute("user", u);
 					CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("用户[%s]登录成功", name), request);
-					
+					if( u.getType() == user.USER_TYPE_ADMIN){
+						return "redirect:/devparam/devconfig/";
+					}else if( u.getType() == user.USER_TYPE_ENGINEER){
+						return "redirect:/devparam/devconfig/";
+					}
 					return "redirect:/runview/runstatus/";
 				}else{
 					System.out.println("login failed");

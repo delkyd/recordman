@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import codeman.util.Config;
 import codeman.util.DTF;
+import recordman.bean.ethernet;
 import recordman.bean.fileconf;
 import recordman.bean.lineparam;
 import recordman.bean.logconf;
@@ -234,30 +235,30 @@ public class ConfigHandle {
 		}
 	}
 	
-	public List<protocol> getProtocols(){
+	public List<ethernet> getProtocols(){
 		try{
 			Document doc = ConfigDao.getInstance().getDocument();
 			String path = ROOTNODE+"outward_commu_protocol_config/protocol";
-			List<protocol> arr = new ArrayList<protocol>();
+			List<ethernet> arr = new ArrayList<ethernet>();
 			List list = doc.selectNodes(path);
 			for( Object o : list){
 				Element e = (Element)o;
-				protocol p = new protocol();
+				ethernet p = new ethernet();
 				Element child = e.element("id");
 				if( null != child ){
-					p.setId( child.getText() );
+					p.setIndex( DTF.StringToInt(child.getText()));
 				}
 				child = e.element("name");
 				if( null != child ){
-					p.setName( child.getText() );
+					p.setProtocol( child.getText() );
 				}
 				child = e.element("net_card");
 				if( null != child ){
-					p.setNetcard( child.getText() );
+					p.setName( child.getText() );
 				}
 				child = e.element("addr");
 				if( null != child ){
-					p.setAddr( child.getText() );
+					p.setIp( child.getText() );
 				}
 				child = e.element("net_mask");
 				if( null != child ){
@@ -269,7 +270,7 @@ public class ConfigHandle {
 				}
 				child = e.element("gateway");
 				if( null != child ){
-					p.setGateway( child.getText() );
+					p.setGate( child.getText() );
 				}
 				arr.add(p);
 			}
@@ -281,30 +282,30 @@ public class ConfigHandle {
 		}
 	}
 	
-	public protocol getProtocol(String id){
+	public ethernet getProtocol(int id){
 		try{
 			Document doc = ConfigDao.getInstance().getDocument();
-			String path = ROOTNODE+String.format("outward_commu_protocol_config/protocol[id='%s']", id);
+			String path = ROOTNODE+String.format("outward_commu_protocol_config/protocol[id='%d']", id);
 			Element e = (Element)doc.selectSingleNode(path);
 			if( null == e ){
 				return null;
 			}
-			protocol p = new protocol();
+			ethernet p = new ethernet();
 			Element child = e.element("id");
 			if( null != child ){
-				p.setId( child.getText() );
+				p.setIndex( DTF.StringToInt(child.getText()));
 			}
 			child = e.element("name");
 			if( null != child ){
-				p.setName( child.getText() );
+				p.setProtocol( child.getText() );
 			}
 			child = e.element("net_card");
 			if( null != child ){
-				p.setNetcard( child.getText() );
+				p.setName( child.getText() );
 			}
 			child = e.element("addr");
 			if( null != child ){
-				p.setAddr( child.getText() );
+				p.setIp( child.getText() );
 			}
 			child = e.element("net_mask");
 			if( null != child ){
@@ -316,7 +317,7 @@ public class ConfigHandle {
 			}
 			child = e.element("gateway");
 			if( null != child ){
-				p.setGateway( child.getText() );
+				p.setGate( child.getText() );
 			}
 			return p;
 		}catch(Exception e){
@@ -326,13 +327,13 @@ public class ConfigHandle {
 		}
 	}
 	
-	public boolean editProtocol( protocol p ){
+	public boolean editProtocol( ethernet p ){
 		try{
 			if( null == p ){
 				return false;
 			}
 			Document doc = ConfigDao.getInstance().getDocument();
-			String path = ROOTNODE+String.format("outward_commu_protocol_config/protocol[id='%s']", p.getId());
+			String path = ROOTNODE+String.format("outward_commu_protocol_config/protocol[id='%d']", p.getIndex());
 			Element e = (Element)doc.selectSingleNode(path);
 			if( null == e ){
 				path = ROOTNODE+"outward_commu_protocol_config/protocol";
@@ -347,7 +348,7 @@ public class ConfigHandle {
 				child = e.addElement("id");
 			}
 			if( null != child ){
-				child.setText( p.getId() );
+				child.setText( String.valueOf(p.getIndex()) );
 			}
 			
 			child = e.element("name");
@@ -355,7 +356,7 @@ public class ConfigHandle {
 				child = e.addElement("name");
 			}
 			if( null != child ){
-				child.setText( p.getName() );
+				child.setText( p.getProtocol() );
 			}
 			
 			child = e.element("net_card");
@@ -363,7 +364,7 @@ public class ConfigHandle {
 				child = e.addElement("net_card");
 			}
 			if( null != child ){
-				child.setText( p.getNetcard() );
+				child.setText( p.getName() );
 			}
 			
 			child = e.element("addr");
@@ -371,7 +372,7 @@ public class ConfigHandle {
 				child = e.addElement("addr");
 			}
 			if( null != child ){
-				child.setText( p.getAddr() );
+				child.setText( p.getIp() );
 			}
 			
 			child = e.element("net_mask");
@@ -395,7 +396,7 @@ public class ConfigHandle {
 				child = e.addElement("gateway");
 			}
 			if( null != child ){
-				child.setText( p.getGateway() );
+				child.setText( p.getGate() );
 			}
 			return true;
 			

@@ -11,7 +11,7 @@ $(function(){
 function fillStgroupList(){
 	var param={};
 	var dataParam = {
-		    url: rootPath + "/devparam/settings/stgroups",
+		    url: rootPath + "/dataloader/settings/stgroups",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.stgroups != null) {
@@ -36,7 +36,7 @@ function fillSettingList(){
 	var param={};	
 	param.group=$('#stgroups').val();
 	var dataParam = {
-		    url: rootPath + "/devparam/settings/settings",
+		    url: rootPath + "/dataloader/settings/settings",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.settings != null) {

@@ -8,4 +8,6 @@ public class sysconstant {
 	public static final int CMD_APPLYMGR_RE=20071;
 	public static final int CMD_APPLYTIME=20021;
 	public static final int CMD_APPLYTIME_RE=20022;
+	public static final int CMD_MANUALRECORD=20025;
+	public static final int CMD_MANUALRECORD_RE=20026;
 }
