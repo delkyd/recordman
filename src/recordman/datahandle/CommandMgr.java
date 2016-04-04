@@ -64,11 +64,11 @@ public class CommandMgr {
 		cleanTimer.schedule(new CleanTask(), cleanPeriod, cleanPeriod);
 	}
 	
-	protected void  finalize(){
-		System.out.println("release command mgr");
+	public void  stop(){
 		cleanTimer.cancel();
 		stopReceiveCommandResult();
 		stopReceivePublishMsg();
+		System.out.println("command mgr released");
 	}
 	
 	private void stopReceiveCommandResult(){
