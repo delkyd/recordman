@@ -90,6 +90,28 @@ public class DevconfigController {
 		}
 	}
 	
+	@RequestMapping(value="/getethernets", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String getEthernets( HttpServletRequest request ){
+		try{
+			List<ethernet> dfueths = dfuhandle.getNetworkInfo();
+			List<ethernet> mgreths = mgrhandle.getProtocols();
+			
+			List<ethernet> alleths = new ArrayList<ethernet>();
+			alleths.addAll(dfueths);
+			alleths.addAll(mgreths);
+			Map<String, Object> finalMap = new HashMap<String, Object>();
+			finalMap.put("ethernets", alleths);
+			String finalJSON = JSON.toJSONString(finalMap);
+			logger.info(finalJSON);
+			return finalJSON;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
 	@RequestMapping(value="/findethernet", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String getDetail( @RequestParam int index, HttpServletRequest request ){
@@ -142,7 +164,7 @@ public class DevconfigController {
 				}else{
 					saveResult = mgrhandle.save();
 				}
-				if( saveResult ){
+				if( false == saveResult ){
 					rs = false;
 					finalMap.put("reason", errorcode.savetofile);
 					CommandMgr.getInstance().sendLog(

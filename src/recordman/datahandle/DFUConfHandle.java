@@ -1,8 +1,12 @@
 package recordman.datahandle;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Component;
 import codeman.util.Config;
 import codeman.util.DTF;
 import recordman.bean.channel;
+import recordman.bean.channelmap;
 import recordman.bean.devconf;
 import recordman.bean.ethernet;
 import recordman.bean.lineparam;
@@ -28,6 +33,8 @@ public class DFUConfHandle {
 	// 输出日志文件
 	private static Logger logger = Logger.getLogger(DFUConfHandle.class);
 	
+	private static int AI_BOARD_NUM=6;
+	
 	public boolean save(){
 		try{
 			return XMLDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_tmpdir")
@@ -37,6 +44,10 @@ public class DFUConfHandle {
 			logger.error(e.toString());
 			return false;
 		}
+	}
+	
+	protected void  finalize(){
+		System.out.println("dfuconfhandle close");
 	}
 	
 	public boolean rewrite(){
@@ -284,6 +295,20 @@ public class DFUConfHandle {
 		}
 	}
 	
+	public List<channel> getChannels(int board){
+		try{
+			if( board <= AI_BOARD_NUM ){
+				return getAIChannels(board);
+			}else{
+				return getDIChannels(board);
+			}
+		}catch( Exception e ){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
 	/**
 	 * @param type A表示电流通道，V表示电压通道
 	 * @return
@@ -300,6 +325,82 @@ public class DFUConfHandle {
 				String unit = e.attributeValue("unit");
 				unit = unit.toUpperCase();
 				if( unit.indexOf(type) >= 0 ){
+					channel c = new channel();
+					c.setId( e.attributeValue("id"));
+					c.setName( e.attributeValue("name"));
+					arr.add(c);
+				}
+			}
+			return arr;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
+	public List<channel> getAIChannels(int board){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = "/LeyunDevices/Channels/AIs/AI";
+			
+			List<channel> arr = new ArrayList<channel>();
+			List list = doc.selectNodes(xpath);
+			String id=String.format("%dA", board);
+			for( Object o : list){
+				Element e = (Element)o;
+				String cid = e.attributeValue("id");
+				if( cid.indexOf(id) >= 0 ){
+					channel c = new channel();
+					c.setId( e.attributeValue("id"));
+					c.setName( e.attributeValue("name"));
+					c.setKind( e.getName() );
+					c.setUnit( e.attributeValue("unit"));
+					c.setRate1( e.attributeValue("rate1"));
+					c.setUnit1( e.attributeValue("unit1"));
+					c.setRate2( e.attributeValue("rate2"));
+					c.setUnit2( e.attributeValue("unit2"));
+					arr.add(c);
+				}
+			}
+			return arr;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
+	public List<channel> getDIChannels(int board){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = "/LeyunDevices/Channels/BIs/BI";
+			
+			List<channel> arr = new ArrayList<channel>();
+			List list = doc.selectNodes(xpath);
+			String id=String.format("%dD", board-AI_BOARD_NUM-1);
+			for( Object o : list){
+				Element e = (Element)o;
+				String cid = e.attributeValue("id");
+				if( cid.indexOf(id) >= 0 ){
+					channel c = new channel();
+					c.setId( e.attributeValue("id"));
+					c.setName( e.attributeValue("name"));
+					c.setKind( e.getName() );
+					if( null != e.attributeValue("val")){
+						c.setVal( DTF.StringToInt(e.attributeValue("val")));
+					}
+					arr.add(c);
+				}
+			}
+			
+			xpath = "/LeyunDevices/Channels/BOs/BO";
+			
+			list = doc.selectNodes(xpath);
+			for( Object o : list){
+				Element e = (Element)o;
+				String cid = e.attributeValue("id");
+				if( cid.indexOf(id) >= 0 ){
 					channel c = new channel();
 					c.setId( e.attributeValue("id"));
 					c.setName( e.attributeValue("name"));
@@ -344,6 +445,100 @@ public class DFUConfHandle {
 		}
 	}
 	
+	public boolean editChannelInfoSimple( channel c ){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Channels/%ss/%s[@id='%s']", c.getKind(), c.getKind(), c.getId());
+			Element e = (Element)doc.selectSingleNode(xpath);
+			if( null == e ){
+				xpath = String.format("/LeyunDevices/Channels/%ss/%s", c.getKind(), c.getKind());
+				e = XMLDao.getInstance().createXPathElement(xpath);
+			}
+			if( null == e )
+				return false;
+			e.addAttribute("id", c.getId());
+			e.addAttribute("name", c.getName());
+			
+			return true;
+		}catch( Exception e ){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	public Map<String, Boolean> getChannelMaps(int board){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@board='%d']", board);
+			List list = doc.selectNodes(xpath);
+			Map<String, Boolean> maps = new HashMap<String, Boolean>();
+			for( Object o : list){
+				Element e = (Element)o;
+				maps.put(e.attributeValue("id"), true);
+			}
+			return maps;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return null;
+		}
+	}
+	
+	public boolean sortChannelMaps(){
+		if( !sortChannelMaps("AI")){
+			return false;
+		}
+		if( !sortChannelMaps("BI")){
+			return false;
+		}
+		if( !sortChannelMaps("BO")){
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean sortChannelMaps(String type){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/ChannelMap/%ss",type);
+			Element parent = (Element) doc.selectSingleNode(xpath);
+			if( null != parent){
+				List<Element> list = (List<Element>)parent.elements();
+				if( list != null && list.size() > 0 ){
+					List<channelmap> maplist = new ArrayList<channelmap>();
+					for( Element ele : list ){
+						channelmap cm = new channelmap();
+						cm.setId(ele.attributeValue("id"));
+						cm.setBoard(ele.attributeValue("board"));
+						cm.setIndex(ele.attributeValue("index"));
+						maplist.add(cm);
+					}
+					Collections.sort(maplist, new Comparator<channelmap>(){
+						public int compare(channelmap o1, channelmap o2) {
+							return o1.getId().compareTo(o2.getId());
+						}
+					});
+					
+					XMLDao.getInstance().deleteChildren(parent);					
+					
+					for( channelmap c : maplist ){
+						Element e = parent.addElement("Item");
+						e.addAttribute("id", c.getId());
+						e.addAttribute("board", c.getBoard());
+						e.addAttribute("index", c.getIndex());
+					}
+				}
+			}
+			
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
 	/** 根据板块号和端子号取得对应的通道ID
 	 * @param board 板卡号
 	 * @param index 端子号
@@ -354,6 +549,7 @@ public class DFUConfHandle {
 			Document doc = XMLDao.getInstance().getDocument();
 			String xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@board='%d' and @index='%d']", board, index);
 			Element e = (Element)doc.selectSingleNode(xpath);
+
 			if( null == e )
 				return null;
 			return e.attributeValue("id");
@@ -364,7 +560,31 @@ public class DFUConfHandle {
 		}
 	}
 	
-	public boolean editChannelMap(int board, int index, String id){
+	public boolean editChannelMap(String channelId){
+		String id = channelId;
+		String boardId="";
+		String terminalId="";
+		if( id.indexOf('A') >= 0 ){
+			String[] ids = id.split("A");
+			if( ids.length == 2 ){
+				boardId = ids[0];
+				terminalId=ids[1];
+				return editChannelMap(DTF.StringToInt(boardId), 
+						DTF.StringToInt(terminalId), id);
+			}
+		}else if( id.indexOf('D') >= 0 ){
+			String[] ids = id.split("D");
+			if( ids.length == 2 ){
+				boardId = ids[0];
+				terminalId=ids[1];
+				return editChannelMap(DTF.StringToInt(boardId), 
+						DTF.StringToInt(terminalId), id);
+			}
+		}
+		return false;
+	}
+	
+	public boolean deleteChannelMap(String id){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
 			String xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@id='%s']", id);
@@ -377,7 +597,18 @@ public class DFUConfHandle {
 					return false;
 				}
 			}
-			xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@board='%d' and @index='%d']", board, index);
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	public boolean editChannelMap(int board, int index, String id){
+		try{
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@board='%d' and @index='%d']", board, index);
 			Element e = (Element)doc.selectSingleNode(xpath);
 			if( null == e ){
 				terminal t = getTerminalInfo(board, index);
@@ -388,6 +619,7 @@ public class DFUConfHandle {
 			}
 			if( null == e )
 				return false;
+
 			e.addAttribute("id", id);
 			e.addAttribute("board", String.valueOf(board));
 			e.addAttribute("index", String.valueOf(index));

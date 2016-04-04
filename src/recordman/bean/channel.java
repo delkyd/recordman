@@ -18,6 +18,7 @@ public class channel {
 	private String rate2=null;
 	private String unit2=null;
 	private int val=0;
+	private boolean enable=false;
 	public String getId() {
 		return id;
 	}
@@ -87,6 +88,12 @@ public class channel {
 	}
 	public void setVal(int val) {
 		this.val = val;
+	}
+	public boolean isEnable() {
+		return enable;
+	}
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 	
 	

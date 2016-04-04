@@ -286,7 +286,7 @@ function fillModuleItems(){
 							param.moduleId = getActiveModule();
 							param.id = getActiveModuleConfig();
 							var dataParam = {
-								    url: rootPath + "/devparam/modules/moduleitem",
+								    url: rootPath + "/mgrparam/modules/moduleitem",
 									param:param,
 									call: function(data) {
 										if(data!=null && data.moduleItem != null) {

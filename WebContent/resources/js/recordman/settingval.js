@@ -46,18 +46,13 @@ function fillSettingList(){
 						html += "<tr>"						
 						html += "<td>"+s.group+"</td>";
 						html += "<td>"+s.name+"</td>";
-						html += "<td>"+(validateVar(s.unit)?s.unit:"")+"</td>";
 						html += "<td>"+s.type+"</td>";
 						html += "<td>"+"<input type='text' data-sid=\""+ s.sid +"\" data-group=\""+ s.group+"\" data-oldvalue=\""+
 						s.val+"\" data-orivalue=\""+s.val+"\" class='settingvalue' value='"+s.val+"' onChange=checkValidate(event,\""+s.type+"\",\""
-						+s.min+"\",\""+s.max+"\",\""+s.step+"\")></td>";
+						+s.min+"\",\""+s.max+"\",\""+s.step+"\")>&nbsp"+(validateVar(s.unit)?s.unit:"")+"</td>";						
 						html += "<td>"+(validateVar(s.max)?s.max:"")+"</td>";
 						html += "<td>"+(validateVar(s.min)?s.min:"")+"</td>";
 						html += "<td>"+(validateVar(s.step)?s.step:"")+"</td>";
-						html += "<td>"+(validateVar(s.rate1)?s.rate1:"")+"</td>";
-						html += "<td>"+(validateVar(s.unit1)?s.unit1:"")+"</td>";
-						html += "<td>"+(validateVar(s.rate2)?s.rate2:"")+"</td>";
-						html += "<td>"+(validateVar(s.unit2)?s.unit2:"")+"</td>";
 						html += "</tr>"
 					}
 					$('#settings tbody').html(html);

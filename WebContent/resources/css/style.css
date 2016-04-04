@@ -967,3 +967,7 @@ fieldset[disabled] .customBtn {
 #settings .valuechanged{
 	border: 2px solid #447EB9;
 }
+
+#board_name{
+	padding:0px 15px;
+}

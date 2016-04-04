@@ -28,16 +28,11 @@
 									<tr>
 										<th><fmt:message key="set_group" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_name" bundle="${bundle }"/></th>
-										<th><fmt:message key="set_unit" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_type" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_val" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_max" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_min" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_step" bundle="${bundle }"/></th>
-										<th><fmt:message key="set_rate1" bundle="${bundle }"/></th>
-										<th><fmt:message key="set_unit1" bundle="${bundle }"/></th>
-										<th><fmt:message key="set_rate2" bundle="${bundle }"/></th>
-										<th><fmt:message key="set_unit2" bundle="${bundle }"/></th>
 									</tr>
 								</thead>
 								<tbody >

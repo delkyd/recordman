@@ -15,6 +15,42 @@ $(function(){
 	setCursel( ethIndex==''?-1:parseInt(ethIndex));
 	
 	$('.ip_input .item').keyup(onipitemkeyup);
+	
+	$('#eth_save').click(function(){
+		var param={};
+		param.index = getActiveIndex();
+		param.name = $('#eth_name').val();
+		param.ip = getipvalue('#eth_ip');
+		param.mask = getipvalue('#eth_netmask');
+		param.gate = getipvalue('#eth_gate');
+		if( param.index > 100 ){
+			param.protocol = $('#eth_protocolname').val();
+			param.port = $('#eth_protocolport').val();
+		}
+		var dataParam = {
+			    url: rootPath + "/devparam/devconfig/updateethernet",
+				param:param,
+				call: function(data) {
+					if(data!=null && data.result != null) {
+						if( data.result ){
+							$("#editEthernetModal").modal('hide');
+							if( param.index > 100 ){
+								showAlert($.i18n.prop('oper_success'), $.i18n.prop(data.reason));	
+								fillEthernets();
+							}else{
+								applydfu(doResult);
+							}							
+						}else{
+							showAlert($.i18n.prop('oper_fail'), $.i18n.prop(data.reason));
+						}					
+					}else{
+						showAlert($.i18n.prop('oper_fail'), $.i18n.prop('exceptionerror'));
+					}					
+				}
+		};
+		getAjaxData(dataParam,false);
+		return false;
+	});
 });
 
 function saveCurIndex(index){
@@ -38,6 +74,49 @@ function setCursel(curselIndex){
 
 function getActiveIndex(){
 	return $('.list-group .list-group-item.active').attr('id');
+}
+
+function fillEthernets(){
+	var param={};
+	var dataParam = {
+		    url: rootPath + "/devparam/devconfig/getethernets",
+			param:param,
+			call: function(data) {
+				if(data!=null && data.ethernets!=null) {
+					var html = '';
+					var acModule = getCookie('etherentIndex');
+					var activeItem = '';
+					for(var i=0; i < data.ethernets.length; i++){
+						var m = data.ethernets[i];
+						if( 0 == i ){
+							activeItem = m.index;
+						}
+						if( acModule != '' && m.id == acModule){
+							activeItem = m.index;
+						}						
+						html += "<a id='"+m.index+"' class='list-group-item' ondblclick=\"editEthernet("+m.index+")\")>";
+						html += "<h5 class='list-group-item-heading'>"+m.name+"</h5>";
+						html += "<span class='list-group-item-text'>"+m.ip+"/"+m.mask+"</span>";						
+						html += "<button class='customBtn editBtn' title='"+$.i18n.prop('edit')+"' onclick=\"editEthernet("+m.index+")\"> </button></a>";
+					}
+					$('.ethernets .list-group').html(html);
+					if( activeItem != '' ){
+						setCursel(activeItem);
+					}
+					$('.ethernets .list-group').children().click(function(event){
+						$('.list-group').children().removeClass('active');
+						
+						var item = event.target;
+						if( false == $(item).hasClass('list-group-item') ){
+							item = $(item).parent();
+						}
+						$(item).addClass('active');
+						saveCurIndex($(item).attr('id'));
+					});
+				}
+			}
+	};
+	getAjaxData(dataParam,false);
 }
 
 function clearDetail(){
@@ -103,6 +182,7 @@ function update(){
 function doResult(result, data){
 	if( data.result == 0 ){
 		showAlert($.i18n.prop('oper_fail'), $.i18n.prop('dfuconf_apply_fail'));
+		fillEthernets();
 	}else if( data.result == 1 ){
 		showAlert($.i18n.prop('oper_success'), $.i18n.prop('dfuconf_apply_success'));
 	}

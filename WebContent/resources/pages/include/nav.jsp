@@ -32,16 +32,17 @@
 					<li id='nav_manualrecord'><a href="<%=request.getContextPath()%>/runview/manualrecord/"><fmt:message key="nav_manualrecord" bundle="${bundle }"/></a></li>
 				</c:if>
 				<c:if test="${!empty user && user.type==2}">
-					<li><a href="<%=request.getContextPath()%>/devparam/devconfig/"><fmt:message key="nav_setup_dev" bundle="${bundle }"/></a></li>							
-					<li><a href="<%=request.getContextPath()%>/devparam/settingval/"><fmt:message key="nav_setup_setting" bundle="${bundle }"/></a></li>
-					<li><a href="<%=request.getContextPath()%>/devparam/line/"><fmt:message key="nav_mgr_Line" bundle="${bundle }"/></a></li>							
+					<li id='nav_devconf'><a href="<%=request.getContextPath()%>/devparam/devconfig/"><fmt:message key="nav_setup_dev" bundle="${bundle }"/></a></li>							
+					<li id='nav_channelctrl'><a href="<%=request.getContextPath()%>/devparam/channelctrl/"><fmt:message key="nav_dfu_channel" bundle="${bundle }"/></a></li>												
+					<li id='nav_settingval'><a href="<%=request.getContextPath()%>/devparam/settingval/"><fmt:message key="nav_setup_setting" bundle="${bundle }"/></a></li>
+					<li id='nav_line'><a href="<%=request.getContextPath()%>/devparam/line/"><fmt:message key="nav_mgr_Line" bundle="${bundle }"/></a></li>							
 				</c:if>
 				<c:if test="${!empty user && user.type>=3}">						
-					<li><a href="<%=request.getContextPath()%>/mgrparam/channels/"><fmt:message key="nav_dfu_channel" bundle="${bundle }"/></a></li>
-					<li><a href="<%=request.getContextPath()%>/mgrparam/modules/"><fmt:message key="nav_dfu_modules" bundle="${bundle }"/></a></li>						
-					<li><a href="<%=request.getContextPath()%>/mgrparam/settings/"><fmt:message key="nav_dfu_setting" bundle="${bundle }"/></a></li>
-					<li><a href="<%=request.getContextPath()%>/mgrparam/dfuapply/"><fmt:message key="nav_dfu_apply" bundle="${bundle }"/></a></li>
-					<li><a href="<%=request.getContextPath()%>/mgrparam/mgrconfig/"><fmt:message key="nav_mgr_config" bundle="${bundle }"/></a></li>				
+					<li id='nav_channels'><a href="<%=request.getContextPath()%>/mgrparam/channels/"><fmt:message key="nav_dfu_channel" bundle="${bundle }"/></a></li>
+					<li id='nav_modules'><a href="<%=request.getContextPath()%>/mgrparam/modules/"><fmt:message key="nav_dfu_modules" bundle="${bundle }"/></a></li>						
+					<li id='nav_settings'><a href="<%=request.getContextPath()%>/mgrparam/settings/"><fmt:message key="nav_dfu_setting" bundle="${bundle }"/></a></li>
+					<li id='nav_dfuapply'><a href="<%=request.getContextPath()%>/mgrparam/dfuapply/"><fmt:message key="nav_dfu_apply" bundle="${bundle }"/></a></li>
+					<li id='nav_mgrconf'><a href="<%=request.getContextPath()%>/mgrparam/mgrconfig/"><fmt:message key="nav_mgr_config" bundle="${bundle }"/></a></li>				
 				</c:if>
 				<c:if test="${!empty user}">				
 					<li id='nav_sys' class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
