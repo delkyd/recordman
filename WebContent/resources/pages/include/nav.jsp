@@ -38,7 +38,7 @@
 					<li id='nav_line'><a href="<%=request.getContextPath()%>/devparam/line/"><fmt:message key="nav_mgr_Line" bundle="${bundle }"/></a></li>							
 				</c:if>
 				<c:if test="${!empty user && user.type>=3}">						
-					<li id='nav_channels'><a href="<%=request.getContextPath()%>/mgrparam/channels/"><fmt:message key="nav_dfu_channel" bundle="${bundle }"/></a></li>
+					<li id='nav_channels'><a href="<%=request.getContextPath()%>/mgrparam/channeltable/"><fmt:message key="nav_dfu_channel" bundle="${bundle }"/></a></li>
 					<li id='nav_modules'><a href="<%=request.getContextPath()%>/mgrparam/modules/"><fmt:message key="nav_dfu_modules" bundle="${bundle }"/></a></li>						
 					<li id='nav_settings'><a href="<%=request.getContextPath()%>/mgrparam/settings/"><fmt:message key="nav_dfu_setting" bundle="${bundle }"/></a></li>
 					<li id='nav_dfuapply'><a href="<%=request.getContextPath()%>/mgrparam/dfuapply/"><fmt:message key="nav_dfu_apply" bundle="${bundle }"/></a></li>

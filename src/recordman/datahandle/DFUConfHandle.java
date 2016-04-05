@@ -198,6 +198,42 @@ public class DFUConfHandle {
 		}
 	}
 	
+	public Map<String, terminal> getTerminals(int board){
+		try{
+			Map<String, terminal> ret = new HashMap<String, terminal>();
+			Document doc = XMLDao.getInstance().getDocument();
+			String xpath = String.format("/LeyunDevices/Boards/Board[@pos='%d']/*", board);
+			List list = doc.selectNodes(xpath);
+			for( Object o : list){
+				
+				Element e = (Element)o;
+				terminal t = new terminal();
+				t.setBoard(board);
+				t.setIndex( DTF.StringToInt(e.attributeValue("index")));
+				t.setKind(e.getName());
+				t.setName( e.attributeValue("name"));
+				t.setType( e.attributeValue("class"));
+				t.setRate( e.attributeValue("rate"));
+				t.setDebounce( e.attributeValue("debounce"));
+				t.setReverse( e.attributeValue("reverse"));
+				
+				String key="";
+				if( t.getBoard() < AI_BOARD_NUM ){
+					key = String.format("%dA%02d", t.getBoard(), t.getIndex());
+				}else{
+					key = String.format("%dD%02d", t.getBoard()-AI_BOARD_NUM-1, t.getIndex());
+				}
+				ret.put(key, t);
+			}
+			
+			return ret;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error( e.toString() );
+			return null;
+		}
+	}
+	
 	public terminal getTerminalInfo(int board, int index){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
@@ -212,18 +248,9 @@ public class DFUConfHandle {
 			t.setKind(e.getName());
 			t.setName( e.attributeValue("name"));
 			t.setType( e.attributeValue("class"));
-			if( terminal.KIND_AI.equals(t.getKind()) ){
-				if( null != e.attributeValue("rate")){
-					t.setRate( DTF.StringToFloat(e.attributeValue("rate")));
-				}
-			}else if( terminal.KIND_BI.equals(t.getKind()) ){
-				if( null != e.attributeValue("debounce")){
-					t.setDebounce( DTF.StringToInt(e.attributeValue("debounce")));
-				}
-				if( null != e.attributeValue("reverse")){
-					t.setReverse( DTF.StringToInt(e.attributeValue("reverse")));
-				}
-			}
+			t.setRate( e.attributeValue("rate"));
+			t.setDebounce( e.attributeValue("debounce"));
+			t.setReverse( e.attributeValue("reverse"));
 			
 			return t;
 		}catch(Exception e){
@@ -243,19 +270,10 @@ public class DFUConfHandle {
 			}
 			e.addAttribute("name", t.getName());
 			e.addAttribute("class", t.getType());
-			if( terminal.KIND_AI.equals(t.getKind()) ){
-				if( DTF.isValid(t.getRate())){
-					e.addAttribute("rate", String.valueOf(t.getRate()));
-				}
-				
-			}else if( terminal.KIND_BI.equals(t.getKind()) ){
-				if( DTF.isValid(t.getDebounce())){
-					e.addAttribute("debounce", String.valueOf(t.getDebounce()));
-				}
-				if( DTF.isValid(t.getReverse())){
-					e.addAttribute("reverse", String.valueOf(t.getReverse()));
-				}
-			}
+			e.addAttribute("rate", t.getRate());
+			e.addAttribute("debounce", t.getDebounce());
+			e.addAttribute("reverse", t.getReverse());
+
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -404,6 +422,7 @@ public class DFUConfHandle {
 					channel c = new channel();
 					c.setId( e.attributeValue("id"));
 					c.setName( e.attributeValue("name"));
+					c.setKind( e.getName() );
 					arr.add(c);
 				}
 			}

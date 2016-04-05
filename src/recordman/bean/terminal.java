@@ -8,9 +8,9 @@ public class terminal {
 	private String name=null;
 	private String kind=null; //AI、BI、BO
 	private String type=null;
-	private float rate = DTF.INVALID_FLOAT;
-	private int debounce = DTF.INVALID_INT;
-	private int reverse = 0;
+	private String rate = null;
+	private String debounce = null;
+	private String reverse = null;
 	
 	public final static String KIND_AI="AI";
 	public final static String KIND_BI="BI";
@@ -46,24 +46,23 @@ public class terminal {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public float getRate() {
+	public String getRate() {
 		return rate;
 	}
-	public void setRate(float rate) {
+	public void setRate(String rate) {
 		this.rate = rate;
 	}
-	public int getDebounce() {
+	public String getDebounce() {
 		return debounce;
 	}
-	public void setDebounce(int debounce) {
+	public void setDebounce(String debounce) {
 		this.debounce = debounce;
 	}
-	public int getReverse() {
+	public String getReverse() {
 		return reverse;
 	}
-	public void setReverse(int reverse) {
+	public void setReverse(String reverse) {
 		this.reverse = reverse;
 	}
-	
 	
 }
