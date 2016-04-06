@@ -1,5 +1,5 @@
 $(function(){
-	setNavActive('nav_mgr');
+	setNavActive('nav_line');
 	
 	$('#line').change(function(){
 		saveActiveLine($('#line').val());

@@ -54,7 +54,7 @@ function fillTables(){
 						 html += "<tr>";
 						 html += "<td>"+ "<input type='checkbox' data-toggle='toggle'"+(chl.enable==true?'checked':'')+"/>" + "</td>";
 						 html += "<td class='channelId' id='"+chl.kind+"'>"+ chl.id + "</td>";
-						 html += "<td>"+ "<input class='channelName' type='text' value='"+(validateVar(chl.name)?chl.name:'') + "' "+(chl.enable==false?'disabled':'')+"/></td>";
+						 html += "<td>"+ "<input class='channelName form-control' type='text' value='"+(validateVar(chl.name)?chl.name:'') + "' "+(chl.enable==false?'disabled':'')+"/></td>";
 						 html += "</tr>";
 						 if( i < size/2 ){
 							 htmlTb1 += html;

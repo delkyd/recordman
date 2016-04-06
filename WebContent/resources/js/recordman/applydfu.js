@@ -1,5 +1,5 @@
 $(function(){
-	setNavActive('nav_setup');
+	setNavActive('nav_dfuapply');
 });
 
 function apply(){

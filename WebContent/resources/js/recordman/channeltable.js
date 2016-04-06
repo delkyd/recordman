@@ -56,9 +56,9 @@ function fillAITable(data){
 				var chl = data.channels[i];
 				var t = getTerminal(data, chl.id);
 				 html += "<tr>";
-				 html += "<td>"+ "<input type='checkbox' data-toggle='toggle'"+(chl.enable==true?'checked':'')+"/>" + "</td>";
-				 html += "<td class='channelId' id='"+chl.kind+"'>"+ chl.id + "</td>";
-				 html += "<td><select class='data_terminalKind form-control' "+(chl.enable==false?'disabled':'')+
+				 html += "<td>"+ "<input type='checkbox' id='"+(validateVar(t.board)?t.board:'')+"' data-toggle='toggle'"+(chl.enable==true?'checked':'')+"/>" + "</td>";
+				 html += "<td class='data_channelId' id='"+chl.kind+"'>"+ chl.id + "</td>";
+				 html += "<td><select class='data_terminalType form-control' id='"+(validateVar(t.index)?t.index:'')+"' "+(chl.enable==false?'disabled':'')+
 				 "><option value='AMP' "+(t.kind==='AMP'?'selected':'')+">"+$.i18n.prop('terminal_type_ai_amp')+"</option>"+
 				 "<option value='VOL' "+(t.kind==='VOL'?'selected':'')+">"+$.i18n.prop('terminal_type_ai_vol')+"</option>"+
 				 "<option value='DC' "+(t.kind==='DC'?'selected':'')+">"+$.i18n.prop('terminal_type_ai_dc')+"</option>"
@@ -94,10 +94,10 @@ function fillDITable(data){
 				var chl = data.channels[i];
 				var t = getTerminal(data, chl.id);
 				 html += "<tr>";
-				 html += "<td>"+ "<input type='checkbox' data-toggle='toggle'"+(chl.enable==true?'checked':'')+"/>" + "</td>";
-				 html += "<td class='channelId' id='"+chl.kind+"'>"+ chl.id + "</td>";
+				 html += "<td>"+ "<input type='checkbox' id='"+(validateVar(t.board)?t.board:'')+"' data-toggle='toggle'"+(chl.enable==true?'checked':'')+"/>" + "</td>";
+				 html += "<td class='data_channelId' id='"+chl.kind+"'>"+ chl.id + "</td>";
 				 if( CONST.TERMINAL_KIND.BI === chl.kind){
-					 html += "<td><select class='data_terminalKind form-control' "+(chl.enable==false?'disabled':'')+
+					 html += "<td><select class='data_terminalType form-control' id='"+(validateVar(t.index)?t.index:'')+"' "+(chl.enable==false?'disabled':'')+
 					 "><option>"+$.i18n.prop('terminal_type_bi')+"</option>"+"</select></td>";
 					 html += "<td>"+ "<input class='data_terminalDebounce form-control' type='text' value='"+(validateVar(t.debounce)?t.debounce:'') + "' "+(chl.enable==false?'disabled':'')+"/></td>"; 
 					 html += "<td><select class='data_terminalReverse form-control' "+(chl.enable==false?'disabled':'')+
@@ -106,7 +106,7 @@ function fillDITable(data){
 					 html += "<td>"+ "<input class='data_channelName form-control' type='text' value='"+(validateVar(chl.name)?chl.name:'') + "' "+(chl.enable==false?'disabled':'')+"/></td>";
 					 html += "<td>"+ "<input class='data_channelVal form-control' type='text' value='"+(validateVar(chl.val)?chl.val:'') + "' "+(chl.enable==false?'disabled':'')+"/></td>";	
 				 }else if( CONST.TERMINAL_KIND.BO === chl.kind ){
-					 html += "<td><select class='data_terminalKind form-control' "+(chl.enable==false?'disabled':'')+
+					 html += "<td><select class='data_terminalType form-control' "+(chl.enable==false?'disabled':'')+
 					 "><option>"+$.i18n.prop('terminal_type_bo')+"</option>"+"</select></td>";
 					 html += "<td> </td>";
 					 html += "<td> </td>";
@@ -195,24 +195,44 @@ function disableAll(){
 
 function getItems(){
 	var list = new Array();
+	var ts = new Array();
 	var index = 0;
 	$('#channelTb tbody tr').each(function(){
 		var p = {};
+		var t = {};
+		t.board=parseInt($(this).find(':checkbox').attr('id'));
+		t.index=parseInt($(this).find('.data_terminalType').attr('id'));
+		t.type=$(this).find('.data_terminalType').val();
 		p.enable=$(this).find(':checkbox').prop('checked');
-		p.id=$(this).find('.channelId').text();
-		p.name = $(this).find('.channelName').val();
-		p.kind=$(this).find('.channelId').attr('id');
+		p.id=$(this).find('.data_channelId').text();
+		p.name = $(this).find('.data_channelName').val();
+		p.kind=$(this).find('.data_channelId').attr('id');
+		t.kind=p.kind;
+		if( p.kind === CONST.TERMINAL_KIND.AI){
+			t.rate=$(this).find('.data_terminalRate').val();
+			p.unit = $(this).find('.data_channelUnit').val();
+			p.rate1 = $(this).find('.data_channelRate1').val();
+			p.unit1 = $(this).find('.data_channelUnit1').val();
+			p.rate2 = $(this).find('.data_channelRate2').val();
+			p.unit2 = $(this).find('.data_channelUnit2').val();
+		}else if( p.kind == CONST.TERMINAL_KIND.BI ){
+			t.debounce=$(this).find('.data_terminalDebounce').val();
+			t.reverse=$(this).find('.data_terminalReverse').val();
+			p.val = $(this).find('.data_channelVal').val();
+		}
 		list.push(p);
+		ts.push(t);
 	});
-	return list;
+	return [list, ts];
 }
 
 function update(){
-	var list = getItems();
+	var items = getItems();
 	var param={};
-	param.items=JSON.stringify(list);
+	param.channels=JSON.stringify(items[0]);
+	param.terminals=JSON.stringify(items[1]);
 	var dataParam = {
-		    url: rootPath + "/devparam/channelctrl/update",
+		    url: rootPath + "/mgrparam/channeltable/update",
 			param:param,
 			call: function(data) {
 				if(data!=null && data.result != null) {

@@ -90,23 +90,22 @@ public class ChannelCtrlController {
 				boolean needSort=false;
 				for( channel ch : chls){
 					String id = ch.getId();
-					handle.editChannelInfoSimple(ch);
-					handle.deleteChannelMap(id);
-					if( ch.isEnable() ){
-						needSort = true;
-						if( !handle.editChannelMap(id) ){
-							rs = false;
-							break;
+					if(handle.editChannelInfoSimple(ch)){
+						if( ch.isEnable() ){
+							needSort = true;
 						}
-					}					
+					}else{
+						rs = false;
+						break;
+					}
+										
 				}
-				if(needSort){
+				if(rs && needSort){
 					rs = handle.sortChannelMaps();
 				}
 			}else{
 				rs = false;
-			}
-			
+			}			
 			
 			if( false == rs ){
 				finalMap.put("reason", errorcode.update);

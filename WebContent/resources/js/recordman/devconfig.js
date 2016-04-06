@@ -1,5 +1,5 @@
 $(function(){
-	setNavActive('nav_setup');
+	setNavActive('nav_devconf');
 	
 	$('.list-group').children().click(function(event){
 		$('.list-group').children().removeClass('active');

@@ -12,8 +12,8 @@
 	<div class="site-wrapper slideout-panel">				
 		<%@ include file="../include/nav.jsp"%>	
 			<div id="content" class="container-fluid bluebk">
-				<div class="devconfig conf-container">					
-					<div class="config left formstyle">
+				<div class="conf-container">					
+					<div class="centerpage formstyle">
 						<h1 class="heading"><fmt:message key="nav_mgr_config" bundle="${bundle }"/></h1>
 						<form class="form-horizontal" onsubmit="return false;">
 							<section class="cber">
@@ -79,9 +79,6 @@
 							   </div>
 							</div>
 						</form>
-					</div>
-					<div class="branding right">
-						<span class="log"></span>
 					</div>
 				</div>
 			</div>

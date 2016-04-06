@@ -30,6 +30,7 @@
 										<th><fmt:message key="set_name" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_type" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_val" bundle="${bundle }"/></th>
+										<th><fmt:message key="set_unit" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_max" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_min" bundle="${bundle }"/></th>
 										<th><fmt:message key="set_step" bundle="${bundle }"/></th>

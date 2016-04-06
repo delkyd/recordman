@@ -1,5 +1,5 @@
 $(function(){
-	setNavActive('nav_dfu');
+	setNavActive('nav_modules');
 	$('#module_kind').change(function(){
 		clearAll();
 		fillModuleList();

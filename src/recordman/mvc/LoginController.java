@@ -41,7 +41,7 @@ public class LoginController {
 					if( u.getType() == user.USER_TYPE_ADMIN){
 						return "redirect:/devparam/devconfig/";
 					}else if( u.getType() == user.USER_TYPE_ENGINEER){
-						return "redirect:/mgrparam/channels/";
+						return "redirect:/mgrparam/channeltable/";
 					}
 					return "redirect:/runview/runstatus/";
 				}else{

@@ -1,7 +1,5 @@
 package recordman.bean;
 
-import codeman.util.DTF;
-
 public class terminal {
 	private int board;
 	private int index;

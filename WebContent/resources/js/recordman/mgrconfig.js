@@ -1,5 +1,5 @@
 $(function(){
-	setNavActive('nav_mgr');
+	setNavActive('nav_mgrconf');
 });
 
 function update(){

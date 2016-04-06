@@ -456,6 +456,13 @@ public class DFUConfHandle {
 			}else if( channel.KIND_BI.equals(c.getKind()) ){
 				e.addAttribute("val", String.valueOf(c.getVal()));
 			}
+			
+			if(c.isEnable()){
+				editChannelMap(c.getId());
+			}else{
+				deleteChannelMap(c.getId());
+			}
+			
 			return true;
 		}catch( Exception e ){
 			e.printStackTrace();
@@ -477,6 +484,12 @@ public class DFUConfHandle {
 				return false;
 			e.addAttribute("id", c.getId());
 			e.addAttribute("name", c.getName());
+			
+			if(c.isEnable()){
+				editChannelMap(c.getId());
+			}else{
+				deleteChannelMap(c.getId());
+			}
 			
 			return true;
 		}catch( Exception e ){
@@ -596,7 +609,9 @@ public class DFUConfHandle {
 			if( ids.length == 2 ){
 				boardId = ids[0];
 				terminalId=ids[1];
-				return editChannelMap(DTF.StringToInt(boardId), 
+				int board = DTF.StringToInt(boardId);
+				board += (AI_BOARD_NUM+1);
+				return editChannelMap(board, 
 						DTF.StringToInt(terminalId), id);
 			}
 		}
@@ -627,7 +642,7 @@ public class DFUConfHandle {
 	public boolean editChannelMap(int board, int index, String id){
 		try{
 			Document doc = XMLDao.getInstance().getDocument();
-			String xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@board='%d' and @index='%d']", board, index);
+			String xpath = String.format("/LeyunDevices/ChannelMap/*/Item[@id='%s']", id);
 			Element e = (Element)doc.selectSingleNode(xpath);
 			if( null == e ){
 				terminal t = getTerminalInfo(board, index);
