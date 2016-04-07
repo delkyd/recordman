@@ -42,13 +42,7 @@ public class CommandMgr {
 	private String APPID="WEBAPP";
 	
 	private CommandMgr(){
-		ConfigHandle confHandle = new ConfigHandle();
-		LOG_EXCHANGE_NAME=confHandle.getValue("rabbit_mq_advance_config/log_exchange");
-		SEND_QUEUE = confHandle.getValue("rabbit_mq_advance_config/collector_recv_queue");
-		RECEIVE_QUEUE = confHandle.getValue("rabbit_mq_advance_config/web_result_queue");
-		MESSAGE_PUBLISH_EXCHANGE = confHandle.getValue("rabbit_mq_advance_config/message_publish_exchange");
-		rabbit_addr = confHandle.getValue("rabbit_mq_base_config/addr");
-		rabbit_port = DTF.StringToInt(confHandle.getValue("rabbit_mq_base_config/port"));
+		
 		Date now = new Date();
 		String hostname="";
 		try {
@@ -59,9 +53,9 @@ public class CommandMgr {
 			e.printStackTrace();
 		}
 		APPID = String.format("%s.%s#%d", APPID, hostname, now.getTime());
-		receiveCommandResult();
-		receivePublishMessage();
 		cleanTimer.schedule(new CleanTask(), cleanPeriod, cleanPeriod);
+		
+		start();
 	}
 	
 	public void  stop(){
@@ -71,10 +65,32 @@ public class CommandMgr {
 		System.out.println("command mgr released");
 	}
 	
+	private boolean start(){
+		try{
+			stop();
+			ConfigHandle confHandle = new ConfigHandle();
+			rabbit_addr = confHandle.getValue("rabbit_mq_base_config/addr");
+			rabbit_port = DTF.StringToInt(confHandle.getValue("rabbit_mq_base_config/port"));
+			LOG_EXCHANGE_NAME=confHandle.getValue("rabbit_mq_advance_config/log_exchange");
+			SEND_QUEUE = confHandle.getValue("rabbit_mq_advance_config/collector_recv_queue");
+			RECEIVE_QUEUE = confHandle.getValue("rabbit_mq_advance_config/web_result_queue");
+			MESSAGE_PUBLISH_EXCHANGE = confHandle.getValue("rabbit_mq_advance_config/message_publish_exchange");
+			receiveCommandResult();
+			receivePublishMessage();
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+		
+	}
+	
 	private void stopReceiveCommandResult(){
 		if( null != recv_channel ){
 			try {
 				recv_channel.close();
+				recv_channel=null;
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (TimeoutException e) {
@@ -84,6 +100,7 @@ public class CommandMgr {
 		if( null != recv_connection ){
 			try {
 				recv_connection.close();
+				recv_connection=null;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

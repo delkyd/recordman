@@ -77,6 +77,9 @@ public class SettingvalController {
 						String.format("更新定值信息失败"), 
 						request);
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
 			String finalJSON = JSON.toJSONString(finalMap);

@@ -4,6 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import recordman.datahandle.CommandMgr;
+import recordman.datahandle.MongoDao;
 
 
 public class ContextListener implements ServletContextListener {
@@ -13,6 +14,7 @@ public class ContextListener implements ServletContextListener {
 		// TODO Auto-generated method stub
 		System.out.println("================>[ServletContextListener]Web容器开始退出.");
 		CommandMgr.getInstance().stop();
+		MongoDao.GetInstance().close();
 	}
 
 	@Override

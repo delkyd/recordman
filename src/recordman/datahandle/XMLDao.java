@@ -20,12 +20,29 @@ public class XMLDao {
 	
 	private XMLDao(){
 		try {
-			SAXReader reader = new SAXReader();
-			m_doc = reader.read(new File(Config.getInstance().get("Config/conf_rootdir")
-					+ Config.getInstance().get("Config/dfu_conf") +".xml"));
+			loadFile(Config.getInstance().get("Config/conf_rootdir")
+					+ Config.getInstance().get("Config/dfu_conf") +".xml");
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e.toString());
+		}
+	}
+	
+	public static boolean loadFile(String filepath){
+		try{
+			m_doc=null;
+			SAXReader reader = new SAXReader();
+			m_doc = reader.read(new File(filepath));
+			if( null == m_doc ){
+				return false;
+			}
+			SaveTo(Config.getInstance().get("Config/conf_tmpdir")
+					+ Config.getInstance().get("Config/dfu_conf") +".xml");
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
 		}
 	}
 	
@@ -39,7 +56,7 @@ public class XMLDao {
 		return m_instance;
 	}
 	
-	public boolean SaveTo(String filepath) {
+	public static boolean SaveTo(String filepath) {
 		try {
 			if( null == m_doc )
 				return false;

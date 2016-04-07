@@ -80,6 +80,9 @@ public class DevconfigController {
 					CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, "更新通信板基本配置成功", request);
 				}
 			}
+			if( false == rs ){
+				dfuhandle.rollback();
+			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);
 			return finalJSON;
@@ -178,6 +181,10 @@ public class DevconfigController {
 							String.format("更新网卡[%s]的参数配置成功", p==null?"":p.getName()), 
 							request);
 				}
+			}
+			if( false == rs ){
+				dfuhandle.rollback();
+				mgrhandle.rollback();
 			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);

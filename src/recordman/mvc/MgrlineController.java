@@ -114,6 +114,9 @@ public class MgrlineController {
 						String.format("更新线路[%s]属性失败", newId), 
 						request);
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
 			String finalJSON = JSON.toJSONString(finalMap);
@@ -154,6 +157,9 @@ public class MgrlineController {
 						logmsg.LOG_ERROR, 
 						String.format("删除线路[%s]失败", id), 
 						request);
+			}
+			if( false == rs ){
+				handle.rollback();
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
@@ -216,6 +222,9 @@ public class MgrlineController {
 						logmsg.LOG_ERROR, 
 						String.format("更新线路[%s]参数配置失败", null==p?"":p.getName()), 
 						request);
+			}
+			if( false == rs ){
+				handle.rollback();
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);

@@ -135,6 +135,9 @@ public class ModulesController {
 						String.format("更新功能模块[%s]的属性信息失败", null==m?"":m.getId()), 
 						request);
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
 			String finalJSON = JSON.toJSONString(finalMap);
@@ -175,6 +178,9 @@ public class ModulesController {
 						logmsg.LOG_ERROR, 
 						String.format("删除功能模块[%s]失败", id), 
 						request);
+			}
+			if( false == rs ){
+				handle.rollback();
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
@@ -240,6 +246,9 @@ public class ModulesController {
 						String.format("更新功能模块[%s]的参数[%s]的配置信息失败", moduleId, null==m?"":m.getId()), 
 						request);
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
 			String finalJSON = JSON.toJSONString(finalMap);
@@ -281,6 +290,9 @@ public class ModulesController {
 						String.format("删除功能模块参数[%s]的配置信息失败", id), 
 						request);
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
 			String finalJSON = JSON.toJSONString(finalMap);
@@ -321,6 +333,9 @@ public class ModulesController {
 						logmsg.LOG_ERROR, 
 						String.format("根据功能模块[%s]的参数配置创建定值失败", id), 
 						request);
+			}
+			if( false == rs ){
+				handle.rollback();
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
@@ -365,6 +380,9 @@ public class ModulesController {
 						logmsg.LOG_ERROR, 
 						String.format("根据功能模块[%s]的参数配置创建的线路信息失败", id), 
 						request);
+			}
+			if( false == rs ){
+				handle.rollback();
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);

@@ -83,6 +83,9 @@ public class MgrnetworkController {
 							request);
 				}
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);
 			return finalJSON;

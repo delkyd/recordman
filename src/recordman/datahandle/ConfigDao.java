@@ -16,31 +16,58 @@ import codeman.util.Config;
 
 public class ConfigDao {
 	// 输出日志文件
-		private static Logger logger = Logger.getLogger(XMLDao.class);
+		private static Logger logger = Logger.getLogger(ConfigDao.class);
 		
 		private ConfigDao(){
 			try {
-				SAXReader reader = new SAXReader();
-				m_doc = reader.read(new File(Config.getInstance().get("Config/conf_rootdir")
+				loadFile(Config.getInstance().get("Config/conf_rootdir")
 						+ Config.getInstance().get("Config/mgr_conf")
-						+".xml"));
+						+".xml");
 			} catch (Exception e) {
 				e.printStackTrace();
 				logger.error(e.toString());
 			}
 		}
 		
-		private static ConfigDao m_instance;
+		public static boolean loadFile(String filepath){
+			try{
+				m_doc=null;
+				SAXReader reader = new SAXReader();
+				m_doc = reader.read(new File(filepath));
+				if( null == m_doc ){
+					return false;
+				}
+				SaveTo(Config.getInstance().get("Config/conf_tmpdir")
+						+ Config.getInstance().get("Config/mgr_conf")
+						+".xml");
+				return true;
+			}catch(Exception e){
+				e.printStackTrace();
+				logger.error(e.toString());
+				return false;
+			}
+		}
+		
+		private static ConfigDao m_instance=null;
 		private static Document m_doc = null;
 		
 		public static ConfigDao getInstance(){
 			if( null == m_instance ){
 				m_instance = new ConfigDao();
 			}
+			if( null == m_doc ){
+				loadFile(Config.getInstance().get("Config/conf_rootdir")
+						+ Config.getInstance().get("Config/mgr_conf")
+						+".xml");
+			}
+			if( null == m_doc ){
+				logger.error("load mgr config fail");
+				return null;
+			}
 			return m_instance;
 		}
 		
-		public boolean SaveTo(String filepath) {
+		public static boolean SaveTo(String filepath) {
 			try {
 				if( null == m_doc )
 					return false;

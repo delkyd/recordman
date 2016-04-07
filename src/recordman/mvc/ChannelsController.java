@@ -121,6 +121,9 @@ public class ChannelsController {
 						String.format("板块:%d,端子:%d,通道:%s,端子与通道配置更新成功", t==null?"":t.getBoard(), t==null?"":t.getIndex(), c==null?"":c.getId()), 
 						request);
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
 			String finalJSON = JSON.toJSONString(finalMap);

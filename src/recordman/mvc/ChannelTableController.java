@@ -142,6 +142,9 @@ public class ChannelTableController {
 					CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, "更新端子和通道配置成功", request);
 				}
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			String finalJson = JSON.toJSONString(finalMap);
 			logger.info(finalJson);

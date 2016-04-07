@@ -37,7 +37,7 @@ public class DFUConfHandle {
 	
 	public boolean save(){
 		try{
-			return XMLDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_tmpdir")
+			return XMLDao.SaveTo(Config.getInstance().get("Config/conf_tmpdir")
 					+ Config.getInstance().get("Config/dfu_conf") +".xml");
 		}catch(Exception e){
 			e.printStackTrace();
@@ -52,17 +52,28 @@ public class DFUConfHandle {
 	
 	public boolean rewrite(){
 		try{
-			if( !XMLDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_rootdir")
+			if( !XMLDao.SaveTo(Config.getInstance().get("Config/conf_rootdir")
 					+ Config.getInstance().get("Config/dfu_conf") +".xml") ){
 				return false;
 			}
 			String filename = Config.getInstance().get("Config/dfu_conf");
 			Date now = new Date();
 			filename = filename +"-"+ DTF.DateToString(now, "yyyyMMddHHmmss") + ".xml";
-			if( !XMLDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_hisdir")+filename) ){
+			if( !XMLDao.SaveTo(Config.getInstance().get("Config/conf_hisdir")+filename) ){
 				return false;
 			}
 			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	public boolean rollback(){
+		try{
+			return XMLDao.loadFile(Config.getInstance().get("Config/conf_tmpdir")
+					+ Config.getInstance().get("Config/dfu_conf") +".xml");
 		}catch(Exception e){
 			e.printStackTrace();
 			logger.error(e.toString());

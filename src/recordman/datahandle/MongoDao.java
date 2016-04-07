@@ -22,12 +22,11 @@ public class MongoDao {
 	// 输出日志文件
 	private static Logger logger = Logger.getLogger(MongoDao.class);
 	
-
 	private MongoDao() {
 
 	}
 
-	protected void finalize() {
+	public void close(){
 		if ( null != m_client ) {
 			m_client.close();
 		}
@@ -38,6 +37,8 @@ public class MongoDao {
 	public static MongoDao GetInstance() {
 		if (m_instance == null) {
 			m_instance = new MongoDao();
+		}
+		if( null == m_client ){
 			Connect();
 		}
 		return m_instance;

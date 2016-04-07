@@ -66,6 +66,9 @@ public class MgrconfigController {
 					CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, "更新管理板文件和日志参数配置成功", request);
 				}
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			String finalJSON = JSON.toJSONString(finalMap);
 			logger.info(finalJSON);
 			return finalJSON;

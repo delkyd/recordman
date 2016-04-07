@@ -1,5 +1,6 @@
 package recordman.datahandle;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import org.springframework.stereotype.Component;
 
 import codeman.util.Config;
@@ -26,7 +28,25 @@ public class ConfigHandle {
 	
 	public boolean save(){
 		try{
-			return ConfigDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_tmpdir")
+			if( null == ConfigDao.getInstance()){
+				return false;
+			}
+			return ConfigDao.SaveTo(Config.getInstance().get("Config/conf_tmpdir")
+					+ Config.getInstance().get("Config/mgr_conf")
+					+".xml");
+		}catch(Exception e){
+			e.printStackTrace();
+			logger.error(e.toString());
+			return false;
+		}
+	}
+	
+	public boolean rollback(){
+		try{
+			if( null == ConfigDao.getInstance()){
+				return false;
+			}
+			return ConfigDao.loadFile(Config.getInstance().get("Config/conf_tmpdir")
 					+ Config.getInstance().get("Config/mgr_conf")
 					+".xml");
 		}catch(Exception e){
@@ -38,14 +58,17 @@ public class ConfigHandle {
 	
 	public boolean rewirte(){
 		try{
-			if( !ConfigDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_rootdir")
+			if( null == ConfigDao.getInstance()){
+				return false;
+			}
+			if( !ConfigDao.SaveTo(Config.getInstance().get("Config/conf_rootdir")
 					+Config.getInstance().get("Config/mgr_conf")+".xml") ){
 				return false;
 			}
 			String filename = Config.getInstance().get("Config/mgr_conf");
 			Date now = new Date();
 			filename = filename +"-"+ DTF.DateToString(now, "yyyyMMddHHmmss") + ".xml";
-			if( !ConfigDao.getInstance().SaveTo(Config.getInstance().get("Config/conf_hisdir")+filename) ){
+			if( !ConfigDao.SaveTo(Config.getInstance().get("Config/conf_hisdir")+filename) ){
 				return false;
 			}
 			return true;
@@ -58,6 +81,9 @@ public class ConfigHandle {
 	
 	public String getValue(String confPath){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return null;
+			}
 			if( null == confPath || confPath.isEmpty() ){
 				return null;
 			}
@@ -77,6 +103,9 @@ public class ConfigHandle {
 	
 	public fileconf getFileConf(){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return null;
+			}
 			Document doc = ConfigDao.getInstance().getDocument();
 			String path = ROOTNODE+"record_file_config";
 			Element e = (Element)doc.selectSingleNode(path);
@@ -109,6 +138,9 @@ public class ConfigHandle {
 	}
 	
 	public boolean editFileConf( fileconf c ){
+		if( null == ConfigDao.getInstance()){
+			return false;
+		}
 		if( null == c ){
 			return false;
 		}
@@ -158,6 +190,9 @@ public class ConfigHandle {
 	
 	public logconf getLogConf(){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return null;
+			}
 			Document doc = ConfigDao.getInstance().getDocument();
 			String path = ROOTNODE+"system_log_config";
 			Element e = (Element)doc.selectSingleNode(path);
@@ -190,6 +225,9 @@ public class ConfigHandle {
 	
 	public boolean editLogConf( logconf c){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return false;
+			}
 			if( null == c ){
 				return false;
 			}
@@ -237,6 +275,9 @@ public class ConfigHandle {
 	
 	public List<ethernet> getProtocols(){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return null;
+			}
 			Document doc = ConfigDao.getInstance().getDocument();
 			String path = ROOTNODE+"outward_commu_protocol_config/protocol";
 			List<ethernet> arr = new ArrayList<ethernet>();
@@ -284,6 +325,9 @@ public class ConfigHandle {
 	
 	public ethernet getProtocol(int id){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return null;
+			}
 			Document doc = ConfigDao.getInstance().getDocument();
 			String path = ROOTNODE+String.format("outward_commu_protocol_config/protocol[id='%d']", id);
 			Element e = (Element)doc.selectSingleNode(path);
@@ -329,6 +373,9 @@ public class ConfigHandle {
 	
 	public boolean editProtocol( ethernet p ){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return false;
+			}
 			if( null == p ){
 				return false;
 			}
@@ -409,6 +456,9 @@ public class ConfigHandle {
 	
 	public List<String> getLines(){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return null;
+			}
 			Document doc = ConfigDao.getInstance().getDocument();
 			String path = ROOTNODE+"line_param/line";
 			List<String> arr = new ArrayList<String>();
@@ -427,6 +477,9 @@ public class ConfigHandle {
 	
 	public boolean editLine(String oldName, String newName){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return false;
+			}
 			Document doc = ConfigDao.getInstance().getDocument();
 			String xpath = ROOTNODE+String.format("line_param/line[@name='%s']", oldName);
 			Element e = (Element)doc.selectSingleNode(xpath);
@@ -448,6 +501,9 @@ public class ConfigHandle {
 	
 	public boolean deleteLine(String name){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return false;
+			}
 			Document doc = ConfigDao.getInstance().getDocument();
 			String xpath = ROOTNODE+String.format("line_param/line[@name='%s']", name);
 			Element e = (Element)doc.selectSingleNode(xpath);
@@ -475,6 +531,9 @@ public class ConfigHandle {
 	
 	public lineparam getLineParam(String name){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return null;
+			}
 			Document doc = ConfigDao.getInstance().getDocument();
 			String path = ROOTNODE+String.format("line_param/line[@name='%s']", name);
 			Element e = (Element)doc.selectSingleNode(path);
@@ -534,6 +593,9 @@ public class ConfigHandle {
 	
 	public boolean editLineParam( lineparam p ){
 		try{
+			if( null == ConfigDao.getInstance()){
+				return false;
+			}
 			if( null == p ){
 				return false;
 			}

@@ -65,6 +65,9 @@ public class SettingsController {
 						String.format("删除定值组[%s]失败", id), 
 						request);
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
 			String finalJSON = JSON.toJSONString(finalMap);
@@ -105,6 +108,9 @@ public class SettingsController {
 						logmsg.LOG_ERROR, 
 						String.format("更新定值组[%s]信息失败", newId), 
 						request);
+			}
+			if( false == rs ){
+				handle.rollback();
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
@@ -147,6 +153,9 @@ public class SettingsController {
 						String.format("删除定值组[%s]中定值[%s]的配置失败", group, sid), 
 						request);
 			}
+			if( false == rs ){
+				handle.rollback();
+			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
 			String finalJSON = JSON.toJSONString(finalMap);
@@ -187,6 +196,9 @@ public class SettingsController {
 						logmsg.LOG_ERROR, 
 						String.format("更新定值组[%s]中定值[%s]的配置失败", null==s?"":s.getGroup(), null==s?"":s.getName()), 
 						request);
+			}
+			if( false == rs ){
+				handle.rollback();
 			}
 			finalMap.put("result", rs);
 			finalMap.put("reason", reason);
