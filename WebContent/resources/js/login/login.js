@@ -54,3 +54,12 @@ function loadProperties(){
 		mode:'map'	
 	});
 }
+
+function guestlogin(){
+	var url = rootPath + "/logon/login?name=guest";
+	url = url.replace(/\#/g, "%23");
+	url = url.replace(/\+/g, "%2B");
+	url = url.replace(/\ /g, "%20");
+	url = encodeURI(url);
+	window.location.href=url;
+}

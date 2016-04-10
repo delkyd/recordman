@@ -104,7 +104,7 @@ function getAjaxData(json,flag) {
 	
 	$.ajax({
 		url: json.url,
-		type: "POST",
+		type: (json.type===undefined)?"POST":json.type,
 		data: json.param,
 		dataType: "json",
 		async: flag,

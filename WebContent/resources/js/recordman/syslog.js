@@ -60,6 +60,8 @@ $(function(){
 	$('#loglevel').change(fillData);
 	$('#numPrePage').change(fillData);
 	$('#query').click(fillData);
+	
+	fillData();
 });
 
 var visiblePages = 7;

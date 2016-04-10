@@ -21,7 +21,7 @@
 			<div class="loginFormBox center-block-form" id="loginform">
 				<form class="form" onsubmit="return validLogin();" action="<%=request.getContextPath()%>/logon/login" method="post">
 					<div class="form-group input-group input-group-lg col-xs-10 col-xs-offset-1">
-						<label id="tipMsg" >
+						<label id="tipMsg" class='tipMsg'>
 						<c:choose>
 							<c:when test="${empty loginFail}"><fmt:message key="login_tip" bundle="${bundle }"/></c:when>
 							<c:otherwise>
@@ -35,7 +35,6 @@
 						<span class="input-group-addon glyphicon glyphicon-user"></span>
 						<select class="form-control" id="name" name="name">
 							<option value="admin" selected><fmt:message key="user_admin" bundle="${bundle }"/></option>
-							<option value="guest"><fmt:message key="user_guest" bundle="${bundle }"/></option>
 							<option value="engineer"><fmt:message key="user_engineer" bundle="${bundle }"/></option>						
 						</select>			
 					</div>
@@ -46,6 +45,10 @@
 					</div>	
 					<div class="form-group input-group input-group-lg col-xs-10 col-xs-offset-1">
 						<button id="submitBtn" type="submit" class="btn btn-primary btn-lg btn-block"><fmt:message key="login" bundle="${bundle }"/></button>
+			  		</div>
+			  		<label class='tipMsg'><fmt:message key="or" bundle="${bundle }"/></label>
+			  		<div class="form-group input-group input-group-lg col-xs-10 col-xs-offset-1">
+						<button id="guestBtn" type="button" class="btn btn-success  btn-block" onclick="guestlogin()"><fmt:message key="loginAsGuest" bundle="${bundle }"/></button>
 			  		</div>
 				</form>
 			</div>	
