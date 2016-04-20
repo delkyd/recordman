@@ -92,24 +92,25 @@ var UNDEFINED,
 	// lookup over the types and the associated classes
 	JSComtrade;
 
-// The JSComtrade namespace
-JSComtrade = win.JSComtrade = win.JSComtrade ? error(16, true) : {};
+	// The JSComtrade namespace
+	//JSComtrade = win.JSComtrade = win.JSComtrade ? error(16, true) : {};
+	JSComtrade = win.JSComtrade = {};
 
-/**
- * Extend an object with the members of another
- * @param {Object} a The object to be extended
- * @param {Object} b The object to add to the first one
- */
-var extend = JSComtrade.extend = function (a, b) {
-	var n;
-	if (!a) {
-		a = {};
-	}
-	for (n in b) {
-		a[n] = b[n];
-	}
-	return a;
-};
+	/**
+	 * Extend an object with the members of another
+	 * @param {Object} a The object to be extended
+	 * @param {Object} b The object to add to the first one
+	 */
+	var extend = JSComtrade.extend = function (a, b) {
+		var n;
+		if (!a) {
+			a = {};
+		}
+		for (n in b) {
+			a[n] = b[n];
+		}
+		return a;
+	};
 	
 /**
  * Deep merge two or more objects and return a third object. If the first argument is
@@ -971,7 +972,7 @@ pathAnim = {
 					if (options !== UNDEFINED) {
 						options.chart = options.chart || {};
 						options.chart.renderTo = this[0];
-						chart = new JSComtrade[constr](options, args[1]);
+						JSComtrade.chartObj = chart = new JSComtrade[constr](options, args[1]);
 						ret = this;
 					}
 				}				
@@ -1252,6 +1253,7 @@ defaultOptions = {
 	},
 	
 	chart: {
+		mode: 'show', //show | print
 		borderColor: '#4572A7',
 		borderRadius: 0,
 		spacing: [0, 30, 0, 0],
@@ -7235,6 +7237,7 @@ Tooltip.prototype = {
  ******************************************************************************/
 var Chart = JSComtrade.Chart = function(){
 	this.init.apply(this, arguments);
+	return this;
 };
 Chart.prototype={
 	callbacks:[],
@@ -7260,6 +7263,20 @@ Chart.prototype={
 				
 		chart.firstRender();
 	},
+	
+	scaleTimespace: function(zoomout){
+		var chart = this,
+		chartOptions = chart.options.chart;
+		if( zoomout == true ){
+			chartOptions.pxPerMS++;
+		}else{
+			if( chartOptions.pxPerMS > 1 ){
+				chartOptions.pxPerMS--;
+			}
+		}
+		chart.firstRender();
+	},
+
 	/*
 	 * 规划图形分页,本函数须在plot区域确定后再调用
 	 */
@@ -7314,25 +7331,30 @@ Chart.prototype={
 			chart.axis = new Axis(chart, options.axis);
 		}
 		
-		if (JSComtrade.Pointer) {
-			chart.pointer = new Pointer(chart);
-		}
-		
-		if(JSComtrade.Tooltip){
-			chart.tooltip = new Tooltip(chart, options.tooltip);
-		}
-		
-		if(JSComtrade.Cursor){
-				chart.primaryCursor = new Cursor(chart, options.cursor1);
-				chart.secondaryCursor = new Cursor(chart, options.cursor2);
-		}
+		if( options.chart.mode === 'show'){
+			if (JSComtrade.Pointer) {
+				chart.pointer = new Pointer(chart);
+			}
+			
+			if(JSComtrade.Tooltip){
+				chart.tooltip = new Tooltip(chart, options.tooltip);
+			}
+			
+			if(JSComtrade.Cursor){
+					chart.primaryCursor = new Cursor(chart, options.cursor1);
+					chart.secondaryCursor = new Cursor(chart, options.cursor2);
+			}
+		}		
 		
 		if( JSComtrade.Channels ){
 			chart.channels = new Channels(chart, options.comtrade);
 		}	
 
 		chart.render();
-		chart.showPageturner(false);
+		
+		if( options.chart.mode === 'show'){
+			chart.showPageturner(false);
+		}
 			
 		//add canvas
 		chart.renderer.draw();
@@ -7347,108 +7369,120 @@ Chart.prototype={
 		}
 	},
 	getContainer:function(){
-		var chart = this,
-		container,
-		optionsChart = chart.options.chart,
-		chartWidth,
-		chartHeight,
-		renderTo,
-		indexAttrName='data-jscomtrade-chart',
-		oldChartIndex,
-		containerId;
-		
-		chart.renderTo = renderTo = optionsChart.renderTo;
-		containerId = PREFIX + chart.index;
-		
-		if(isString(renderTo)){
-			chart.renderTo = renderTo = doc.getElementById(renderTo);
-		}
-		if(!renderTo){
-			error(13, true);
-		}
-		// If the container already holds a chart, destroy it. The check for hasRendered is there
-		// because web pages that are saved to disk from the browser, will preserve the data-highcharts-chart
-		// attribute and the SVG contents, but not an interactive chart. So in this case,
-		// charts[oldChartIndex] will point to the wrong chart if any (#2609).
-		/*oldChartIndex = pInt(attr(renderTo, indexAttrName));
-		if(!isNaN(oldChartIndex)&& charts[oldChartIndex] && charts[oldChartIndex]!='undefined'){
-			charts[oldChartIndex].destory();
-			if(axischarts[oldChartIndex]){
-				axischarts[oldChartIndex].destory();
+			var chart = this, container, optionsChart = chart.options.chart, chartWidth, chartHeight, renderTo, indexAttrName = 'data-jscomtrade-chart', oldChartIndex, containerId;
+
+			chart.renderTo = renderTo = optionsChart.renderTo;
+			containerId = PREFIX + chart.index;
+
+			if (isString(renderTo)) {
+				chart.renderTo = renderTo = doc.getElementById(renderTo);
 			}
-		}*/
-		
-		//make a reference to the chart from the div
-		attr(renderTo, indexAttrName, chart.index);
-		
-		//remove previous chart
-		renderTo.innerHTML='';
-		
-		// get the width and height
-		chart.getChartSize();
-		chartWidth = chart.chartWidth;
-		chartHeight = chart.chartHeight;
-		
-		//create the inner container
-		chart.container = container = createElement(DIV, {
-			className:PREFIX + 'container' + (optionsChart.className ? ' '+optionsChart.className:''),
-			id: containerId},
-			extend({
-				position:RELATIVE,
-				overflow:'auto',
-				width:chartWidth+PX,
-				height:chartHeight+PX,
-				textAlign:'left',
-				lineHeight:'normal',
-				zIndex:0,
-				'border-width':'1px',
-				'border-style':'solid none solid solid',
-				'border-color':optionsChart.borderColor
-				},
-				optionsChart.style),
-			chart.renderToClone||renderTo);	
-		//cache the cursor
-		chart._cursor = container.style.cursor;
-		//charts[chart.index] = container;
-		
-		var cheight = optionsChart.channel.height + optionsChart.channelMargin[0] + optionsChart.channelMargin[2];
-		var comtradeOptions = chart.options.comtrade;
-		chart.channelsPrePage = comtradeOptions.achannelCount + comtradeOptions.dchannelCount;
-		chart.pageHeight = cheight * chart.channelsPrePage;
-		chart.Vpage = 1;
-		
-		var scrollwidth = 30;
-		//Initialize the renderer
-		chart.renderer = optionsChart.forExport?
-				new SVGRenderer(container, chartWidth-scrollwidth, chart.pageHeight, optionsChart.style, true):
-				new Renderer(container, chartWidth-scrollwidth, chart.pageHeight, optionsChart.style);
-		if(useCanVG){
-			chart.renderer.create(chart,container, chartWidth-scrollwidth, chart.pageHeight);
-		}
-		//Add a reference to the charts index
-		chart.renderer.chartIndex = chart.index;
-		
-		//axis container
-		var axiscontainer = chart.axiscontainer = createElement(DIV, {id: containerId+'-axis'},
-			extend({
-				position:RELATIVE,
-				overflow:HIDDEN,
-				width:chartWidth+PX,
-				height:chart.axisHeight+PX,
-				textAlign:'left',
-				lineHeight:'normal',
-				zIndex:0},
-				optionsChart.style),
-			chart.renderToClone||renderTo);
-		//axischarts[chart.index] = chart.axiscontainer;
-		//Initialize the axis renderer
-		chart.axisrenderer = optionsChart.forExport?
-				new SVGRenderer(axiscontainer, chartWidth, chart.axisHeight, optionsChart.style, true):
-				new Renderer(axiscontainer, chartWidth, chart.axisHeight, optionsChart.style);
-		if(useCanVG){
-			chart.axiscontainer.create(chart,axiscontainer, chartWidth, chart.axisHeight);
-		}
-	},
+			if (!renderTo) {
+				error(13, true);
+			}
+			// If the container already holds a chart, destroy it. The check for
+			// hasRendered is there
+			// because web pages that are saved to disk from the browser, will
+			// preserve the data-highcharts-chart
+			// attribute and the SVG contents, but not an interactive chart. So
+			// in this case,
+			// charts[oldChartIndex] will point to the wrong chart if any
+			// (#2609).
+			/*
+			 * oldChartIndex = pInt(attr(renderTo, indexAttrName));
+			 * if(!isNaN(oldChartIndex)&& charts[oldChartIndex] &&
+			 * charts[oldChartIndex]!='undefined'){
+			 * charts[oldChartIndex].destory(); if(axischarts[oldChartIndex]){
+			 * axischarts[oldChartIndex].destory(); } }
+			 */
+
+			// make a reference to the chart from the div
+			attr(renderTo, indexAttrName, chart.index);
+
+			// remove previous chart
+			renderTo.innerHTML = '';
+
+			// get the width and height
+			chart.getChartSize();
+			chartWidth = chart.chartWidth;
+			chartHeight = chart.chartHeight;
+			
+			var containerStyle={
+					//position:RELATIVE,
+					//overflow:'auto',
+					width:chartWidth+PX,
+					height:chartHeight+PX,
+					textAlign:'left',
+					lineHeight:'normal',
+					zIndex:0,
+					'border-width':'1px',
+					'border-style':'solid none solid solid',
+					'border-color':optionsChart.borderColor
+					};
+			if( optionsChart.mode === 'show' ){
+				containerStyle.position = RELATIVE;
+				containerStyle.overflow = 'auto';
+			}
+
+			// create the inner container
+			chart.container = container = createElement(DIV, {
+				className : PREFIX
+						+ 'container'
+						+ (optionsChart.className ? ' '
+								+ optionsChart.className : ''),
+				id : containerId
+			}, extend(containerStyle, optionsChart.style), chart.renderToClone
+					|| renderTo);
+			// cache the cursor
+			chart._cursor = container.style.cursor;
+			// charts[chart.index] = container;
+
+			var cheight = optionsChart.channel.height
+					+ optionsChart.channelMargin[0]
+					+ optionsChart.channelMargin[2];
+			var comtradeOptions = chart.options.comtrade;
+			chart.channelsPrePage = comtradeOptions.achannelCount
+					+ comtradeOptions.dchannelCount;
+			chart.pageHeight = cheight * chart.channelsPrePage;
+			chart.Vpage = 1;
+
+			var scrollwidth = 30;
+			// Initialize the renderer
+			chart.renderer = optionsChart.forExport ? new SVGRenderer(
+					container, chartWidth - scrollwidth, chart.pageHeight,
+					optionsChart.style, true) : new Renderer(container,
+					chartWidth - scrollwidth, chart.pageHeight,
+					optionsChart.style);
+			if (useCanVG) {
+				chart.renderer.create(chart, container, chartWidth
+						- scrollwidth, chart.pageHeight);
+			}
+			// Add a reference to the charts index
+			chart.renderer.chartIndex = chart.index;
+
+			// axis container
+			var axiscontainer = chart.axiscontainer = createElement(DIV, {
+				id : containerId + '-axis'
+			}, extend({
+				position : RELATIVE,
+				overflow : HIDDEN,
+				width : chartWidth + PX,
+				height : chart.axisHeight + PX,
+				textAlign : 'left',
+				lineHeight : 'normal',
+				zIndex : 0
+			}, optionsChart.style), chart.renderToClone || renderTo);
+			// axischarts[chart.index] = chart.axiscontainer;
+			// Initialize the axis renderer
+			chart.axisrenderer = optionsChart.forExport ? new SVGRenderer(
+					axiscontainer, chartWidth, chart.axisHeight,
+					optionsChart.style, true) : new Renderer(axiscontainer,
+					chartWidth, chart.axisHeight, optionsChart.style);
+			if (useCanVG) {
+				chart.axiscontainer.create(chart, axiscontainer, chartWidth,
+						chart.axisHeight);
+			}
+		},
 	getChartSize:function(){
 		var chart = this,
 		optionsChart = chart.options.chart,
@@ -7461,16 +7495,38 @@ Chart.prototype={
 		//get inner width and height from JQuery
 		if(!defined(widthOption)){
 			chart.containerWidth = adapterRun(renderTo, 'width');
+		}else{
+			chart.containerWidth=widthOption;
 		}
 		if(!defined(heightOption)){
 			chart.containerHeight = adapterRun(renderTo, 'height');
+		}else{
+			chart.containerHeight = heightOption;
 		}
+		chart.chartWidth = chart.containerWidth;
+		chart.chartHeight = chart.containerHeight;
 		
-		chart.chartWidth = mathMax(0, widthOption || chart.containerWidth || 600 );
-		chart.chartHeight = mathMax(0, pick(heightOption,
-			// the offsetHeight of an empty container is 0 in standard browsers, but 19 in IE7:
-			chart.containerHeight > 19 ? chart.containerHeight:520));
-		chart.chartHeight -= chart.axisHeight;
+		if( optionsChart.mode === 'print'){
+			var totalWidth=0,totalHeight=0;
+			var cheight = optionsChart.channel.height + optionsChart.channelMargin[0] + optionsChart.channelMargin[2];
+			var comtradeOptions = chart.options.comtrade;
+			var changeNum = comtradeOptions.achannelCount + comtradeOptions.dchannelCount;
+			totalHeight = cheight * changeNum;
+			var startTime = chart.options.comtrade.times[0];
+			var endTime = chart.options.comtrade.times[chart.options.comtrade.times.length-1];
+			totalWidth = (endTime - startTime)*optionsChart.pxPerMS + optionsChart.channelMargin[3];
+			
+			if( !defined(widthOption)){
+				chart.chartWidth=totalWidth;
+			}
+			
+			if( !defined(heightOption)){
+				chart.chartHeight=totalHeight;
+			}
+		}
+		if( optionsChart.mode === 'show'){
+			chart.chartHeight -= chart.axisHeight;
+		}			
 	},
 	/**
 	* Creates arrays for spacing and margin from given options.
@@ -7503,29 +7559,26 @@ Chart.prototype={
 		
 		// Draw the borders and backgrounds
 		//chart.drawChartBox();
-		
+				
 		//draw axis
 		chart.axis.render();
 		
 		//draw channels
 		chart.channels.render();
-		
-		//draw cursor
-		if(chart.options.cursor1.enable){
-			chart.primaryCursor.render();
-		}else{
+		if( options.chart.mode === 'show'){
+			//draw cursor
+			if(chart.options.cursor1.enable && chart.primaryCursor){
+				chart.primaryCursor.render();
+			}
 			
-		}
-		if(chart.options.cursor2.enable){
-			chart.secondaryCursor.render();
-		}else{
+			if(chart.options.cursor2.enable && chart.secondaryCursor){
+				chart.secondaryCursor.render();
+			}
 			
+			//draw page turner
+			chart.getPageturner();
+			chart.renderIndicator();
 		}
-		
-		//draw page turner
-		chart.getPageturner();
-		chart.renderIndicator('h');
-		chart.renderIndicator('v');
 		
 		//set flag
 		chart.hasRendered = true;

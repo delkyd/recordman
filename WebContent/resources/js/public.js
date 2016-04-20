@@ -172,9 +172,92 @@ function showConfirm(title,message,yesFn,noFn){
 	});
 }
 
+var comtradeParam={};
+function setActiveComtrade(needDown,path, name){
+	comtradeParam.path = path;
+	comtradeParam.name = name;
+	comtradeParam.data = null;
+	if( needDown == true){
+		getComtradeData();
+	}
+}
+
+function getComtradeData(){
+	var param={};
+	param.filepath=comtradeParam.path;
+	var dataParam = {
+		    url: rootPath + "/wave/read",
+			param:param,
+			call: function(data) {
+				if(data!=null && data.comtrade.err!=1) {
+					//波形文件 数据
+					comtradeParam.data=data;
+				}
+			}
+	};
+	getAjaxData(dataParam,false);
+}
+function showComtrade(){
+	if(validateVar(comtradeParam.data) == false){
+		getComtradeData();
+	}
+	if(validateVar(comtradeParam.data) == true){
+		showWave(comtradeParam.data);
+	}else{
+		showAlert($.i18n.prop('file_notfound'), $.i18n.prop('file_notfound')+":"+comtradeParam.path);
+	}
+}
+
+function exportComtrade(){
+	var url = rootPath+"/runview/recordfile/export?filepath="+comtradeParam.path+"&filename="+comtradeParam.name+"";
+	url = url.replace(/\#/g, "%23");
+	url = url.replace(/\+/g, "%2B");
+	url = url.replace(/\ /g, "%20");
+	url = encodeURI(url);
+	window.location.href=url;
+}
+
+function printComtrade(){
+	window.JSComtrade.chartObj.scaleTimespace(true);
+	return;
+	if(validateVar(comtradeParam.data) == false){
+		getComtradeData();
+	}
+	if(validateVar(comtradeParam.data) == true){
+		printWave(comtradeParam.data.comtrade);
+		location.reload();
+	}else{
+		alert("当前文件不存在！文件路径： "+comtradeParam.data.comtrade.fileName);
+	}
+}
+
+function printWave(comtradeData){
+	$('#waveModal .modal-header #wave-graph').html('');
+	var oldBody = $('body').html();
+	var html = "<div class='printWave'></div>";
+	$('body').html(html);
+	$('.printWave').jscomtrade({
+		lang: {
+			b_time: $.i18n.prop('b_time'),
+			b_curdi: $.i18n.prop('b_curdi'),
+			b_primarycursor: $.i18n.prop('b_primarycursor'),
+			b_secondcursor: $.i18n.prop('b_secondcursor'),
+			b_effectivevalue: $.i18n.prop('b_effectivevalue'),
+			b_reset: $.i18n.prop('b_reset'),
+			b_action: $.i18n.prop('b_action')
+		},
+		chart:{
+			mode:'print'
+		},
+        comtrade:comtradeData		
+	});
+	window.print();
+}
+
 function showWave(comtradeData){
 	var w = $(window).width()-20;
 	var h = $(window).height()-60;
+	
 	$('#waveModal .modal-dialog').attr("style", 'width:'+w+'px'+';height:'+h+'px');
 	$('#waveModal .modal-header').attr("style", 'width:'+w+'px'+';height:'+h+'px');
 	$('#waveModal .modal-header #wave-graph').attr("style", 'width:'+(w-30)+'px'+';height:'+(h-60)+'px');
@@ -185,14 +268,7 @@ function showWave(comtradeData){
 	
 	$('#waveModal').unbind('shown.bs.modal');
 	$('#waveModal').on('shown.bs.modal', function (e) {
-		wave_graph(comtradeData);	
-		if( comtradeData.comtrade.hdr != null ){
-			wave_hdr(comtradeData.comtrade.hdr);
-			$('#waveModal .nav-tabs a[href="#wave-hdr"]').unbind('shown.bs.tab');
-			$('#waveModal .nav-tabs a[href="#wave-hdr"]').on('shown.bs.tab', function(e){
-				$('#wave-hdr').scrollTop(0);
-			});			
-		}
+		wave_graph(comtradeData);
 	});
 }
 
@@ -380,7 +456,7 @@ function wave_setSettingValue(hdrData){
 }
 
 function wave_graph(data, height){
-	$('#wave-graph').jscomtrade({
+	comtradeParam.chart = $('#wave-graph').jscomtrade({
 		lang: {
 			b_time: $.i18n.prop('b_time'),
 			b_curdi: $.i18n.prop('b_curdi'),

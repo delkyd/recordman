@@ -1,5 +1,5 @@
 body,p,input,label,button,a,li{
-	font-family: '微软雅黑 ,宋体,Arial,Verdana,Sans-serif' !important;
+	font-family: 'Microsoft YaHei,微软雅黑 ,宋体,Arial,Verdana,Sans-serif' !important;
     font-size: 14px;
     vertical-align: middle;
 }
@@ -967,4 +967,16 @@ fieldset[disabled] .customBtn {
 
 #board_name{
 	padding:0px 15px;
+}
+
+.waveMenu{
+	padding-left: 0;
+	margin-bottom: 10px;
+	list-style: none;
+}
+.waveMenu > li{
+	float: left;
+	margin-right:2px;
+	position: relative;
+	display: block;
 }

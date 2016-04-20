@@ -95,31 +95,15 @@ function setdate(){
 function clickitem(event){
 }
 
-function openitem(path){
-	var param={};
-	param.filepath=path;
-	var dataParam = {
-		    url: rootPath + "/wave/read",
-			param:param,
-			call: function(data) {
-				if(data!=null && data.comtrade.err!=1) {
-					//波形文件 数据处理
-					showWave(data);
-				}else{
-					alert("当前文件不存在！文件路径： "+data.comtrade.fileName);
-				}
-			}
-	};
-	getAjaxData(dataParam,false);
+function openitem(path, name){
+	setActiveComtrade(true,path,name);
+	showComtrade();
+	
 }
 
 function exportitem(path, name){
-	var url = rootPath+"/runview/recordfile/export?filepath="+path+"&filename="+name+"";
-	url = url.replace(/\#/g, "%23");
-	url = url.replace(/\+/g, "%2B");
-	url = url.replace(/\ /g, "%20");
-	url = encodeURI(url);
-	window.location.href=url;
+	setActiveComtrade(false,path,name);
+	exportComtrade();
 }
 
 function find(){
@@ -173,7 +157,8 @@ function fillData(data){
 			 for( var fi in day.f ){
 				 var f = day.f[fi];
 				 var path = f.savePath+f.name;
-				 html += "<div class='item' id='"+ path + "'><div class='toolbar'><div class='icon open' onclick="+ '"openitem('+ "'" + path + "'"+ ')"></div>' + 
+				 html += "<div class='item' id='"+ path + "'><div class='toolbar'><div class='icon open' onclick="+ 
+				 		'"openitem('+ "'" + path + "','"+f.name+ "')\"></div>" + 
 				 		"<div class='icon export' onclick=\"exportitem('"+path+"','"+f.name+"')\"></div></div>";
 				 html += "<h5>" + f.shortTime + "</h5>";
 				 html += "<h5 class='filename'>" + f.name + "</h5>";
@@ -203,7 +188,7 @@ function fillData_tb(data){
 				 html += "<td>"+ f.name + "</td>";
 				 html += "<td>"+ $.i18n.prop('faulttype_'+f.faultType) + "</td>";
 				 html += "<td>"+ (validateVar(f.distance)?(f.distance + "(km)"):"-")+"</td>";
-				 html += "<td><button class='customBtn showBtn' onclick=\"openitem('"+path+"')\" title='"+$.i18n.prop('view')+"'></button>";
+				 html += "<td><button class='customBtn showBtn' onclick=\"openitem('"+path+"','"+f.name+"')\" title='"+$.i18n.prop('view')+"'></button>";
 					html += "<button class='customBtn exportBtn' onclick=\"exportitem('"+path+"','"+f.name+"')\" title='"+$.i18n.prop('export')+"'></button></td>";
 				 html += "</tr>";
 			 }
