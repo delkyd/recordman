@@ -10,6 +10,7 @@
 	</script>
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap.min.css" />	
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/loaders.min.css" />
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap-toggle.min.css" />
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/style.css" />
 	
 	

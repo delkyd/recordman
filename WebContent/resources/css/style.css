@@ -946,7 +946,7 @@ fieldset[disabled] .customBtn {
 	margin-bottom:4px;
 }
 .blue_bar{
-	background-color:#447EB9;
+	background-color:#447EB9 ;
 	height:31px;
 	line-height:31px;
 }
@@ -976,7 +976,100 @@ fieldset[disabled] .customBtn {
 }
 .waveMenu > li{
 	float: left;
+	margin-bottom:2px;
 	margin-right:2px;
 	position: relative;
 	display: block;
+}
+
+.menu_separator{
+	width:0px;
+	height:32px;
+	border: 1px solid #99979c;
+}
+
+.scroll{
+	overflow:auto;
+}
+
+#waveSelChlModal .scroll{
+	height:600px;
+}
+
+.table-head{
+	margin-bottom:0px;
+}
+
+#waveSelChlModal .table > thead > tr > th{
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.nomodal{
+	position:fixed;
+	left:200px;
+	top:0px;
+	display:none;
+	z-index:1150;
+}
+
+.nomodal-dialog{
+	width:780px;
+	margin:30px auto;
+}
+
+.nomodal-content{
+	position: relative;
+	background-color: #fff;
+	box-shadow: 0 5px 15px rgba(0,0,0,.5);
+	background-clip: padding-box;
+	border: 1px solid rgba(0,0,0,.2);
+	border-radius: 6px;
+	outline: 0;
+}
+
+.nomodal-header{
+	padding: 15px;
+	min-height: 16.43px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.nomodal-title{
+	margin: 0;
+	line-height: 1.42857143;
+}
+
+.nomodal-body{
+	
+}
+
+.nomodal-footer {
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+#vectorDialog .scroll{
+	height:360px;
+}
+#vectorDialog .vector-graph{
+	height:360px;
+}
+
+#vectorDialog .checkbox{
+	margin:0px;
+}
+
+#harmonicDialog .radio{
+	margin:0px;
+}
+
+#harmonicDialog .nomodal-dialog{
+	width:600px;
+}
+
+#harmonicDialog .scroll{
+	height:360px;
+}
+#harmonicDialog .#harmonic-graph{
+	height:360px;
 }

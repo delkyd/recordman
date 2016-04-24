@@ -76,9 +76,13 @@
 		<form method="post"></form>
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
+	<%@ include file="../include/wave.jsp"%>
 	<%@ include file="../include/html_footer.jsp"%>
-	<script src="<%=request.getContextPath()%>/resources/js/moment-with-locales.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/moment-with-locales.min.js"></script>	
 	<script src="<%=request.getContextPath()%>/resources/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/jscomtrade.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/jsvectorgraph.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/wave.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/recordman/recordfile.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-//JSComtrade, extend from highcharts
+//JSVectorGraph, extend from highcharts
 (function () {
 // encapsulated variables
 var UNDEFINED,
@@ -43,7 +43,7 @@ var UNDEFINED,
 	charts = [],
 	axischarts=[],
 	chartCount = 0,
-	PRODUCT = 'JSComtrade',
+	PRODUCT = 'JSVectorGraph',
 	VERSION = '0.1.0',
 	redCursor,
 	greenCursor,
@@ -54,7 +54,7 @@ var UNDEFINED,
 	ABSOLUTE = 'absolute',
 	RELATIVE = 'relative',
 	HIDDEN = 'hidden',
-	PREFIX = 'jscomtrade-',
+	PREFIX = 'jsvectorgraph-',
 	VISIBLE = 'visible',
 	PX = 'px',
 	NONE = 'none',
@@ -90,18 +90,17 @@ var UNDEFINED,
 
 
 	// lookup over the types and the associated classes
-	JSComtrade;
+	JSVectorGraph;
 
-	// The JSComtrade namespace
-	//JSComtrade = win.JSComtrade = win.JSComtrade ? error(16, true) : {};
-	JSComtrade = win.JSComtrade = {};
+	// The JSVectorGraph namespace
+	JSVectorGraph = win.JSVectorGraph = {};
 
 	/**
 	 * Extend an object with the members of another
 	 * @param {Object} a The object to be extended
 	 * @param {Object} b The object to add to the first one
 	 */
-	var extend = JSComtrade.extend = function (a, b) {
+	var extend = JSVectorGraph.extend = function (a, b) {
 		var n;
 		if (!a) {
 			a = {};
@@ -116,7 +115,7 @@ var UNDEFINED,
  * Deep merge two or more objects and return a third object. If the first argument is
  * true, the contents of the second object is copied into the first object.
  * Previously this function redirected to jQuery.extend(true), but this had two limitations.
- * First, it deep merged arrays, which lead to workarounds in JSComtrade. Second,
+ * First, it deep merged arrays, which lead to workarounds in JSVectorGraph. Second,
  * it copied properties from extended prototypes. 
  */
 function merge() {
@@ -280,7 +279,7 @@ function splat(obj) {
 /**
  * Return the first value that is defined. Like MooTools' $.pick.
  */
-var pick = JSComtrade.pick = function () {
+var pick = JSVectorGraph.pick = function () {
 	var args = arguments,
 		i,
 		arg,
@@ -369,7 +368,7 @@ function relativeLength (value, base) {
  * as the original function, except that the original function is unshifted and passed as the first 
  * argument. 
  */
-var wrap = JSComtrade.wrap = function (obj, method, func) {
+var wrap = JSVectorGraph.wrap = function (obj, method, func) {
 	var proceed = obj[method];
 	obj[method] = function () {
 		var args = Array.prototype.slice.call(arguments);
@@ -437,7 +436,7 @@ dateFormat = function (format, timestamp, capitalize) {
 			'P': hours < 12 ? 'am' : 'pm', // Lower case AM or PM
 			'S': pad(date.getSeconds()), // Two digits seconds, 00 through  59
 			'L': pad(mathRound(timestamp % 1000), 3) // Milliseconds (naming from Ruby)
-		}, JSComtrade.dateFormats);
+		}, JSVectorGraph.dateFormats);
 
 
 	// do the replaces
@@ -464,7 +463,7 @@ function formatSingle(format, val) {
 		decimals = format.match(decRegex);
 		decimals = decimals ? decimals[1] : -1;
 		if (val !== null) {
-			val = JSComtrade.numberFormat(
+			val = JSVectorGraph.numberFormat(
 				val,
 				decimals,
 				lang.decimalPoint,
@@ -682,7 +681,7 @@ function discardElement(element) {
  * Provide error messages for debugging, with links to online explanation 
  */
 function error (code, stop) {
-	var msg = 'JSComtrade error #' + code + ': www.JSComtrade.com/errors/' + code;
+	var msg = 'JSVectorGraph error #' + code + ': www.JSVectorGraph.com/errors/' + code;
 	if (stop) {
 		throw msg;
 	}
@@ -734,7 +733,7 @@ timeUnits = {
  * @param {String} decPoint The decimal point, defaults to the one given in the lang options
  * @param {String} thousandsSep The thousands separator, defaults to the one given in the lang options
  */
-JSComtrade.numberFormat = function (number, decimals, decPoint, thousandsSep) {
+JSVectorGraph.numberFormat = function (number, decimals, decPoint, thousandsSep) {
 	var lang = defaultOptions.lang,
 		// http://kevin.vanzonneveld.net/techblog/article/javascript_equivalent_for_phps_number_format/
 		n = +number || 0,
@@ -848,9 +847,9 @@ pathAnim = {
 
 (function ($) {
 	/**
-	 * The default JSComtradeAdapter for jQuery
+	 * The default JSVectorGraphdeAdapter for jQuery
 	 */
-	win.JSComtradeAdapter = win.JSComtradeAdapter || ($ && {
+	win.JSVectorGraphAdapter = win.JSVectorGraphAdapter || ($ && {
 		
 		/**
 		 * Initialize the adapter by applying some extensions to jQuery
@@ -868,7 +867,7 @@ pathAnim = {
 			});
 			/*jslint unparam: false*/
 		
-			// extend some methods to check for elem.attr, which means it is a JSComtrade SVG object
+			// extend some methods to check for elem.attr, which means it is a JSVectorGraph SVG object
 			$.each(['cur', '_default', 'width', 'height', 'opacity'], function (i, fn) {
 				var obj = Fx.step,
 					base;
@@ -956,9 +955,9 @@ pathAnim = {
 				};
 			
 			/**
-			 * Register JSComtrade as a plugin in the respective framework
+			 * Register JSVectorGraph as a plugin in the respective framework
 			 */
-			$.fn.jscomtrade = function () {
+			$.fn.jsvectorgraph = function () {
 				var constr = 'Chart', // default constructor
 					args = arguments,
 					options,
@@ -972,7 +971,7 @@ pathAnim = {
 					if (options !== UNDEFINED) {
 						options.chart = options.chart || {};
 						options.chart.renderTo = this[0];
-						JSComtrade.chartObj = chart = new JSComtrade[constr](options, args[1]);
+						JSVectorGraph.chartObj = chart = new JSVectorGraph[constr](options, args[1]);
 						ret = this;
 					}
 				}				
@@ -1085,7 +1084,7 @@ pathAnim = {
 				detachedType = 'detached' + type,
 				defaultPrevented;
 	
-			// Remove warnings in Chrome when accessing returnValue (#2790), layerX and layerY. Although JSComtrade
+			// Remove warnings in Chrome when accessing returnValue (#2790), layerX and layerY. Although JSVectorGraph
 			// never uses these properties, Chrome includes them in the default click event and
 			// raises the warning when they are copied over in the extend statement below.
 			//
@@ -1190,8 +1189,8 @@ pathAnim = {
 }(win.jQuery));
 
 
-// check for a custom JSComtradeAdapter defined prior to this file
-var globalAdapter = win.JSComtradeAdapter,
+// check for a custom JSVectorGraphAdapter defined prior to this file
+var globalAdapter = win.JSVectorGraphAdapter,
 	adapter = globalAdapter || {};
 	
 // Initialize the adapter
@@ -1200,13 +1199,13 @@ if (globalAdapter) {
 }
 
 
-// Utility functions. If the JSComtradeAdapter is not defined, adapter is an empty object
+// Utility functions. If the JSVectorGraphAdapter is not defined, adapter is an empty object
 // and all the utility functions will be null. In that case they are populated by the
 // default adapters below.
 var adapterRun = adapter.adapterRun,
 	getScript = adapter.getScript,
 	inArray = adapter.inArray,
-	each = JSComtrade.each = adapter.each,
+	each = JSVectorGraph.each = adapter.each,
 	grep = adapter.grep,
 	offset = adapter.offset,
 	map = adapter.map,
@@ -1223,8 +1222,8 @@ var adapterRun = adapter.adapterRun,
  * Handle the options                                                         *
  *****************************************************************************/
 defaultOptions = {
-	colors: ['#7cb5ec', '#434348', '#90ed7d', '#f7a35c', 
-		    '#8085e9', '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
+	colors: ['#7cb5ec', '#90ed7d', '#f7a35c', 
+		    '#8085e9', '#f15c80', '#e4d354', '#2b908f', '#91e8e1', '#f45b5b'],
 	symbols: ['circle', 'diamond', 'square', 'triangle', 'triangle-down'],
 	lang: {
 		loading: 'Loading...',
@@ -1236,14 +1235,7 @@ defaultOptions = {
 		numericSymbols: ['k', 'M', 'G', 'T', 'P', 'E'], // SI prefixes used in axis labels
 		resetZoom: 'Reset zoom',
 		resetZoomTitle: 'Reset zoom level 1:1',
-		thousandsSep: ',',
-		b_time: '时间',
-		b_curdi: '当前时间"动作"的开关',
-		b_primarycursor: ' 主游标:',
-		b_secondcursor: ' 副游标:',
-		b_effectivevalue: ' 有效值:',
-		b_reset: '复归',
-		b_action: '动作'
+		thousandsSep: ','
 	},
 	global: {
 		useUTC: true,
@@ -1253,41 +1245,20 @@ defaultOptions = {
 	},
 	
 	chart: {
-		mode: 'show', //show | print
 		borderColor: '#4572A7',
 		borderRadius: 0,
-		spacing: [0, 30, 0, 0],
+		spacing: [10, 10, 10, 10],
 		backgroundColor: '#FFFFFF',
 		plotBorderColor: '#C0C0C0',
 		plotBorderWidth: 1,
-		pxPerMS : 1, //每毫秒占用几个像素，控制图形横向缩放
-		cursorSyn : true, //游标同步
-    	channel:{
-    		height : 60, //通道图形的高度,包含了名称文字
-    		color : '#d8d8d8'
-    	},
-    	channelName : {
-    		enable : true, //每个通道图形中名称的高度
-    		fontSize : '12px',
-    		color : '#0c0c0c',
-    		height : 16 //此高度应包含在channelHeight之内
-    	},
-    	channelMargin : [4,0,4,60], //通道图形外边距,top,right,bottom,left
-    	channelA : {
-    		color : '#ff0000',
-    		fill : '#ff0000',
-    	},
-    	channelB : {
-    		color : '#0000ff',
-    		fill : '#0000ff'
-    	},
-    	channelC : {
-    		color : '#00ff00',
-    		fill : '#00ff00'
-    	},channelN : {
-    		color : '#000000',
-    		fill : '#000000'
-    	}		
+		plotBackgroundColor: '#000000',
+		stroke:{
+			color:'#FFFFFF',
+			width:1,
+			dash:'5,5'
+		},
+		fontSize:12,
+		color: '#FFFFFF'
 	},
 	title: {
 		text: '',
@@ -1305,168 +1276,23 @@ defaultOptions = {
 		style: {
 			color: '#555555'
 		}
-	},
-	axis:{
-		height:10,
-    	style:{
-    		color : '#000000',
-    		stokeWidth : 1
-    	},
-    	label:{
-    		enable : true,
-    		style :{
-    			color : '#333333',
-        		fontSize : '12px'
-    		}  		
-    	}
-    },
-	cursor1:{
-		type: 'primary',
-		enable:true,
-		style: {
-			color: '#000000',
-			fontSize : '12px'
-		},
-		lineStyle:{
-			stroke: '#000000',
-			'stroke-width':1
-		}
-	},
-	cursor2:{
-		type: 'secondary',
-		enable:true,
-		style: {
-			color: '#000000',
-			fontSize : '12px'
-		},
-		lineStyle:{
-			stroke: '#000000',
-			'stroke-dasharray':'5,5',
-			'stroke-width':1
-		}
-	},
-	
-	tooltip: {
-		enabled: true,
-		animation: hasSVG,
-		backgroundColor: 'rgba(249, 249, 249, .85)',
-		borderWidth: 1,
-		borderRadius: 3,
-		shadow: true,
-		snap: isTouchDevice ? 25 : 10,
-		style: {
-			color: '#333333',
-			cursor: 'default',
-			fontSize: '12px',
-			padding: '8px',
-			whiteSpace: 'nowrap'
-		}
 	}
-	/*comtrade:{
-	achannelCount : 8, //模拟量通道数
-	dchannelCount : 4, //开关量通道数
-	sampleCount : 27, //总采样点数
-	sampleOffset : 40, //采样时间和故障时间的偏差(毫秒),最小为0,小于0的应忽略
-	lineFreq : 50, //线路频率
-	rateCount : 2, //采样频率数
-	rates:[{
-		rate:1200, //频率
-		count:192  //此频率采样点数
-	},{
-		rate:50, //频率
-		count:209  //此频率采样点数
-	}],
-	useCommonAmplitude : false,
-	maxIValue : 200, //最大电流值，用于设置电流通道的振幅
-	maxUValue : 200, //最大电压值，用于设置电压通道的振幅
-	maxOtherValue : 200, //其他通道最大值，用于设置其他通道的振幅
-	maxIValueP : 200, //最大电流值一次值，用于设置电流通道的振幅
-	maxUValueP : 200, //最大电压值一次值，用于设置电压通道的振幅
-	maxOtherValueP : 200, //其他通道最大值一次值，用于设置其他通道的振幅
-	times:[0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260],
-	channels:[{
-    	name:'xxx通道',
-    	type:'AI',
-    	max:26.5,
-    	unit:'A',
-    	phase:'A',
-    	show:true,//是否显示
-    	data:[0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,7.0, -6.9, -9.5, 0, -18.2, -21.5, -25.2, -26.5, -23.3, -18.3, -13.9, -9.6,21.5, 25.2, 26.5]
-    },{
-    	name:'通道2',
-    	type:'AI',
-    	max:24.8,
-    	unit:'A',
-    	phase:'B',
-    	data:[-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5,-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5,22.0, 24.8, 24.1]
-    },{
-    	name:'通道3',
-    	type:'AI',
-    	max:18.6,
-    	unit:'V',
-    	phase:'C',
-    	data:[-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0,-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0,18.6, 17.9, 14.3]
-    },{
-    	name:'通道4',
-    	type:'AI',
-    	max:18.6,
-    	unit:'V',
-    	phase:'N',
-    	data:[-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0,-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0,18.6, 17.9, 14.3]
-    },{
-    	name:'xxx通道',
-    	type:'AI',
-    	max:26.5,
-    	unit:'A',
-    	phase:'A',
-    	data:[7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,21.5, 25.2, 26.5]
-    },{
-    	name:'通道2',
-    	type:'AI',
-    	max:24.8,
-    	unit:'A',
-    	phase:'B',
-    	data:[-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5,-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5,22.0, 24.8, 24.1]
-    },{
-    	name:'通道3',
-    	type:'AI',
-    	max:18.6,
-    	unit:'V',
-    	phase:'C',
-    	data:[-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0,-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0,18.6, 17.9, 14.3]
-    },{
-    	name:'通道4',
-    	type:'AI',
-    	max:18.6,
-    	unit:'V',
-    	phase:'N',
-    	data:[-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0,-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0,18.6, 17.9, 14.3]
-    },{
-    	name:'开关量通道1',
-    	type:'DI',
-    	show:true,
-    	changed:true,//是否有变位
-    	data:[[0,0],
-    	     [8,1],
-    	     [17,0]]
-    },{
-    	name:'开关量通道2',
-    	type:'DI',
-    	data:[[0,1],
-    	     [8,0],
-    	     [17,1]]
-    },{
-    	name:'开关量通道3',
-    	type:'DI',
-    	data:[[0,0],
-    	     [18,1],
-    	     [25,0]]
-    },{
-    	name:'开关量通道4',
-    	type:'DI',
-    	data:[[0,0]]
-    }]
-}*/
+	/*
+	 channels:[
+	 {
+	 	index:0,
+	 	name:ua,
+	 	angle:120.00,
+	 	amp:80.00
+	 },
+	 {
+	 	index:1,
+	 	name:ua,
+	 	angle:120.00,
+	 	amp:80.00
+	 }
+	 ]
+	 */
 };
 
 // set the default time methods
@@ -3513,6 +3339,33 @@ SVGRenderer.prototype = {
 		
 		return wrapper.attr(attribs);
 	},
+	
+	line: function(x1,y1,x2,y2){
+		var attr = isObject(x1) ?
+				x1 :
+				{
+					x1: x1,
+					y1: y1,
+					x2: x2,
+					y2: y2
+				},
+				wrapper = this.createElement('line');
+				wrapper.xSetter = function (value,isPoint1) {
+					if( isPoint1 == true ){
+						this.element.setAttribute('x1', value);
+					}else{
+						this.element.setAttribute('x2', value);
+					}
+				};
+				wrapper.ySetter = function (value,isPoint1) {
+					if( isPoint1 == true ){
+						this.element.setAttribute('y1', value);
+					}else{
+						this.element.setAttribute('y2', value);
+					}
+				};
+			return wrapper.attr(attr);
+	},
 
 	/**
 	 * Resize the box and re-align all aligned elements
@@ -5028,7 +4881,7 @@ VMLElement = {
 		element.style[key] = value;
 	}
 };
-JSComtrade.VMLElement = VMLElement = extendClass(SVGElement, VMLElement);
+JSVectorGraph.VMLElement = VMLElement = extendClass(SVGElement, VMLElement);
 
 // Some shared setters
 VMLElement.prototype.ySetter =
@@ -5585,7 +5438,7 @@ var VMLRendererExtension = { // inherit SVGRenderer
 		}
 	}
 };
-JSComtrade.VMLRenderer = VMLRenderer = function () {
+JSVectorGraph.VMLRenderer = VMLRenderer = function () {
 	this.init.apply(this, arguments);
 };
 VMLRenderer.prototype = merge(SVGRenderer.prototype, VMLRendererExtension);
@@ -5629,7 +5482,7 @@ if (useCanVG) {
 	 * When requested, the CanVGController downloads the rest of the source packaged
 	 * together with the canvg library.
 	 */
-	JSComtrade.CanVGRenderer = CanVGRenderer = function () {
+	JSVectorGraph.CanVGRenderer = CanVGRenderer = function () {
 		// Override the global SVG namespace to fake SVG/HTML that accepts CSS
 		SVG_NS = 'http://www.w3.org/1999/xhtml';
 	};
@@ -5683,1577 +5536,10 @@ if (useCanVG) {
  *                                                                            *
  *****************************************************************************/
 
-/* ****************************************************************************
- *                                                                            *
- * START OF Pointer CODE                                           			  *
- *                                                                            *
- *****************************************************************************/
-var Pointer = JSComtrade.Pointer = function( chart ){
-	this.init(chart);
-};
-
-Pointer.prototype = {
-	/**
-	* Initialize Pointer
-	*/
-	init: function(chart){
-		
-		//store references
-		this.chart = chart;
-		
-		this.setDOMEvents();
-	},
-	getButton: function(e){
-		if(document.implementation.hasFeature("MouseEvents", "2.0")){
-			return e.button;
-		}else{
-			switch(e.button){
-			case 0:
-			case 1:
-			case 3:
-			case 5:
-			case 7:
-				return 0;
-			case 2:
-			case 6:
-				return 2;
-			case 4:
-				return 1;
-			}
-		}
-	},
-	/**
-	 * Add crossbrowser support for chartX,chartY and samplePoint
-	 * @param {Object} e The event object in standard browsers
-	 */
-	normalize: function(e, chartPosition){
-		var chartX,
-			chartY,
-			plotX,
-			plotY,
-			samplePoint,
-			ePos;
-		// common IE normalizing
-		e = e || window.event;
-		// Framework specific normalizing (#1165)
-		e = washMouseEvent(e);
-
-		// More IE normalizing, needs to go after washMouseEvent
-		if (!e.target) {
-			e.target = e.srcElement;
-		}
-		// iOS (#2757)
-		ePos = e.touches ?  (e.touches.length ? e.touches.item(0) : e.changedTouches[0]) : e;
-
-		// Get mouse position
-		if (!chartPosition) {
-			this.chartPosition = chartPosition = offset(this.chart.container);
-		}
-		// chartX and chartY
-		if (ePos.pageX === UNDEFINED) { // IE < 9. #886.
-			chartX = mathMax(e.x, e.clientX - chartPosition.left); // #2005, #2129: the second case is 
-				// for IE10 quirks mode within framesets
-			chartY = e.y;			
-		} else {
-			chartX = ePos.pageX - chartPosition.left;
-			chartY = ePos.pageY - chartPosition.top;
-		}
-		
-		//add the scroll
-		var scrolltop = $(this.chart.container).scrollTop();
-		
-		plotX = chartX - this.chart.plotLeft;
-		plotY = chartY - this.chart.plotTop;
-
-		return extend(e, {
-			chartX: mathRound(chartX),
-			chartY: mathRound(chartY),
-			plotX: mathRound(plotX),
-			plotY: mathRound(plotY),
-			chartYscroll:mathRound(chartY+scrolltop),
-			plotYscroll:mathRound(plotY+scrolltop)
-		});
-	},
-	getCursorByMouse: function(e){
-		var cursor;
-		var button = this.getButton(e);
-		if( button == 0 )
-			return this.chart.primaryCursor;
-		else if( button == 2 )
-			return this.chart.secondaryCursor;
-		return null;
-	},
-	pointInRect: function(x, y, rectBox){
-		if( rectBox && (x >= rectBox.x && x <= rectBox.x+rectBox.width) && 
-				(y >= rectBox.y && y <= rectBox.y+rectBox.height) ){
-	
-			return true;
-		}
-		return false;
-	},
-	/*
-	 * muse called after normalize
-	 */
-	mouseInComtradePlot: function(e){
-		var rect = this.chart.axis.getComtradeBox();
-		return this.pointInRect( e.chartX, e.chartY, rect);
-	},
-	onContainerMouseDown: function(e){
-		e = this.normalize(e);
-		
-		if( this.mouseInComtradePlot(e) ){
-			if(this.chart.PageturnerDisplayed){
-				var rbox = chart.getRightPageturnerBox();
-				if( this.pointInRect(e.chartX, e.chartYscroll, rbox)){
-					return;
-				}
-			}
-			var cursor = this.getCursorByMouse(e);
-			if( cursor && cursor.enable()){
-				cursor.active(true);
-				cursor.moveTo(e.chartX);
-				this.refreshTooltip(e);
-				this.synCursor(cursor);
-				this.refreshChannelValue();
-			}			
-		}
-	},
-	onContainerMouseUp: function(e){
-		e = this.normalize(e);
-
-		var cursor = this.getCursorByMouse(e);
-		if( cursor ){
-			cursor.active(false);
-		}
-		if( this.chart.tooltip)
-			this.chart.tooltip.hide();
-	},
-	onContainerMouseMove: function(e){
-		var chart = this.chart;
-		e = this.normalize(e);
-		var lbox = chart.getLeftPageturnerBox(),
-			rbox = chart.getRightPageturnerBox();
-		if( this.mouseInComtradePlot(e) ){
-			if(chart.PageturnerDisplayed){
-				if( !this.pointInRect(e.chartX, e.chartYscroll, lbox) &&
-						!this.pointInRect(e.chartX, e.chartYscroll, rbox)){
-					chart.showPageturner(false);
-				}
-			}
-			if( this.chart.primaryCursor.active()){
-				this.chart.primaryCursor.moveTo( e.chartX );
-				this.refreshTooltip(e);
-				this.synCursor(this.chart.primaryCursor);
-				this.refreshChannelValue();
-			}
-			if( this.chart.secondaryCursor.active()){
-				this.chart.secondaryCursor.moveTo( e.chartX );
-				this.refreshTooltip(e);
-				this.synCursor(this.chart.secondaryCursor);
-				this.refreshChannelValue();
-			}
-		}
-		
-		if(this.pointInRect(e.chartX, e.chartYscroll, lbox) ||
-				this.pointInRect(e.chartX, e.chartYscroll, rbox)){
-			if(!chart.PageturnerDisplayed){
-				chart.showPageturner(true);
-			}
-		}
-		
-	},
-	synCursor:function(bench){
-		if( bench == null || this.chart.options.chart.cursorSyn == false ){
-			return;
-		}
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade,
-			lineFreq = comtradeOptions.lineFreq,
-			lineFreq = 50,
-			dt = 1000/lineFreq;
-			ds = dt * chart.options.chart.pxPerMS;
-			
-		var rect = this.chart.axis.getComtradeBox();
-		if( bench == this.chart.primaryCursor ){
-			//primary cursor as the benchmark, secondary cursor is at the right of it
-			var x1 = bench.x,
-				denX = x1 + ds;
-			if( denX > rect.x + rect.width ){
-				denX = rect.x + rect.width;
-			}
-			this.chart.secondaryCursor.moveTo( denX );
-		}else{
-			var x1 = bench.x,
-			denX = x1 - ds;
-			if( denX < rect.x ){
-				denX = rect.x ;
-			}
-			this.chart.primaryCursor.moveTo( denX );
-		}
-	},
-	refreshChannelValue:function(){
-		var x1 = this.chart.primaryCursor.x,
-			x2 = this.chart.secondaryCursor.x,
-			axis = this.chart.axis,
-			t1 = axis.getTimeByPoint(x1),
-			t2 = axis.getTimeByPoint(x2),
-			s1 = axis.getNearestSample(t1),
-			s2 = axis.getNearestSample(t2);
-
-		this.chart.channels.updateValue(s1,s2);	
-		if( this.movingListener != null ){
-			this.movingListener(s1,s2);
-		}
-	},
-	refreshTooltip: function(e){
-		if (e.chartX === UNDEFINED) {
-			e = this.normalize(e);
-		}
-		var chart = this.chart,
-			axis = chart.axis,
-			comtradeOptions = chart.options.comtrade,
-			channelsOptions = chart.options.comtrade.channels;
-		var curtime = axis.getTimeByPoint(e.chartX),
-		 	leftSample = axis.getLeftSample(curtime);
-		var onchannel = [];
-		//取得在此时间点时值为1的开关量通道
-		for( var i = comtradeOptions.achannelCount; i < comtradeOptions.achannelCount+comtradeOptions.dchannelCount; i++){
-			var cn = channelsOptions[i];
-			var leftValue;
-			for( var changedi in cn.data ){
-				var cdi = cn.data[changedi];
-				if( changedi == 0 ){
-					leftValue = cdi[1];
-				}
-				if( cdi[0] > leftSample && changedi != 0 ){
-					var precdi = cn.data[changedi-1];
-					leftValue = precdi[1];
-					break;
-				}
-			}
-			if( leftValue == 1 ){
-				//变位通道
-				onchannel[onchannel.length] = cn.name;
-			}
-		}
-		//组织tooltip文字 
-		var text = '<span style="font-weight:bold">'+chart.options.lang.b_time+':'+curtime+'</span><br><br>';
-		text += '<span>'+chart.options.lang.b_curdi+'</span><br>';
-		for( var index = 0; index < onchannel.length; index++ ){
-			text += '<span style="font-weight:bold">'+onchannel[index]+'</span><br>';
-		}
-		if( this.chart.tooltip)
-			this.chart.tooltip.refresh(e, text);
-	},
-	onClick:function(e){
-		var chart = this.chart;
-		e = this.normalize(e);
-		
-		if( this.pointInRect( e.chartX, e.chartYscroll, chart.getLeftPageturnerBox())){
-			this.clickLeftPageturner();
-		}
-		if( this.pointInRect( e.chartX, e.chartYscroll, chart.getRightPageturnerBox())){
-			this.clickRightPageturner();
-		}
-	},
-	clickTopPageturner:function(){
-		var chart = this.chart;
-		if( chart.curVPage > 0 ){
-			chart.curVPage--;
-			chart.turnPage(false);
-		}
-	},
-	clickBottomPageturner:function(){
-		var chart = this.chart;
-		if( chart.curVPage < chart.VPages-1 ){
-			chart.curVPage++;
-			chart.turnPage(false);
-		}
-	},
-	clickLeftPageturner:function(){
-		var chart = this.chart;
-		if( chart.curHPage > 0 ){
-			chart.curHPage--;
-			chart.turnPage(true);
-		}
-	},
-	clickRightPageturner:function(){
-		var chart = this.chart;
-		if( chart.curHPage < chart.HPages-1 ){
-			chart.curHPage++;
-			chart.turnPage(true);
-		}		
-	},
-	/**
-	 * Set the JS DOM events on the container and document. This method should contain
-	 * a one-to-one assignment between methods and their handlers. Any advanced logic should
-	 * be moved to the handler reflecting the event's name.
-	 */
-	setDOMEvents: function(){
-		var pointer = this;
-			container = pointer.chart.container;
-		container.onmousedown = function(e){
-			pointer.onContainerMouseDown(e);
-		};
-		container.onmousemove = function(e){
-			pointer.onContainerMouseMove(e);
-		};
-		container.onmouseup = function(e){
-			pointer.onContainerMouseUp(e);
-		}
-		container.onclick = function(e){
-			pointer.onClick(e);
-		}
-		container.oncontextmenu=function(){
-			return false;
-		}
-		container.ondragstart=function(){
-			return false;
-		}
-	}
-	
-};
-/* ****************************************************************************
- *                                                                            *
- * END OF Pointer CODE                                           			  *
- *                                                                            *
- *****************************************************************************/
-
-/* ****************************************************************************
- *                                                                            *
- * START OF Cursor                                          				  *
- *                                                                            *
- *****************************************************************************/
-var Cursor = JSComtrade.Cursor = function(chart, cursorOption){
-	this.init(chart, cursorOption);
-};
-
-Cursor.prototype = {
-	init: function(chart, cursorOption){
-		this.chart = chart;
-		this.cursorOption = cursorOption;
-		var cbox = chart.axis.getComtradeBox();
-		this.x = 0;
-		this._active = false;
-		this._enable = this.cursorOption.enable;
-	},
-	render: function(destinationX){		
-		var finalX = destinationX? destinationX : this.x;
-			renderer = this.chart.renderer,
-
-			gAttr = {'class': PREFIX + this.cursorOption.type+'Cursor',
-					zIndex:4};
-		this.cursorGroup = renderer.g('axis')
-				.attr(gAttr)
-				.add();
-		this.cursorLine = renderer.path([
-		     M,
-		     finalX,
-		     this.chart.plotTop,
-		     L,
-		     finalX,
-		     this.chart.plotTop+this.chart.pageHeight		     
-		     ])
-			.css(this.cursorOption.lineStyle)
-			.add(this.cursorGroup);		
-	},
-	moveTo: function(destinationX){
-		if( !this.enable())
-			return;
-		var time = this.chart.axis.getTimeByPoint(destinationX);
-		
-		var bgAttr = {
-				'd':[M, destinationX, this.chart.plotTop, L, destinationX, this.chart.plotTop+this.chart.pageHeight]
-		}
-		if( this.cursorLine ){ //move
-			this.cursorLine.attr(bgAttr);
-		}else{//create			
-			this.render(destinationX);
-		}
-		this.x = destinationX;
-	},
-	enable: function(){
-		if( arguments.length == 0 )
-			return this._enable;
-		else{
-			this._enable = arguments[0];
-		}
-	},
-	active: function(){
-		if( arguments.length == 0 ){
-			return this._active;
-		}else{
-			this._active = arguments[0];
-		}		
-	}
-};
-/* ****************************************************************************
- *                                                                            *
- * END OF Cursor                                          				      *
- *                                                                            *
- *****************************************************************************/
-
-/* ****************************************************************************
- *                                                                            *
- * START OF Axis                                          				  *
- *                                                                            *
- *****************************************************************************/
-var Axis = JSComtrade.Axis = function(chart, userOptions){
-	this.init(chart, userOptions);
-};
-
-Axis.prototype = {
-	
-	init : function(chart, userOptions){
-		var axis = this;
-			axis.chart = chart;
-			axis.axisOptions = userOptions;
-	},
-	/*
-	 * 绘制到底部,所以底部必须有足够空间
-	 */
-	render : function(){
-		var axis = this,
-			chart = this.chart,
-			renderer = chart.axisrenderer,
-			comtradeOptions = chart.options.comtrade,
-			labelOptions = axis.axisOptions.label,
-			channelMargin = chart.options.chart.channelMargin,
-			pxPerMs = chart.options.chart.pxPerMS,
-			minSpace = 40,
-			maxTime = comtradeOptions.times[comtradeOptions.times.length-1],
-			attrAttr={stroke:axis.axisOptions.style.color,
-				'stroke-width': axis.axisOptions.style.stokeWidth},
-			gAttr = {zIndex:2};
-		if( this.axisgroup ){
-			this.axisgroup.destroy();
-			this.axisgroup = null;
-		}
-		if( this.labelgroup ){
-			this.labelgroup.destroy();
-			this.labelgroup = null;
-		}
-		var warp = this.axisgroup = renderer.g('axis')
-			.attr(gAttr)
-			.add();
-		var labelg;
-		if( labelOptions.enable)
-			this.labelgroup = labelg = renderer.g('axis-label').attr(gAttr).add();
-		var textoffset = parseInt(labelOptions.style.fontSize);
-		var cBox = this.getComtradeBox();
-		var startY = 0,
-			endY = axis.axisOptions.height,
-			textY = endY+textoffset;
-		var time0pos = cBox.x;
-		if( chart.curHPage == 0 ){//横向第一页			
-			if( comtradeOptions.sampleOffset > 0 ){
-				var x = cBox.x;
-				time0pos += (comtradeOptions.sampleOffset * pxPerMs);
-				
-				//在起始点画采样开始时间
-				renderer.path([
-				  		     M,
-				  		     x,
-				  		     startY,
-				  		     L,
-				  		     x,
-				  		     endY	     
-				  		     ])
-				  			.attr(attrAttr)
-				  			.add(warp);
-				if(labelOptions.enable){
-					//绘制标签
-					renderer.text(
-							-comtradeOptions.sampleOffset,
-							x,
-							textY,
-							false)
-					.attr({
-						align: 'center'
-					})
-					.css(labelOptions.style)
-					.add(labelg);
-				}
-			}
-			var width100ms = pxPerMs*100;
-			var count = 0;
-			var Lastpos = time0pos;
-			for( var pos = time0pos; pos <= cBox.x + cBox.width ; pos += width100ms){
-				renderer.path([
-					  		     M,
-					  		     pos,
-					  		     startY,
-					  		     L,
-					  		     pos,
-					  		     endY	     
-					  		     ])
-					  			.attr(attrAttr)
-					  			.add(warp);
-					if(labelOptions.enable){
-						//绘制标签
-						renderer.text(
-								count,
-								pos,
-								textY,
-								false)
-						.attr({
-							align: 'center'
-						})
-						.css(labelOptions.style)
-						.add(labelg);
-					}
-					Lastpos = pos;
-					count += 100;
-			}
-			if( count > maxTime){
-				//绘制最后一个采样点
-				x = Lastpos + (maxTime-(count-100))*pxPerMs;
-				renderer.path([
-				  		     M,
-				  		     x,
-				  		     startY,
-				  		     L,
-				  		     x,
-				  		     endY	     
-				  		     ])
-				  			.attr(attrAttr)
-				  			.add(warp);
-				if(labelOptions.enable && (x-Lastpos) > minSpace){
-					//绘制标签
-					renderer.text(
-							maxTime,
-							x,
-							textY,
-							false)
-					.attr({
-						align: 'center'
-					})
-					.css(labelOptions.style)
-					.add(labelg);
-				}
-			}else{
-				//绘制本页最后一个点
-				x = cBox.x+cBox.width;
-				renderer.path([
-				  		     M,
-				  		     x,
-				  		     startY,
-				  		     L,
-				  		     x,
-				  		     endY	     
-				  		     ])
-				  			.attr(attrAttr)
-				  			.add(warp);
-				if(labelOptions.enable && (x-Lastpos) > minSpace){
-					//绘制标签
-					renderer.text(
-							chart.spanPrePage-comtradeOptions.sampleOffset,
-							x,
-							textY,
-							false)
-					.attr({
-						align: 'center'
-					})
-					.css(labelOptions.style)
-					.add(labelg);
-				}
-			}
-			
-		}else{ //非第一页
-			var startTime = axis.getStartTime();
-			//绘制第一个点
-			var x = cBox.x;
-			time0pos = x;
-			
-			//在起始点画采样开始时间
-			renderer.path([
-			  		     M,
-			  		     x,
-			  		     startY,
-			  		     L,
-			  		     x,
-			  		     endY	     
-			  		     ])
-			  			.attr(attrAttr)
-			  			.add(warp);
-			var distanceToNext = (100 - startTime%100)*pxPerMs;
-			
-			if(labelOptions.enable && distanceToNext>minSpace){
-				//绘制标签
-				renderer.text(
-						startTime,
-						x,
-						textY,
-						false)
-				.attr({
-					align: 'center'
-				})
-				.css(labelOptions.style)
-				.add(labelg);
-			}
-			
-			time0pos += distanceToNext;
-			var width100ms = pxPerMs*100;
-			var count = mathCeil(startTime/100)*100;
-			var Lastpos = time0pos;
-			for( var pos = time0pos; pos <= cBox.x+cBox.width ; pos += width100ms){
-				renderer.path([
-					  		     M,
-					  		     pos,
-					  		     startY,
-					  		     L,
-					  		     pos,
-					  		     endY	     
-					  		     ])
-					  			.attr(attrAttr)
-					  			.add(warp);
-					if(labelOptions.enable){
-						//绘制标签
-						renderer.text(
-								count,
-								pos,
-								textY,
-								false)
-						.attr({
-							align: 'center'
-						})
-						.css(labelOptions.style)
-						.add(labelg);
-					}
-					Lastpos = pos;
-					count += 100;
-			}
-			
-			if( count > maxTime){
-				//绘制最后一个采样点
-				x = Lastpos + (maxTime-(count-100))*pxPerMs;
-				renderer.path([
-				  		     M,
-				  		     x,
-				  		     startY,
-				  		     L,
-				  		     x,
-				  		     endY	     
-				  		     ])
-				  			.attr(attrAttr)
-				  			.add(warp);
-				if(labelOptions.enable && (x-Lastpos) > minSpace){
-					//绘制标签
-					renderer.text(
-							maxTime,
-							x,
-							textY,
-							false)
-					.attr({
-						align: 'center'
-					})
-					.css(labelOptions.style)
-					.add(labelg);
-				}
-			}else{
-				//绘制最后一个点
-				x = cBox.x+cBox.width;
-				renderer.path([
-				  		     M,
-				  		     x,
-				  		     startY,
-				  		     L,
-				  		     x,
-				  		     endY	     
-				  		     ])
-				  			.attr(attrAttr)
-				  			.add(warp);
-				if(labelOptions.enable && (x-Lastpos) > minSpace){
-					//绘制标签
-					renderer.text(
-							startTime+chart.spanPrePage,
-							x,
-							textY,
-							false)
-					.attr({
-						align: 'center'
-					})
-					.css(labelOptions.style)
-					.add(labelg);
-				}
-			}			
-		}
-	},
-	/*
-	 * 取得本页的录波图形的有效区域,只关注X轴方向，Y轴方向和plotBox一致
-	 */
-	getComtradeBox:function(){
-		var chart = this.chart,
-			startTime = this.getStartTime(),
-			endTime = this.getEndTime(),
-			plotBox = chart.plotBox,
-			rect = { x:plotBox.x + chart.options.chart.channelMargin[3], 
-					y:plotBox.y, 
-					width:(endTime - startTime)*chart.options.chart.pxPerMS, 
-					height:plotBox.height};
-			return rect;
-	},
-	/*
-	 * 根据在图形中的位置计算位置对应的时间(相对于chart的位置),这种计算方法需保证时间均匀分布
-	 */
-	getTimeByPoint:function(pointX){
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade,
-			channelMargin = chart.options.chart.channelMargin,
-			startTime = this.getStartTime(),
-			maxTime = comtradeOptions.times[comtradeOptions.times.length-1],
-			startX = chart.plotLeft+channelMargin[3];
-		if( pointX < chart.poltLeft || pointX > (chart.plotLeft+chart.plotWidth)){
-			return invaildTime-1;
-		}
-
-		var span = (pointX - startX)/chart.options.chart.pxPerMS;
-		var time = JSComtrade.numberFormat( (startTime + span), 2);
-		if( time > maxTime )
-			return invaildTime-1;
-		return JSComtrade.numberFormat( (startTime + span), 2);		
-	},
-	/*
-	 * 根据采样点索引号取得在本页图形中的位置(相对于chart的位置)，小于0的值表示采样点不在本页中
-	 */
-	getPointBySample:function(sampleIndex){
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade,
-			cbox = this.getComtradeBox();
-		if( sampleIndex < 0 || sampleIndex >= comtradeOptions.sampleCount )
-			return -1;
-		var time = comtradeOptions.times[sampleIndex];
-		var startTime = this.getStartTime(),
-			endTime = this.getEndTime();
-		if( time < startTime || time > endTime )
-			return -1;
-		var offset = (time - startTime) * chart.options.chart.pxPerMS;
-		return offset+cbox.x;
-	},
-	getSampleTime:function(sampleIndex){
-		var chart = this.chart,
-		comtradeOptions = chart.options.comtrade;
-		if( sampleIndex < 0 || sampleIndex >= comtradeOptions.sampleCount )
-			return -1;
-		return comtradeOptions.times[sampleIndex];
-	},
-	/*
-	 * 取得当前页的起始时间
-	 */
-	getStartTime:function(){
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade,
-			startTime = chart.curHPage * chart.spanPrePage - comtradeOptions.sampleOffset;
-		return startTime;
-	},
-	/*
-	 * 取得当前页的结束时间
-	 */
-	getEndTime:function(){
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade,
-			startTime = this.getStartTime(),
-			maxTime = comtradeOptions.times[comtradeOptions.times.length-1],
-			endTime = mathMin( (startTime + chart.spanPrePage), maxTime );
-		return endTime;
-	},
-	/*
-	 * 取得小于指定时间的最近的采样点（0开始计数）
-	 */
-	getLeftSample:function(time){
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade;
-		
-		for( var i in comtradeOptions.times ){
-			if( comtradeOptions.times[i] > time ){
-				if( i > 0 )
-					return (i-1);
-				else
-					return 0;
-			}
-		}
-		return (comtradeOptions.times.length-1);
-	},
-	/*
-	 * 取得第一个大于或等于指定时间的采样点（0开始计数）
-	 */
-	getRightSample:function(time){
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade;
-	
-		for( var i in comtradeOptions.times ){
-			if( comtradeOptions.times[i] >= time ){
-				return i;
-			}
-		}
-		return (comtradeOptions.times.length-1);
-	},
-	/*
-	 * 取得离指定时间最近的采样点，可能是左边也可能是右边.（0开始计数）
-	 */
-	getNearestSample:function(time){
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade;
-		for( var i in comtradeOptions.times ){
-			if( comtradeOptions.times[i] > time ){
-				if( i > 0 ){
-					if( mathAbs(comtradeOptions.times[i-1]-time) < mathAbs(comtradeOptions.times[i]-time) ){
-						return (i-1);
-					}else
-						return i;
-				}
-				else
-					return 0;
-			}
-		}
-		return (comtradeOptions.times.length-1);
-	},
-	getSampleRate:function(s){
-		var chart = this.chart,
-			comtradeOptions = chart.options.comtrade,
-			rates = comtradeOptions.rates;
-		var totalSample = 0;
-		for(var i in rates){
-			var r = rates[i];
-			totalSample += r[1];
-			if( s < totalSample ){
-				return r[0];
-			}
-		}
-		return 1200;
-	}
-};
-/* ****************************************************************************
- *                                                                            *
- * END OF Axis                                          				      *
- *                                                                            *
- *****************************************************************************/
-
-var Channels = JSComtrade.Channels = function(chart, userOptions){
-	this.init(chart, userOptions);
-};
-
-
-Channels.prototype = {
-	init:function(chart, userOptions){
-		this.chart = chart;
-		this.comtradeOptions = userOptions;
-		this.channelsOptions = userOptions.channels;
-		this.firstUpdateValue = false;
-	},
-	render:function(){
-		var channels = this,
-			chart = this.chart,
-			axis = chart.axis,
-			renderer = chart.renderer,
-			chartOptions = chart.options.chart,
-			comtradeOptions = chart.options.comtrade,
-			channelsOptions = chart.options.comtrade.channels,
-			maxIValue = channels.comtradeOptions.maxIValue,
-			maxUValue = channels.comtradeOptions.maxUValue,
-			maxOtherValue = channels.comtradeOptions.maxOtherValue,
-			channelsPrePage = chart.channelsPrePage,
-			totalChannel = comtradeOptions.achannelCount + comtradeOptions.dchannelCount,
-			colorA = chartOptions.channelA.color,
-			colorB = chartOptions.channelB.color,
-			colorC = chartOptions.channelC.color,
-			colorN = chartOptions.channelN.color,
-			channelHeight = chartOptions.channel.height,
-			channelColor = chartOptions.channel.color,
-			channelTotalHeight = channelHeight + chartOptions.channelMargin[0]+ chartOptions.channelMargin[2],
-			channelNameOptions = chartOptions.channelName,
-			halfChannelH = (channelHeight-channelNameOptions.height)/2,
-			cbox = axis.getComtradeBox(),
-			startX = cbox.x,
-			maxX = cbox.x + cbox.width;
-		var startIndex = chart.curVPage * channelsPrePage,
-			endIndex = totalChannel;
-		if( endIndex >= totalChannel ){
-			endIndex = totalChannel;
-		}
-		
-		this.vArray = null;
-		this.vArray = new Array();
-		this.idArray = null;
-		this.idArray = new Array();
-		this.nameArray = null;
-		this.nameArray = new Array();
-		if( this.channelG ){
-			this.channelG.destroy();
-			this.channelG = null;
-			
-		}
-		
-		var warp = this.channelG = renderer.g('channels')
-			.add();
-		var bodyAttr={
-				stroke: channelColor,
-				'stroke-width': 1
-				};
-		var labelAttr = {fontSize : channelNameOptions.fontSize, 
-				color : channelNameOptions.color};
-		//计算并保存当前页所有采样点的X轴坐标，减少计算次数
-		var firstSample = axis.getRightSample(axis.getStartTime()),
-			endSample = axis.getLeftSample(axis.getEndTime()),
-			exfirstSample = axis.getLeftSample(axis.getStartTime()),
-			exendSample = axis.getRightSample(axis.getEndTime());
-		var samplePos = [];
-		var cit = 0;
-		for( var it = firstSample; it <= endSample; it++ ){
-			samplePos[cit] = axis.getPointBySample(it);
-			cit++;			
-		}
-		this.canRenderValue = false;
-		
-		var startY = chart.plotTop + chartOptions.channelMargin[0];
-		//start draw
-		for( var i = startIndex; i < endIndex; i++ ){
-			this.idArray[i-startIndex] = i;
-			this.nameArray[i-startIndex]=null;
-			this.vArray[i-startIndex]=null;
-			var cn = channelsOptions[i];
-			if( cn.show == false ){
-				continue;
-			}
-			var warpC = renderer.g('channel-'+i).add(warp);
-			
-			//绘制名称
-			this.nameArray[i-startIndex] = renderer.text(
-					cn.name,
-					startX,
-					startY+channelNameOptions.height-4,
-					false)
-			.attr({
-				align: 'left'
-			})
-			.css(labelAttr)
-			.add(warpC);
-			
-			//绘制值占位符
-			this.vArray[i-startIndex] = renderer.text(
-					'',
-					startX ,
-					startY+channelNameOptions.height-4,
-					false)
-			.attr({
-				align: 'left'
-			})
-			.css(labelAttr)
-			.add(warpC);
-			
-			var topY = startY + channelNameOptions.height,
-				midY = startY + (channelHeight - channelNameOptions.height)/2 + channelNameOptions.height,
-				bottomY = startY + channelHeight;
-				
-			//绘制曲线外框
-				renderer.path(
-						[ M, 
-						  startX, 
-						  topY, 
-						  L, 
-						  maxX,
-						  topY ])
-						.attr(bodyAttr).add(warpC);
-				renderer.path(
-						[ M, 
-						  startX, 
-						  midY, 
-						  L, 
-						  maxX,
-						  midY ])
-						.attr(bodyAttr).css({'stroke-dasharray': '5, 5'}).add(warpC);
-				renderer.path(
-						[ M, 
-						  startX, 
-						  bottomY, 
-						  L, 
-						  maxX,
-						  bottomY ])
-						.attr(bodyAttr).add(warpC);
-				renderer.path(
-						[ M, 
-						  startX, 
-						  topY, 
-						  L, 
-						  startX,
-						  bottomY ])
-						.attr(bodyAttr).add(warpC);
-			if( cn.type == "AI"){
-				//绘制振幅标签
-				var amplitude = cn.max;
-				if( comtradeOptions.useCommonAmplitude ){
-					switch( cn.unit ){
-					case "A":
-						amplitude = comtradeOptions.maxIValue;
-						break;
-					case "V":
-						amplitude = comtradeOptions.maxUValue;
-						break;
-					default:
-						amplitude = comtradeOptions.maxOtherValue;	
-					}
-				}
-				renderer.text(
-						amplitude,
-						startX-2,
-						topY,
-						false)
-				.attr({
-					align: 'right',
-					'dominant-baseline':'middle'
-				})
-				.css(labelAttr)
-				.add(warpC);
-				
-				renderer.text(
-						0,
-						startX-2,
-						midY,
-						false)
-				.attr({
-					align: 'right',
-					'dominant-baseline':'middle'
-				})
-				.css(labelAttr)
-				.add(warpC);
-				
-				renderer.text(
-						-amplitude,
-						startX-2,
-						bottomY,
-						false)
-				.attr({
-					align: 'right',
-					'dominant-baseline':'middle'
-				})
-				.css(labelAttr)
-				.add(warpC);
-				//绘制波形
-				var cindex = 1;
-				var pathdata=[];
-				pathdata[0]=M;
-				//保证图形从坐标0点开始画
-				if( true ){
-					var exfirstx = axis.getSampleTime(exfirstSample),
-					exfirstvalue = cn.data[exfirstSample],
-					firstx = axis.getSampleTime(firstSample),
-					firstvalue = cn.data[firstSample];
-					pathdata[1] = startX;		
-					var startT = parseFloat(axis.getTimeByPoint(startX));
-					var zerovalue = firstvalue;
-					if( (firstx-exfirstx) > 1)
-						zerovalue = (firstvalue-exfirstvalue)*(startT-exfirstx)/(firstx-exfirstx)+exfirstvalue;
-					if( mathAbs(zerovalue) > amplitude){
-						zerovalue = exfirstvalue;
-					}
-					if( zerovalue < 0 ){
-						pathdata[2] = midY + ( mathAbs(zerovalue)/amplitude * halfChannelH);
-					}else if( zerovalue > 0 ){
-						pathdata[2] = midY - ( mathAbs(zerovalue)/amplitude * halfChannelH);
-					}
-					else{
-						pathdata[2] = midY;
-					}
-				}
-				
-				for( var it = firstSample; it <= endSample; it++ ){
-					var samplex = samplePos[cindex-1],
-						samplevalue = cn.data[it],
-						sampley = 0;
-					if( samplevalue < 0 ){
-						sampley = midY + ( mathAbs(samplevalue)/amplitude * halfChannelH);
-					}else if( samplevalue > 0 ){
-						sampley = midY - ( mathAbs(samplevalue)/amplitude * halfChannelH);
-					}
-					else{
-						sampley = midY;
-					}
-
-					pathdata[cindex*3]=L;
-					pathdata[cindex*3+1] = samplex;
-					pathdata[cindex*3+2] = sampley;
-					cindex++;
-				}
-				if( chart.curHPage != chart.HPages-1 ){
-					var exendx = axis.getSampleTime(exendSample),
-					exendvalue = cn.data[exendSample],
-					endx = axis.getSampleTime(endSample),
-					endvalue = cn.data[endSample];
-					pathdata[cindex*3]=L;
-					pathdata[cindex*3+1] = maxX;
-					var endT = parseFloat(axis.getTimeByPoint(maxX));
-					var zerovalue = endvalue;
-					if( (exendx-endx)>1 )
-						zerovalue = (exendvalue-endvalue)*(exendx-endT)/(exendx-endx)+endvalue;
-					if( mathAbs(zerovalue) > amplitude){
-						zerovalue = exendvalue;
-					}
-					if( zerovalue < 0 ){
-						pathdata[cindex*3+2] = midY + ( mathAbs(zerovalue)/amplitude * halfChannelH);
-					}else if( zerovalue > 0 ){
-						pathdata[cindex*3+2] = midY - ( mathAbs(zerovalue)/amplitude * halfChannelH);
-					}
-					else{
-						pathdata[cindex*3+2] = midY;
-					}
-				}
-				var cc={stroke: channelColor,
-						'stroke-width': 1};
-				//根据相位区分颜色
-				switch(cn.phase){
-				case "A":
-					cc.stroke = chartOptions.channelA.color;
-					break;
-				case "B":
-					cc.stroke = chartOptions.channelB.color;
-					break;
-				case "C":
-					cc.stroke = chartOptions.channelC.color;
-					break;
-				case "N":
-					cc.stroke = chartOptions.channelN.color;
-					break;
-					default:{
-						switch(parseInt(i)%4){
-						case 0:
-							cc.stroke = chartOptions.channelA.color;
-							break;
-						case 1:
-							cc.stroke = chartOptions.channelB.color;
-							break;
-						case 2:
-							cc.stroke = chartOptions.channelC.color;
-							break;
-						case 3:
-							cc.stroke = chartOptions.channelN.color;
-							break;							
-						}
-					}
-				}
-				renderer.path(pathdata)
-						.attr(cc).add(warpC);
-			}else{ //开关量通道
-				//绘制波形
-				var ditopY = midY - (channelHeight - channelNameOptions.height)/4,
-					diheight = (channelHeight - channelNameOptions.height)/2;
-				var firstChangedi = -1;
-				for( var changedi in cn.data ){
-					var cdi = cn.data[changedi];
-					if( cdi[0] >= firstSample && cdi[0] <= endSample ){
-						firstChangedi = changedi;
-						break;
-					}
-				}
-				
-				var cc={'stroke-width': 1};
-				switch(parseInt(i)%4){
-				case 0:
-					cc.stroke = chartOptions.channelA.color;
-					cc.fill = chartOptions.channelA.fill;
-					break;
-				case 1:
-					cc.stroke = chartOptions.channelB.color;
-					cc.fill = chartOptions.channelB.fill;
-					break;
-				case 2:
-					cc.stroke = chartOptions.channelC.color;
-					cc.fill = chartOptions.channelC.fill;
-					break;
-				case 3:
-					cc.stroke = chartOptions.channelN.color;
-					cc.fill = chartOptions.channelN.fill;
-					break;							
-				}
-				
-				if( firstChangedi >= 0 ){
-					//本页有变位点					
-					if( firstChangedi > 0 ){
-						//绘制第一个变位点之前的图形
-						var predi = cn.data[firstChangedi-1];
-						var curdi = cn.data[firstChangedi];
-						var nextX = samplePos[curdi[0]-firstSample];
-						if( predi[1] == 0 ){
-							//值为0，画直线
-							renderer.path(
-									[ M,startX,midY,
-									  L,nextX,midY ])
-									.attr(cc).add(warpC);
-						}else{
-							renderer.rect(startX, ditopY, nextX-startX, diheight,
-									0, 1)
-									.attr(cc).add(warpC);
-						}
-					}
-					//从firstChangedi开始绘制
-					for( var did = firstChangedi; did < cn.data.length; did++ ){
-						var curchange = cn.data[did];
-						if( curchange[0] > endSample )
-							break;
-						var nextchange = null;
-						if( did < cn.data.length -1 ){
-							nextchange = cn.data[parseInt(did)+1];
-							if( nextchange[0] > endSample )
-								nextchange = null;
-						}
-						
-						var nextX = maxX;
-						var curX = samplePos[curchange[0]-firstSample]
-						if( nextchange != null ){
-							nextX = samplePos[nextchange[0]-firstSample];
-						}
-						if( curchange[1] == 0 ){
-							//值为0，画直线
-							renderer.path(
-									[ M,curX,midY,
-									  L,nextX,midY ])
-									.attr(cc).add(warpC);
-						}else{
-							renderer.rect(curX, ditopY, nextX-curX, diheight,
-									0, 1)
-									.attr(cc).add(warpC);
-						}
-					}
-				}else{
-					//本页没有变位点，找之前最近的变位点
-					var preChangedi = -1;
-					for( var changedi in cn.data ){
-						var cdi = cn.data[changedi];
-						if( cdi[0] > firstSample ){
-							preChangedi = changedi-1;
-							break;
-						}
-					}
-					if( preChangedi < 0 )
-						preChangedi = 0;
-					var pre = cn.data[preChangedi];
-					if( pre[1] == 0 ){
-						//值为0，画直线
-						renderer.path(
-								[ M,startX,midY,
-								  L,maxX,midY ])
-								.attr(cc).add(warpC);
-					}else{
-						renderer.rect(startX, ditopY, maxX-startX, diheight,
-								0, 1)
-								.attr(cc).add(warpC);
-					}
-				}				
-			}
-			startY +=  (channelTotalHeight);
-			
-		}
-		this.canRenderValue = true;
-	},
-	updateValue : function(s1, s2){
-		var channels = this,
-			chart = this.chart,
-			axis = chart.axis,
-			renderer = chart.renderer,
-			chartOptions = chart.options.chart,
-			langOptions = chart.options.lang,
-			comtradeOptions = chart.options.comtrade,
-			channelsOptions = chart.options.comtrade.channels;
-		if( this.vArray == null || this.idArray == null ){
-			return;
-		}
-
-		for( var i = 0; i < this.idArray.length; i++ ){
-			if( this.nameArray[i]==null ){
-				continue;
-			}
-			var c = channelsOptions[this.idArray[i]];			
-			var ele = this.vArray[i];
-			if( !this.firstUpdateValue ){
-				var nameEle = this.nameArray[i];
-				var b = nameEle.getBBox();
-				var newx = b.x + b.width + 5
-				ele.attr('x',newx);
-			}
-			if( c.type=="AI"){
-				var v1 = c.data[s1];
-				var v2 = c.data[s2];
-				//计算有效值
-				var dv = 0.0;
-				for( var p = parseInt(s1); p <= parseInt(s2); p++ ){
-					dv += math.pow(c.data[p],2);
-				}
-				
-				dv = math.sqrt(dv/(s2-s1+1));
-								
-				var text = langOptions.b_primarycursor+JSComtrade.numberFormat(v1,2)+c.unit
-							+langOptions.b_secondcursor+JSComtrade.numberFormat(v2,2)+c.unit
-							+langOptions.b_effectivevalue+JSComtrade.numberFormat(dv,2);
-				ele.textSetter(text);
-			}else{
-				var v1 = 0,
-					v2 = 0,
-					setv1 = false,
-					setv2 = false;
-				for( var changedi in c.data ){
-					var cdi = c.data[changedi];
-					if( changedi == 0 ){
-						v1 = v2 = cdi[1];
-					}
-					if( cdi[0] > s1 && changedi != 0 && setv1==false ){
-						var precdi = c.data[changedi-1];
-						v1 = precdi[1];
-						setv1 = true;
-					}
-					if( cdi[0] > s2 && changedi != 0 && setv2 == false ){
-						var precdi = c.data[changedi-1];
-						v2 = precdi[1];
-						setv2 = true;
-					}
-					if( setv1 == true && setv2 == true )
-						break;
-				}
-				var text = langOptions.b_primarycursor+(v1==0?langOptions.b_reset:langOptions.b_action)+
-							langOptions.b_secondcursor+(v2==0?langOptions.b_reset:langOptions.b_action);
-				ele.textSetter(text);
-			}			
-		}
-		this.firstUpdateValue = false;
-	}
-};
-
-/*******************************************************************************
- * * START OF Tooltip * *
- ******************************************************************************/
-var Tooltip = JSComtrade.Tooltip = function(){
-	this.init.apply(this, arguments);
-};
-
-Tooltip.prototype = {
-	init : function(chart, options){
-		this.chart = chart;
-		this.options = options;
-		var borderWidth = options.borderWidth,
-			style = options.style,
-			padding = pInt(style.padding);
-		
-		this.crosshairs = [];
-		this.now = {x:0, y:0};
-		this.isHidden = true;
-		
-		this.label = chart.renderer.label('', 0, 0, options.shape || 'callout', null, null, options.useHTML, null, 'tooltip')
-				.attr({
-					padding:padding,
-					fill:options.backgroundColor,
-					'stroke-width':borderWidth,
-					r:options.borderRadius,
-					zIndex:8
-				})
-				.css(style)
-				.css({padding:0})// Remove it from VML, the padding is applied as an attribute instead (#1117)
-				.add()
-				.attr({y:-9999});
-		// When using canVG the shadow shows up as a gray circle
-		// even if the tooltip is hidden.
-		if (!useCanVG) {
-			this.label.shadow(options.shadow);
-		}
-	},
-	
-	destroy:function(){
-		if(this.label){
-			this.label = this.label.destroy();
-		}
-		clearTimout(this.hideTimer);
-		clearTimeout(this.tooptipTimeout);
-	},
-	
-	move:function(x, y, anchorX, anchorY){
-		var tooltip = this,
-			now = tooltip.now,
-			animate = tooltip.options.animation !== false && !tooltip.isHidden &&
-				(mathAbs(x-now.x)>1 || mathAbs(y-now.y)>1),
-			skipAnchor = tooltip.followPointer || tooltip.len > 1;
-			// Get intermediate values for animation
-			extend(now, {
-				x: animate ? (2 * now.x + x) / 3 : x,
-				y: animate ? (now.y + y) / 2 : y,
-				anchorX: skipAnchor ? UNDEFINED : animate ? (2 * now.anchorX + anchorX) / 3 : anchorX,
-				anchorY: skipAnchor ? UNDEFINED : animate ? (now.anchorY + anchorY) / 2 : anchorY
-			});
-
-			// Move to the intermediate value
-			tooltip.label.attr(now);
-
-			
-			// Run on next tick of the mouse tracker
-			if (animate) {			
-				// Never allow two timeouts
-				clearTimeout(this.tooltipTimeout);
-				
-				// Set the fixed interval ticking for the smooth tooltip
-				this.tooltipTimeout = setTimeout(function () {
-					// The interval function may still be running during
-					// destroy, so check that the chart is really there before
-					// calling.
-					if (tooltip) {
-						tooltip.move(x, y, anchorX, anchorY);
-					}
-				}, 32);
-				
-			}
-	},
-	/**
-	 * Hide the tooltip
-	 */
-	hide: function (delay) {
-		var tooltip = this,
-			hoverPoints;
-		
-		clearTimeout(this.hideTimer); // disallow duplicate timers (#1728, #1766)
-		if (!this.isHidden) {
-			hoverPoints = this.chart.hoverPoints;
-
-			this.hideTimer = setTimeout(function () {
-				tooltip.label.fadeOut();
-				tooltip.isHidden = true;
-			}, pick(delay, this.options.hideDelay, 500));
-		}
-	},
-	
-	/**
-	 * Place the tooltip in a chart without spilling over
-	 * and not covering the point it self.
-	 */
-	getPosition: function (boxWidth, boxHeight, point) {
-		var chart = this.chart,
-			ret = {},
-			distance = 8,
-			first = ['y', chart.plotTop, chart.plotHeight, boxHeight, point.y],
-			second = ['x', chart.plotLeft, chart.plotWidth, boxWidth, point.x],
-			
-			/**
-			 * Handle the preferred dimension. When the preferred dimension is tooltip
-			 * on top or bottom of the point, it will look for space there.
-			 */
-			firstDimension = function (dim, outerStart, outerSize, innerSize, point) {
-				var roomLeft = innerSize < point - distance - outerStart,
-					roomRight = point + distance + innerSize < (outerStart+outerSize),
-					alignedLeft = point - distance - innerSize,
-					alignedRight = point + distance;
-
-				if (roomRight) {
-					ret[dim] = alignedRight;
-				} else {
-					ret[dim] = alignedLeft;
-				}
-			};
-			firstDimension.apply(0, first);
-			firstDimension.apply(0, second);
-		return ret;
-	
-	},
-	
-	/**
-	 * In case no user defined formatter is given, this will be used. Note that the context
-	 * here is an object holding point, series, x, y etc.
-	 */
-	defaultFormatter: function (tooltip) {
-		var items = this.points || splat(this),
-			s;
-
-		// build the header
-		s = [tooltip.tooltipFooterHeaderFormatter(items[0])]; //#3397: abstraction to enable formatting of footer and header
-
-		// build the values
-		s = s.concat(tooltip.bodyFormatter(items));
-
-		// footer
-		s.push(tooltip.tooltipFooterHeaderFormatter(items[0], true)); //#3397: abstraction to enable formatting of footer and header
-
-		return s.join('');
-	},
-	
-	/**
-	 * Refresh the tooltip's text and position.
-	 * @param {Object} point
-	 */
-	refresh: function ( mouseEvent, text ) {
-		var tooltip = this,
-			chart = tooltip.chart,
-			label = tooltip.label,
-			options = tooltip.options,
-			x,
-			y,
-			anchor,
-			textConfig = {},
-			text,
-			pointConfig = [],
-			borderColor;
-			
-		clearTimeout(this.hideTimer);
-		
-		// get the reference point coordinates (pie charts use tooltipPos)
-		//anchor = tooltip.getAnchor(mouseEvent);
-		if (mouseEvent.chartX === UNDEFINED) {
-			mouseEvent = chart.pointer.normalize(mouseEvent);
-		}
-		x = mouseEvent.chartX;
-		y = mouseEvent.chartYscroll;
-
-		// update the inner HTML
-		if (text === false) {
-			this.hide();
-		} else {
-
-			// show it
-			if (tooltip.isHidden) {
-				stop(label);
-				label.attr('opacity', 1).show();
-			}
-
-			// update text
-			label.attr({
-				text: text
-			});
-
-			// set the stroke color of the box
-			borderColor = options.borderColor || '#606060';
-			label.attr({
-				stroke: borderColor
-			});
-			tooltip.updatePosition({ 
-				x: x, 
-				y: y, 
-				negative: true, 
-				ttBelow: false, 
-				h: 0
-			});
-		
-			this.isHidden = false;
-		}
-	},
-	/**
-	 * Find the new position and perform the move
-	 */
-	updatePosition: function (point) {
-		var chart = this.chart,
-			label = this.label, 
-			pos = this.getPosition.call(
-				this,
-				label.width,
-				label.height,
-				point
-			);
-
-		// do the move
-		this.move(
-			mathRound(pos.x), 
-			mathRound(pos.y || 0), // can be undefined (#3977) 
-			point.plotX + chart.plotLeft, 
-			point.plotY + chart.plotTop
-		);
-	}
-};
-
 /*******************************************************************************
  * * START OF Chart * *
  ******************************************************************************/
-var Chart = JSComtrade.Chart = function(){
+var Chart = JSVectorGraph.Chart = function(){
 	this.init.apply(this, arguments);
 	return this;
 };
@@ -7273,30 +5559,12 @@ Chart.prototype={
 		this.options = options;
 		
 		var chart = this;
-		//add the chart to the global lookup
-		//chart.index = charts.length;
-		//charts.push(chart);
 		chart.index = chartCount++;
 		chartCount++;
 				
 		chart.firstRender();
 	},
 	
-	/*
-	 * 规划图形分页,本函数须在plot区域确定后再调用
-	 */
-	layoutPages : function(){
-		var chart = this,
-			chartOptions = chart.options.chart,
-			comtradeOptions = chart.options.comtrade,
-			times = comtradeOptions.times;
-		
-		var pagewidth = chart.plotWidth - chartOptions.channelMargin[1] - chartOptions.channelMargin[3];
-		chart.spanPrePage = mathFloor(pagewidth/chartOptions.pxPerMS);
-		chart.HPages = mathCeil( (times[times.length-1]-times[0])/chart.spanPrePage );
-		chart.curVPage = chart.curHPage = 0;
-		chart.pageWidth = pagewidth;
-	},
 	isReadyToRender: function(){
 		var chart = this;
 		
@@ -7330,51 +5598,16 @@ Chart.prototype={
 		chart.setChartSize();
 
 		// depends on inverted and on margins being set		
-		chart.layoutPages();
-		
-		if( JSComtrade.Axis ){
-			chart.axis = new Axis(chart, options.axis);
-		}
-		
-		if( options.chart.mode === 'show'){
-			if (JSComtrade.Pointer) {
-				chart.pointer = new Pointer(chart);
-			}
-			
-			if(JSComtrade.Tooltip){
-				chart.tooltip = new Tooltip(chart, options.tooltip);
-			}
-			
-			if(JSComtrade.Cursor){
-					chart.primaryCursor = new Cursor(chart, options.cursor1);
-					chart.secondaryCursor = new Cursor(chart, options.cursor2);
-			}
-		}		
-		
-		if( JSComtrade.Channels ){
-			chart.channels = new Channels(chart, options.comtrade);
-		}	
-
 		chart.render();
 		
-		if( options.chart.mode === 'show'){
-			chart.showPageturner(false);
-		}
-			
 		//add canvas
 		chart.renderer.draw();
 		
 		// If the chart was rendered outside the top container, put it back in (#3679)
 		chart.cloneRenderTo(true);
-		
-		if(chart.primaryCursor){
-			var cbox = chart.axis.getComtradeBox();
-			chart.primaryCursor.moveTo(cbox.x+20);
-			chart.pointer.synCursor(chart.primaryCursor)
-		}
 	},
 	getContainer:function(){
-			var chart = this, container, optionsChart = chart.options.chart, chartWidth, chartHeight, renderTo, indexAttrName = 'data-jscomtrade-chart', oldChartIndex, containerId;
+			var chart = this, container, optionsChart = chart.options.chart, chartWidth, chartHeight, renderTo, indexAttrName = 'data-jsvectorgraph-chart', oldChartIndex, containerId;
 
 			chart.renderTo = renderTo = optionsChart.renderTo;
 			containerId = PREFIX + chart.index;
@@ -7385,22 +5618,7 @@ Chart.prototype={
 			if (!renderTo) {
 				error(13, true);
 			}
-			// If the container already holds a chart, destroy it. The check for
-			// hasRendered is there
-			// because web pages that are saved to disk from the browser, will
-			// preserve the data-highcharts-chart
-			// attribute and the SVG contents, but not an interactive chart. So
-			// in this case,
-			// charts[oldChartIndex] will point to the wrong chart if any
-			// (#2609).
-			/*
-			 * oldChartIndex = pInt(attr(renderTo, indexAttrName));
-			 * if(!isNaN(oldChartIndex)&& charts[oldChartIndex] &&
-			 * charts[oldChartIndex]!='undefined'){
-			 * charts[oldChartIndex].destory(); if(axischarts[oldChartIndex]){
-			 * axischarts[oldChartIndex].destory(); } }
-			 */
-
+			
 			// make a reference to the chart from the div
 			attr(renderTo, indexAttrName, chart.index);
 
@@ -7413,22 +5631,15 @@ Chart.prototype={
 			chartHeight = chart.chartHeight;
 			
 			var containerStyle={
-					//position:RELATIVE,
-					//overflow:'auto',
+					overflow:'hide',
 					width:chartWidth+PX,
 					height:chartHeight+PX,
 					textAlign:'left',
 					lineHeight:'normal',
 					zIndex:0,
-					'border-width':'1px',
-					'border-style':'solid none solid solid',
 					'border-color':optionsChart.borderColor
 					};
-			if( optionsChart.mode === 'show' ){
-				containerStyle.position = RELATIVE;
-				containerStyle.overflow = 'auto';
-			}
-
+			
 			// create the inner container
 			chart.container = container = createElement(DIV, {
 				className : PREFIX
@@ -7440,52 +5651,16 @@ Chart.prototype={
 					|| renderTo);
 			// cache the cursor
 			chart._cursor = container.style.cursor;
-			// charts[chart.index] = container;
-
-			var cheight = optionsChart.channel.height
-					+ optionsChart.channelMargin[0]
-					+ optionsChart.channelMargin[2];
-			var comtradeOptions = chart.options.comtrade;
 			
-			chart.pageHeight = cheight * chart.channelsPrePage;
-			chart.Vpage = 1;
-
-			var scrollwidth = 30;
 			// Initialize the renderer
 			chart.renderer = optionsChart.forExport ? new SVGRenderer(
-					container, chartWidth - scrollwidth, chart.pageHeight,
-					optionsChart.style, true) : new Renderer(container,
-					chartWidth - scrollwidth, chart.pageHeight,
-					optionsChart.style);
+					container, chartWidth, chartHeight,optionsChart.style, true) : new Renderer(container,
+					chartWidth, chartHeight,optionsChart.style);
 			if (useCanVG) {
-				chart.renderer.create(chart, container, chartWidth
-						- scrollwidth, chart.pageHeight);
+				chart.renderer.create(chart, container, chartWidth, chartHeight);
 			}
 			// Add a reference to the charts index
 			chart.renderer.chartIndex = chart.index;
-
-			// axis container
-			var axiscontainer = chart.axiscontainer = createElement(DIV, {
-				id : containerId + '-axis'
-			}, extend({
-				position : RELATIVE,
-				overflow : HIDDEN,
-				width : chartWidth + PX,
-				height : chart.axisHeight + PX,
-				textAlign : 'left',
-				lineHeight : 'normal',
-				zIndex : 0
-			}, optionsChart.style), chart.renderToClone || renderTo);
-			// axischarts[chart.index] = chart.axiscontainer;
-			// Initialize the axis renderer
-			chart.axisrenderer = optionsChart.forExport ? new SVGRenderer(
-					axiscontainer, chartWidth, chart.axisHeight,
-					optionsChart.style, true) : new Renderer(axiscontainer,
-					chartWidth, chart.axisHeight, optionsChart.style);
-			if (useCanVG) {
-				chart.axiscontainer.create(chart, axiscontainer, chartWidth,
-						chart.axisHeight);
-			}
 		},
 	getChartSize:function(){
 		var chart = this,
@@ -7493,30 +5668,6 @@ Chart.prototype={
 		widthOption = optionsChart.width,
 		heightOption = optionsChart.height,
 		renderTo = chart.renderToClone || chart.renderTo;
-		
-		chart.axisHeight = 40;
-		
-		var chls = chart.options.comtrade.channels;
-		var showChls = 0;
-		for( var c in chls ){
-			var chl = chls[c];
-			if( typeof chl.show == undefined || chl.show == undefined){
-				chl.show = true;
-			}
-			if( chl.show === true ){
-				showChls++;
-			}
-			if( chl.type === "DI" ){
-				if( typeof chl.changed == undefined || chl.changed == undefined){
-					if( chl.data.length > 2 ){
-						chl.changed=true;
-					}else{
-						chl.changed=false;
-					}
-				}
-			}
-		}
-		chart.channelsPrePage = showChls;
 		
 		//get inner width and height from JQuery
 		if(!defined(widthOption)){
@@ -7531,27 +5682,6 @@ Chart.prototype={
 		}
 		chart.chartWidth = chart.containerWidth;
 		chart.chartHeight = chart.containerHeight;
-		
-		if( optionsChart.mode === 'print'){
-			var totalWidth=0,totalHeight=0;
-			var cheight = optionsChart.channel.height + optionsChart.channelMargin[0] + optionsChart.channelMargin[2];
-			var comtradeOptions = chart.options.comtrade;
-			totalHeight = cheight * showChls;
-			var startTime = chart.options.comtrade.times[0];
-			var endTime = chart.options.comtrade.times[chart.options.comtrade.times.length-1];
-			totalWidth = (endTime - startTime)*optionsChart.pxPerMS + optionsChart.channelMargin[3];
-			
-			if( !defined(widthOption)){
-				chart.chartWidth=totalWidth;
-			}
-			
-			if( !defined(heightOption)){
-				chart.chartHeight=totalHeight;
-			}
-		}
-		if( optionsChart.mode === 'show'){
-			chart.chartHeight -= chart.axisHeight;
-		}			
 	},
 	/**
 	* Creates arrays for spacing and margin from given options.
@@ -7565,46 +5695,43 @@ Chart.prototype={
 				pick(options[target + 'Bottom'], tArray[2]),
 				pick(options[target + 'Left'], tArray[3])];
 	},
+	renderBase: function(){
+		var chart = this,
+			renderer = chart.renderer,
+			chartOptions = chart.options.chart;
+		var warp = renderer.g('baseGraph').attr().add();
+		chart.circleR = mathMin(chart.plotWidth/2, chart.plotHeight/2)-10;
+		chart.zeroPointX=chart.plotLeft+chart.plotWidth/2;
+		chart.zeroPointY=chart.plotTop+chart.plotHeight/2;
+		var strokeAttrs={stroke:chartOptions.stroke.color||NONE,
+				'stroke-width':chartOptions.stroke.width,
+				'stroke-dasharray':chartOptions.stroke.dash};
+		renderer.circle(chart.zeroPointX, chart.zeroPointY, chart.circleR)
+				.attr(strokeAttrs).add(warp);
+		renderer.line(chart.plotLeft,chart.zeroPointY,chart.plotLeft+chart.plotWidth, chart.zeroPointY).attr(strokeAttrs).add(warp);
+		renderer.line(chart.zeroPointX,chart.plotTop,chart.zeroPointX, chart.plotTop+chart.plotHeight).attr(strokeAttrs).add(warp);
+		for( var i = 30; i < 360; i = i+30 ){
+			if( i == 90 || i == 180 || i == 270 ){
+				continue;
+			}
+			renderer.line(chart.zeroPointX,chart.zeroPointY,chart.zeroPointX+(chart.circleR+20)*mathCos(i*deg2rad), chart.zeroPointY+(chart.circleR+20)*mathSin(i*deg2rad)).attr(strokeAttrs).add(warp);			
+		}
+	},
 	/**
 	 * Render the graph and markers
 	 */
 	render: function(){
-		var chart = this,
-			renderer = chart.renderer,
-			options = chart.options,
-			tempWidth,tempHeight,
-			redoHorizontal, redoVertical;
-		
-		//Title
-		//chart.setTitle();
+		var chart = this;
 		
 		//Get chart margins
 		chart.getMargins(true);
 		chart.setChartSize();
 		
 		// Draw the borders and backgrounds
-		//chart.drawChartBox();
-				
-		//draw axis
-		chart.axis.render();
-		
-		//draw channels
-		chart.channels.render();
-		if( options.chart.mode === 'show'){
-			//draw cursor
-			if(chart.options.cursor1.enable && chart.primaryCursor){
-				chart.primaryCursor.render();
-			}
-			
-			if(chart.options.cursor2.enable && chart.secondaryCursor){
-				chart.secondaryCursor.render();
-			}
-			
-			//draw page turner
-			chart.getPageturner();
-			chart.renderIndicator();
-		}
-		
+		chart.drawChartBox();
+		//draw base graph
+		chart.renderBase();
+
 		//set flag
 		chart.hasRendered = true;
 	},
@@ -7675,15 +5802,7 @@ Chart.prototype={
 				plotBGImage.animate(plotBox);
 			}
 		}
-		//plot clip
-		if(!clipRect){
-			chart.clipRect = renderer.clipRect(clipBox);
-		}else{
-			clipRect.animate({
-				width: clipBox.width,
-				height: clipBox.height
-			});
-		}
+		
 		// plot area border
 		if(plotBorderWidth){
 			if(!plotBorder){
@@ -7744,7 +5863,6 @@ Chart.prototype={
 	 */
 	resetMargins: function(){
 		var chart = this;
-		/*marginNames = ['plotTop', 'marginRight', 'marginBottom', 'plotLeft']*/
 		each(marginNames, function(m, side){
 			chart[m] = pick(chart.margin[side], chart.spacing[side]);
 		});
@@ -7912,258 +6030,82 @@ Chart.prototype={
 			}
 		}
 	},
-	getLeftPageturnerBox:function(){
-		var chart = this,
-		optionsChart = chart.options.chart,
-		turnerW = 50,
-		turnerH = mathMin(300, chart.plotHeight-40);
-		var scrolltop = $(this.container).scrollTop();		
-		var plotYmid = scrolltop+chart.plotTop + chart.plotHeight/2;
-		chart.turnerLeftBox = {
-				x: chart.plotLeft, 
-				y: plotYmid - turnerH/2, 
-				width: turnerW, 
-				height: turnerH};
-		return chart.turnerLeftBox;
+	updateChls:function(chls){
+		var options = this.options;
+		options.channels = chls;
+		this.renderChls();
 	},
-	getRightPageturnerBox:function(){
-		var chart = this,
-		optionsChart = chart.options.chart,
-		turnerW = 50,
-		turnerH = mathMin(300, chart.plotHeight-40);
-		var scrolltop = $(this.container).scrollTop();		
-		var plotYmid = scrolltop+chart.plotTop + chart.plotHeight/2;
-		chart.turnerRightBox = {
-				x: chart.plotLeft+chart.plotWidth-turnerW, 
-				y: plotYmid - turnerH/2, 
-				width: turnerW, 
-				height: turnerH};
-		return chart.turnerRightBox;
-	},
-	/*
-	 * 在左右分别绘制一个翻页按钮
-	 */
-	getPageturner: function(){
-		var chart = this,
-			optionsChart = chart.options.chart,
-			renderer = chart.renderer,
-			attrAttr={fill:'rgba(0,0,0,.8)'},
-			lineAttr={fill:'rgba(200,200,200,.8)','stroke':'rgb(255,255,255)','stroke-width':1},
-			defaultIndiAttr={fill:'rgba(200,200,200,.8)','stroke':'rgb(255,255,255)','stroke-width':1},
-			selIndiAttr={fill:'rgba(200,0,200,.8)','stroke':'rgb(255,255,255)','stroke-width':1},
-			gAttr = {zIndex:10};
-		if(this.turnerLeft){
-			this.turnerLeft.destroy();
+	renderChls:function(){
+		var chls = this.options.channels,
+		chart = this,
+		renderer = chart.renderer,
+		r = +chart.circleR,
+		cx=chart.zeroPointX, cy=chart.zeroPointY;
+		if(this.chlsGraph){
+			this.chlsGraph.destroy();
 		}
-		if(this.turnerRight){
-			this.turnerRight.destroy();
-		}
-		
-		var lbox = this.getLeftPageturnerBox();
-		//left
-		var warp = this.turnerLeft = renderer.g('pageturnerLeft')
-			.attr(gAttr)
-			.add();
-		renderer.rect( lbox.x, lbox.y, lbox.width, lbox.height)
-			.attr(attrAttr)
-			.add(warp);
-		
-		renderer.path(
-				[ M, 
-				  lbox.x+lbox.width-4, 
-				  lbox.y+4, 
-				  L, 
-				  lbox.x+4,
-				  lbox.y+lbox.height/2,
-				  L, 
-				  lbox.x+lbox.width-4,
-				  lbox.y+lbox.height-4,
-				  L, 
-				  lbox.x+lbox.width-4, 
-				  lbox.y+4])
-				.attr(lineAttr).add(warp);
-		//right
-		warp = this.turnerRight = renderer.g('pageturnerRight')
-			.attr(gAttr)
-			.add();
-		var rbox = this.getRightPageturnerBox();
-		renderer.rect( rbox.x, rbox.y, rbox.width, rbox.height)
-			.attr(attrAttr)
-			.add(warp);
-		renderer.path(
-				[ M, 
-				  rbox.x+4, 
-				  rbox.y+4, 
-				  L, 
-				  rbox.x+rbox.width-4,
-				  rbox.y+rbox.height/2,
-				  L, 
-				  rbox.x+4,
-				  rbox.y+rbox.height-4,
-				  L, 
-				  rbox.x+4, 
-				  rbox.y+4])
-				.attr(lineAttr).add(warp);
-	},
-	turnPage:function(){
-		var chart = this;
-			//draw axis
-			chart.axis.render();
-			
-			//move cursor
-			if(chart.primaryCursor){
-				var cbox = chart.axis.getComtradeBox();
-				chart.primaryCursor.moveTo(cbox.x+20);
-				chart.pointer.synCursor(chart.primaryCursor)
-			}
-			
-			//draw channels
-			chart.channels.render();
-			chart.pointer.refreshChannelValue();			
-
-			chart.renderIndicator();
-			chart.showPageturner(true);
-	},
-	renderIndicator:function(){
-		var chart = this,
-			optionsChart = chart.options.chart,
-			renderer = chart.renderer,
-			attrAttr={fill:'rgba(0,0,0,.8)'},
-			defaultIndiAttr={fill:'rgba(200,200,200,.8)','stroke':'rgb(255,255,255)','stroke-width':1},
-			selIndiAttr={fill:'rgba(244,92,11,.9)','stroke':'rgb(255,255,255)','stroke-width':1},
-			gAttr = {zIndex:10};
-		
-		var indicatorSize = 20;
-				
-			if( this.hIndicator ){
-				this.hIndicator.destroy();
-				this.hIndicator = null;
-			}
-		var scrolltop = $(this.container).scrollTop();
-		var plotXmid = chart.plotLeft + chart.plotWidth/2,
-			plotYmid = scrolltop+chart.plotTop + chart.plotHeight/2;
-			
-			var warp = this.hIndicator = renderer.g('pageHIndicator')
-			.attr(gAttr)
-			.add();
-			 var indiWidth = indicatorSize* this.HPages,
-				indiHeight = indicatorSize ,
-				vx = plotXmid-indiWidth/2,
-				vy = plotYmid - indiHeight/2;
-			renderer.rect( vx, vy, indiWidth, indiHeight)
-			.attr(attrAttr)
-			.add(warp);
-			for( var h = 0; h < this.HPages; h++ ){
-				var x = vx+h*indicatorSize+indicatorSize/2,
-					y = vy + indiHeight/2,
-					r = indicatorSize/4;
-				if( h != this.curHPage ){
-					renderer.circle(x,y,r).attr(defaultIndiAttr).add(warp);
-				}else{
-					renderer.circle(x,y,r).attr(selIndiAttr).add(warp);
-				}
-			}		
-	},
-	showPageturner : function(bshow){
-		var chart = this;
-			//redraw			
-			if( bshow ){
-				this.getPageturner();
-				this.renderIndicator();
-				
-				this.PageturnerDisplayed=true;
-				if( this.turnerLeft ){
-					this.turnerLeft.show();
-				}
-				if( this.turnerRight ){
-					this.turnerRight.show();
-				}
-				if( this.hIndicator ){
-					this.hIndicator.show();
-				}
-			}else{
-				this.PageturnerDisplayed=false;
-				if( this.turnerLeft ){
-					this.turnerLeft.hide();
-				}
-				if( this.turnerRight ){
-					this.turnerRight.hide();
-				}
-				if( this.hIndicator ){
-					this.hIndicator.hide();
-				}
-			}
-		},
-	scaleTimespace: function(zoomin){
-			var chart = this,
-			chartOptions = chart.options.chart;
-			if( zoomin == true ){
-				chartOptions.pxPerMS++;
-			}else{
-				if( chartOptions.pxPerMS > 1 ){
-					chartOptions.pxPerMS--;
-				}
-			}
-			this.reRender();
-	},
-	scaleChannel:function(zoomin){
-		var chart = this,
-		chartOptions = chart.options.chart;
-		var step = 4;
-		if( zoomin == true ){
-			chartOptions.channel.height += step;
-		}else{
-			if( chartOptions.channel.height > chartOptions.channelName.height*2 ){
-				chartOptions.channel.height -= step;
-			}
-		}
-		this.reRender();
-	},
-	getOptions:function(){
-		return this.options;
-	},
-	getChannels:function(){
-		return this.options.comtrade.channels;
-	},
-	setChlShow:function(index,show){
-		var chls = this.options.comtrade.channels;
-		if( chls == null || chls.length <= index ){
+		var warp = this.chlsGraph = renderer.g('chlsGraph').attr().add();
+		if( chls.length == 0 ){
 			return;
 		}
-		chls[index].show = show;
-	},
-	reRender:function(){
-		this.firstRender();
-	},
-	setCursorMovingListener:function(func){
-		this.pointer.movingListener = func;
-	},
-	getCursorSample:function(){
-		var x1 = this.primaryCursor.x,
-		x2 = this.secondaryCursor.x,
-		axis = this.axis,
-		t1 = axis.getTimeByPoint(x1),
-		t2 = axis.getTimeByPoint(x2),
-		s1 = axis.getNearestSample(t1),
-		s2 = axis.getNearestSample(t2);
-		var samples={};
-		samples.s1 = s1;
-		samples.s2 = s2;
-		return samples;
+		var strokeAttrs={stroke:this.options.colors[0],
+				'stroke-width':1 };
+		var labelAttr = {fontSize : this.options.chart.fontSize, 
+				color : this.options.colors[0]};
+		//将第一个通道作为基准通道
+		var chl = chls[0];
+		renderer.line(cx,cy,cx+r,cy).attr(strokeAttrs).addClass(PREFIX+"baseChannel").add(warp);
+		renderer.text(
+				chl.name,
+				cx+r,
+				cy,
+				false)
+		.attr({
+			align: 'left'
+		})
+		.css(labelAttr)
+		.add(warp);
+		for(var i = 1; i < chls.length; i++){
+			var c = chls[i];
+			var tr = c.amp/chl.amp*r;
+			var rad = (c.angle-chl.angle)*deg2rad;
+			labelAttr.color = strokeAttrs.stroke = this.options.colors[i%(this.options.colors.length)]
+			renderer.line(cx,cy,cx+tr*mathCos(rad), cy+tr*mathSin(rad))
+			.attr(strokeAttrs).addClass(PREFIX+c.index).add(warp);
+			if( tr <= r ){
+				renderer.text(
+						c.name,
+						cx+tr*mathCos(rad),
+						cy+tr*mathSin(rad),
+						false)
+				.attr({
+					align: 'left'
+				})
+				.css(labelAttr)
+				.add(warp);
+			}else{
+				renderer.text(
+						c.name,
+						cx+r*mathCos(rad),
+						cy+r*mathSin(rad),
+						false)
+				.attr({
+					align: 'left'
+				})
+				.css(labelAttr)
+				.add(warp);
+			}
+		}
 	}
 };
  
 // global variables
-extend(JSComtrade, {	
+extend(JSVectorGraph, {	
 	// Constructors
 	Color: Color,
 	Renderer: Renderer,
 	SVGElement: SVGElement,
 	SVGRenderer: SVGRenderer,
-	Pointer: Pointer,
-	Cursor: Cursor,
-	Channels : Channels,
-	Tooltip : Tooltip,
 	
 	// Various
 	arrayMin: arrayMin,
@@ -8196,4 +6138,4 @@ extend(JSComtrade, {
 	version: VERSION
 });
 }());
-window.console && console.log('--- Running JSComtrade 0.1.0 ---');
+window.console && console.log('--- Running JSVectorGraph 0.1.0 ---');
