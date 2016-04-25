@@ -99,10 +99,7 @@ function wave_vzoom(zoomin){
 	window.JSComtrade.chartObj.scaleChannel(zoomin);
 }
 
-function wave_selectChls(){
-	var w = $(window).width()-20;
-	var h = $(window).height()-60;
-	
+function wave_selectChls(){	
 	$('#waveSelChlModal .modal-dialog').attr("style", "width:800px");
 	
 	$('#waveSelChlModal').modal('show');
@@ -117,15 +114,15 @@ function wave_selectChls(){
 			var c = chls[i];
 			if( c.type === 'AI' ){
 				htmlai += "<tr id='"+i+"'>";
-				htmlai += "<td width='30%'>"+ "<input type='checkbox' data-toggle='toggle'"+(c.show==true?'checked':'')+"/>" + "</td>";
-				htmlai += "<td width='50%'>"+c.name+"</td>"; 
-				htmlai += "<td width='20%'>"+c.phase+"</td>";
+				htmlai += "<td >"+ "<input type='checkbox' data-toggle='toggle'"+(c.show==true?'checked':'')+"/>" + "</td>";
+				htmlai += "<td >"+c.name+"</td>"; 
+				htmlai += "<td >"+c.phase+"</td>";
 				htmlai += "</tr>";
 			}else if( c.type === "DI"){
 				htmldi += "<tr id='"+i+"'>";
-				htmldi += "<td width='30%'>"+ "<input type='checkbox' id='"+c.changed+"' data-toggle='toggle'"+(c.show==true?'checked':'')+"/>" + "</td>";
-				htmldi += "<td width='50%'>"+c.name+"</td>"; 
-				htmldi += "<td width='20%'>"+(c.changed==true?$.i18n.prop('yes'):$.i18n.prop('no'))+"</td>";
+				htmldi += "<td >"+ "<input type='checkbox' id='"+c.changed+"' data-toggle='toggle'"+(c.show==true?'checked':'')+"/>" + "</td>";
+				htmldi += "<td >"+c.name+"</td>"; 
+				htmldi += "<td >"+(c.changed==true?$.i18n.prop('yes'):$.i18n.prop('no'))+"</td>";
 				htmldi += "</tr>";
 			}
 		}
@@ -264,7 +261,7 @@ function vector_update(s1, s2){
 
 function closeVectorDlg(){
 	if(window.JSComtrade.chartObj){
-		window.JSComtrade.chartObj.setCursorMovingListener(vector_update);
+		window.JSComtrade.chartObj.setCursorMovingListener(null);
 	}
 }
 
@@ -286,10 +283,6 @@ function wave_harmonic(){
 	$('#harmonicDialog tbody').html(htmlai);
 	$('#harmonicDialog').show();
 	var w = $('#harmonicDialog .nomodal-body').width();
-	w = 7*w/12;
-	//$('#harmonicDialog .harmonic-graph').jsvectorgraph({chart:{
-	//	width:w
-	//}});
 	harmonicParam={
 	        chart: {
 	            type: 'bar',
@@ -300,7 +293,7 @@ function wave_harmonic(){
 	            text: ''
 	        },
 	        xAxis: {
-	            categories: ['DC', '1', '2', '3', '4','5','6','7','8','9','10','11','12','13','14','15'],
+	            categories: ['1', '2', '3', '4','5','6','7','8','9','10','11','12','13','14','15'],
 	            title: {
 	                text: null
 	            }
@@ -347,7 +340,6 @@ function refresh_waveHarmonic(){
 function harmonic_update(s1, s2){
 	var chart = $('#harmonicDialog .harmonic-graph').highcharts();
 	var values = new Array;
-	values.push(0.0);
 	var chlid = $('#harmonicDialog tbody :radio:checked').attr('id');
 	for(var i = 1; i < 16; i++ ){
 		var vector = getHarmonic(s1, s2, chlid, i);
@@ -358,6 +350,240 @@ function harmonic_update(s1, s2){
 		data:values
 	});
 }
+
+function closeHarmonicDlg(){
+	if(window.JSComtrade.chartObj){
+		window.JSComtrade.chartObj.setCursorMovingListener(null);
+	}
+}
+
+var tchannels={};
+tchannels.ua=1;
+tchannels.ub=2;
+tchannels.uc=3;
+tchannels.u0=4;
+tchannels.ia=5;
+tchannels.ib=6;
+tchannels.ic=7;
+tchannels.i0=8;
+function getV(chl,s1,s2){
+	var chlindex = tchannels[chl];
+	if( typeof chlindex == undefined || chlindex == 'undefined')
+		return math.complex(0,0);
+	return getHarmonic(s1,s3,chlindex,1);
+}
+
+/**
+ * @param s1 给定波段的第一个采样位置
+ * @param s2 给定波段的最后一个采样位置
+ * @param phase 需要计算的阻抗相别.1-a;2-b;3-c;4-ab;5-bc;6-ca
+ * @param re 零序补偿实部
+ * @param im 零序补偿虚部
+ */
+function getImpedance(s1, s2, phase, re, im){
+	var kGround = math.complex(re, im);
+	switch(phase){
+	case 1://a
+		{
+		var fi = getV('ia',s1,s2) - getV('ib',s1,s2);
+		if( math.abs(fi) > 0.00001 ){
+			var fu = getV('ua',s1,s2)-getV('ub',s1,s2);
+			return fu/fi;
+		}else{
+			return math.complex(0,0);
+		}
+		break;
+		}
+	case 2://b
+		{
+		var fi = getV('ib',s1,s2) - getV('ic',s1,s2);
+		if( math.abs(fi) > 0.00001 ){
+			var fu = getV('ub',s1,s2)-getV('uc',s1,s2);
+			return fu/fi;
+		}else{
+			return math.complex(0,0);
+		}
+		break;
+		}
+	case 3://c
+		{
+		var fi = getV('ic',s1,s2) - getV('ia',s1,s2);
+		if( math.abs(fi) > 0.00001 ){
+			var fu = getV('uc',s1,s2)-getV('ua',s1,s2);
+			return fu/fi;
+		}else{
+			return math.complex(0,0);
+		}
+		break;
+		}
+	case 4://ab
+		{
+		var ia = getV('ia',s1,s2);
+		var ib = getV('ib',s1,s2);
+		var ic = getV('ic',s1,s2);
+		var i0 = ia+ib+ic;
+		var fi = ia+kGround*i0 ;
+		if( math.abs(fi) > 0.00001 ){
+			var fu = getV('ua',s1,s2);
+			return fu/fi;
+		}
+		break;
+		}
+	case 5://bc
+		{
+			var ia = getV('ia',s1,s2);
+			var ib = getV('ib',s1,s2);
+			var ic = getV('ic',s1,s2);
+			var i0 = ia+ib+ic;
+			var fi = ib+kGround*i0 ;
+			if( math.abs(fi) > 0.00001 ){
+				var fu = getV('ub',s1,s2);
+				return fu/fi;
+			}
+			break;
+		}
+	case 6://ca
+		{
+			var ia = getV('ia',s1,s2);
+			var ib = getV('ib',s1,s2);
+			var ic = getV('ic',s1,s2);
+			var i0 = ia+ib+ic;
+			var fi = ic+kGround*i0 ;
+			if( math.abs(fi) > 0.00001 ){
+				var fu = getV('uc',s1,s2);
+				return fu/fi;
+			}
+			break;
+		}
+	default:
+		{
+		return math.complex(0,0);
+		}
+	}
+}
+
+function wave_impedance(){
+	var chls = window.JSComtrade.chartObj.getChannels();
+	if( chls == null )
+		return;
+	var htmla='';
+	var htmlv='';
+	for( var i in chls ){
+		var c = chls[i];
+		if( c.type === 'AI' ){
+			var html = "<option value='"+i+"'>"+c.name+"</option>";
+			if( c.unit.toLowerCase() ==='v' || c.unit.toLowerCase()==='kv'){
+				htmlv += html;
+			}
+			if( c.unit.toLowerCase() ==='a' || c.unit.toLowerCase()==='ka'){
+				htmla += html;
+			}
+		}else{
+			break;
+		}
+	}
+	$('#ImpedanceDialog #imp_ia').html(htmla);
+	$('#ImpedanceDialog #imp_ib').html(htmla);
+	$('#ImpedanceDialog #imp_ic').html(htmla);
+	$('#ImpedanceDialog #imp_ua').html(htmlv);
+	$('#ImpedanceDialog #imp_ub').html(htmlv);
+	$('#ImpedanceDialog #imp_uc').html(htmlv);
+	autoSetChl();
+	var cyccount = getCycCount();
+	var cycstart='';
+	for(var i = 1; i <= cyccount; i++){
+		cycstart += "<option value='"+i+"'>"+i+"</option>";
+	}
+	$('#ImpedanceDialog #startCyc').html(cycstart);
+	$('#ImpedanceDialog #startCyc').val(1);
+	$('#ImpedanceDialog #startCyc').change(function(){
+		fillEndCyc();
+	});
+	fillEndCyc();
+	$('#ImpedanceDialog').show();
+}
+
+function fillEndCyc(){
+	var cyccount = getCycCount();
+	var start = parseInt($('#ImpedanceDialog #startCyc').val());
+	var html='';
+	for(var i = start+1; i <= cyccount; i++){
+		html += "<option value='"+i+"'>"+i+"</option>";
+	}
+	$('#ImpedanceDialog #endCyc').html(html);
+	var end = start+7;
+	if( end > cyccount ){
+		end = cyccount;
+	}
+	$('#ImpedanceDialog #endCyc').val(end);
+}
+
+function autoSetChl(){
+	var chls = window.JSComtrade.chartObj.getChannels();
+	if( chls == null )
+		return;
+	var ia=false,
+		ib=false,
+		ic=false,
+		ua=false,
+		ub=false,
+		uc=false;
+	for( var i in chls ){
+		var c = chls[i];
+		if( c.type === 'AI' ){
+			if( c.unit.toLowerCase() ==='a' || c.unit.toLowerCase()==='ka'){
+				var phase = c.phase.toLowerCase();
+				if( phase==='a' && ia===false){
+					$('#ImpedanceDialog #imp_ia').val(i);
+					ia = true;
+				}else if( phase==='b' && ib===false){
+					$('#ImpedanceDialog #imp_ib').val(i);
+					ib = true;
+				}else if( phase==='c' && ic===false){
+					$('#ImpedanceDialog #imp_ic').val(i);
+					ic=true;
+				}
+			}
+			if( c.unit.toLowerCase() ==='v' || c.unit.toLowerCase()==='kv'){
+				var phase = c.phase.toLowerCase();
+				if( phase==='a' && ua===false){
+					$('#ImpedanceDialog #imp_ua').val(i);
+					ua = true;
+				}else if( phase==='b' && ub===false){
+					$('#ImpedanceDialog #imp_ub').val(i);
+					ub = true;
+				}else if( phase==='c' && uc===false){
+					$('#ImpedanceDialog #imp_uc').val(i);
+					uc=true;
+				}
+			}
+		}else{
+			break;
+		}
+		if( ia===true && ib===true && ic===true && ua===true && ub===true && uc===true){
+			break;
+		}
+	}
+}
+
+function getCycCount(){
+	var lineFreq = window.JSComtrade.chartObj.getOptions().comtrade.lineFreq;
+	var rates = window.JSComtrade.chartObj.getOptions().comtrade.rates;
+	if(rates.length <= 0){
+		return 0;
+	}
+	var cyccount=0;
+	for(var i in rates){
+		var rate = rates[i];
+		if( (rate.rate - lineFreq)>1.0){
+			cyccount += parseInt(rate.count/(rate.rate/lineFreq));
+		}else{
+			break;
+		}
+	}
+	return cyccount;
+}
+
 
 function wave_hdr_hide(){
 	$('#wave-hdr .panel-zero').hide();

@@ -993,7 +993,8 @@ fieldset[disabled] .customBtn {
 }
 
 #waveSelChlModal .scroll{
-	height:600px;
+	height:450px;
+	margin-bottom:5px;
 }
 
 .table-head{
@@ -1005,9 +1006,19 @@ fieldset[disabled] .customBtn {
 	padding-right:5px;
 }
 
+.modal-header {
+    padding: 10px;
+}
+.modal-body {
+    padding: 10px;
+}
+.modal-footer{
+	padding: 10px;
+}
+
 .nomodal{
 	position:fixed;
-	left:200px;
+	left:500px;
 	top:0px;
 	display:none;
 	z-index:1150;
@@ -1072,4 +1083,21 @@ fieldset[disabled] .customBtn {
 }
 #harmonicDialog .#harmonic-graph{
 	height:360px;
+}
+
+#ImpedanceDialog .nomodal-dialog{
+	width:800px;
+}
+#ImpedanceDialog .Impedance-graph{
+	height:300px;
+}
+#ImpedanceDialog .form-group{
+	
+}
+#ImpedanceDialog .form-group select{
+	
+}
+#ImpedanceDialog .radiogroup{
+	border: 1px solid #e5e5e5;
+	padding: 2px;
 }
