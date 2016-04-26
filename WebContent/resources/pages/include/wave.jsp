@@ -8,6 +8,7 @@
 	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	        <ul class="waveMenu" >
 			    <li><button class="btn btn-default" onclick="wave_selectChls()"><fmt:message key="wave_menu_selectchl" bundle="${bundle }"/></button></li>
+			    <li><button class="btn btn-default" onclick="wave_hdr()"><fmt:message key="wave-hdr" bundle="${bundle }"/></button></li>
 			    <li class="menu_separator"></li>
 			    <li><button class="btn btn-default" onclick="wave_hzoom(true)"><fmt:message key="wave_menu_hzoomin" bundle="${bundle }"/></button></li>
 			    <li><button class="btn btn-default" onclick="wave_hzoom(false)"><fmt:message key="wave_menu_hzoomout" bundle="${bundle }"/></button></li>
@@ -23,6 +24,84 @@
 			</ul>
 			<div id='wave-graph' ondragstart="return false;" onmousedown="return false;"></div>
 	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="waveHdrModal"  role="dialog" data-backdrop="false">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title"><fmt:message key="wave-hdr" bundle="${bundle }"/></h4>
+	      </div>
+			<div class="modal-body">
+				<div id='wave-hdr' class='scroll'>
+					<div class="alert alert-danger" role="alert"></div>
+					<div></div>
+					<div class="panel panel-zero">
+						<div class="panel-heading"><fmt:message key="hdr-overview" bundle="${bundle }"/></div>
+						<table id="waveModal_breifTb" class="table table-striped">
+							<tbody></tbody>
+						</table>
+					</div>
+			
+					<div class="panel panel-success">
+						<div class="panel-heading"><fmt:message key="hdr-fault" bundle="${bundle }"/></div>
+						<table id="waveModal_faultinfoTb" class="table table-striped">
+							<tbody></tbody>
+						</table>
+					</div>
+			
+					<div class="panel panel-info">
+						<div class="panel-heading"><fmt:message key="hdr-action" bundle="${bundle }"/></div>
+						<table id="waveModal_tripinfoTb" class="table table-striped">
+							<thead>
+								<tr>
+									<th width="15%"><fmt:message key="time" bundle="${bundle }"/></th>
+									<th width="20%"><fmt:message key="name" bundle="${bundle }"/></th>
+									<th width="10%"><fmt:message key="value" bundle="${bundle }"/></th>
+									<th width="10%"><fmt:message key="phase" bundle="${bundle }"/></th>
+									<th width="45%"><fmt:message key="faultinfo" bundle="${bundle }"/></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+			
+					<div class="panel panel-warning">
+						<div class="panel-heading"><fmt:message key="hdr-diBeforeFault" bundle="${bundle }"/></div>
+						<table id="waveModal_distatusTb" class="table table-striped">
+							<tbody></tbody>
+						</table>
+					</div>
+			
+					<div class="panel panel-danger">
+						<div class="panel-heading"><fmt:message key="hdr-distatus" bundle="${bundle }"/></div>
+						<table id="waveModal_dieventTb" class="table table-striped">
+							<thead>
+								<tr>
+									<th width="15%"><fmt:message key="time" bundle="${bundle }"/></th>
+									<th width="20%"><fmt:message key="name" bundle="${bundle }"/></th>
+									<th width="20%"><fmt:message key="value" bundle="${bundle }"/></th>
+									<th width="45%"></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+			
+					<div class="panel panel-primary">
+						<div class="panel-heading"><fmt:message key="hdr-setting" bundle="${bundle }"/></div>
+						<table id="waveModal_settingTb" class="table table-striped">
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>							
+			</div>			
+			<div class="modal-footer">
+	        <button type="button" class="btn btn-default" id="cancel" data-dismiss="modal"><fmt:message key="close" bundle="${bundle }"/></button>
+	        </div>
 	    </div>
 	  </div>
 	</div>
@@ -198,18 +277,26 @@
 							</div>
 							</div>
 							<div class="row">
-							<div class="col-md-4 form-group">
+							<div class="col-md-2 form-group">
 								<label for="startCyc" class="control-label">起始周波</label>
 							    <select class="form-control" id="startCyc" ></select>
 							</div>
-							<div class="col-md-4 form-group">
+							<div class="col-md-2 form-group">
 								<label for="endCyc" class="control-label">结束周波</label>
 							    <select class="form-control" id="endCyc" ></select>
+							</div>
+							<div class="col-md-2 form-group">
+								<label for="startCyc" class="control-label">零序补偿系数kr</label>
+							    <input type='text' class="form-control" id="kr" value='0'></input>
+							</div>
+							<div class="col-md-2 form-group">
+								<label for="kx" class="control-label">零序补偿系数kx</label>
+							    <input type='text'  class="form-control" id="kx" value='0'></input>
 							</div>
 							<div class="col-md-2 form-group radiogroup">
 								<div class="radio">
 								  <label>
-								    <input type="radio" name="impPhaseRadios" id="impPhaseRadios1" value="1">
+								    <input type="radio" name="impPhaseRadios" id="impPhaseRadios1" checked value="1">
 								   	 单相
 								  </label>
 								</div>
@@ -223,7 +310,7 @@
 							<div class="col-md-2 form-group radiogroup">
 								<div class="radio">
 								  <label>
-								    <input type="radio" name="impTypeRadios" id="impTypeRadios1" value="1">
+								    <input type="radio" name="impTypeRadios" id="impTypeRadios1" checked value="1">
 								   	 幅值
 								  </label>
 								</div>

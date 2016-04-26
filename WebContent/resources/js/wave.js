@@ -100,8 +100,11 @@ function wave_vzoom(zoomin){
 }
 
 function wave_selectChls(){	
-	$('#waveSelChlModal .modal-dialog').attr("style", "width:800px");
+	var w = 800;
+	var h = $(window).height()-160;
 	
+	$('#waveSelChlModal .modal-dialog').attr("style", 'width:'+w+'px');
+	$('#waveSelChlModal .modal-dialog .scroll').attr("style", 'height:'+(h-80)+'px');
 	$('#waveSelChlModal').modal('show');
 	
 	$('#waveSelChlModal').unbind('shown.bs.modal');
@@ -191,7 +194,11 @@ function wave_vector(){
 		var c = chls[i];
 		if( c.type === 'AI' ){
 			htmlai += "<tr id='"+i+"'>";
-			htmlai += "<td class='checkbox'>"+ "<label><input type='checkbox' class='chlname'>" +c.name+ "</input></label></td>";
+			if( i==='0' || i==='1' || i==='2' || i===0 || i===1 || i===2 ){
+				htmlai += "<td class='checkbox'>"+ "<label><input type='checkbox' checked class='chlname'>" +c.name+ "</input></label></td>";
+			}else{
+				htmlai += "<td class='checkbox'>"+ "<label><input type='checkbox' class='chlname'>" +c.name+ "</input></label></td>";
+			}
 			htmlai += "<td class='angle'></td>";
 			htmlai += "<td class='amp'></td>";
 			htmlai += "</tr>";
@@ -210,7 +217,7 @@ function wave_vector(){
 		refresh_waveVector();
 	});
 	window.JSComtrade.chartObj.setCursorMovingListener(vector_update);
-
+	refresh_waveVector();
 }
 
 function refresh_waveVector(){
@@ -227,7 +234,7 @@ function getHarmonic(s1, s2, chlIndex, harmonicTimes){
 	var chl = chls[chlIndex];
 	var Xr=0.0,Xi=0.0,fV=0.0,fA=0.0;
 	for( var t = s1, j=0; t < s2; t++,j++){
-		var fTemp = chl.data[t]-chl.data[t-1];
+		var fTemp = chl.data[t+1]-chl.data[t];
 		Xr += fTemp * math.sin(harmonicTimes*(j+1)/iN*2*math.PI);
 		Xi += fTemp * math.cos(harmonicTimes*(j+1)/iN*2*math.PI);
 	}
@@ -274,7 +281,12 @@ function wave_harmonic(){
 		var c = chls[i];
 		if( c.type === 'AI' ){
 			htmlai += "<tr id='"+i+"'>";
-			htmlai += "<td class='radio'>"+ "<label><input type='radio' name='chlsRadios' id='"+i+"'>" +c.name+ "</input></label></td>";
+			if( i === 0 || i==='0'){
+				htmlai += "<td class='radio'>"+ "<label><input type='radio' checked name='chlsRadios' id='"+i+"'>" +c.name+ "</input></label></td>";
+			}else{
+				htmlai += "<td class='radio'>"+ "<label><input type='radio' name='chlsRadios' id='"+i+"'>" +c.name+ "</input></label></td>";
+			}
+			
 			htmlai += "</tr>";
 		}else{
 			break;
@@ -282,54 +294,54 @@ function wave_harmonic(){
 	}
 	$('#harmonicDialog tbody').html(htmlai);
 	$('#harmonicDialog').show();
-	var w = $('#harmonicDialog .nomodal-body').width();
-	harmonicParam={
-	        chart: {
-	            type: 'bar',
-	            animation:false,
-	            height:360
-	        },
-	        title: {
-	            text: ''
-	        },
-	        xAxis: {
-	            categories: ['1', '2', '3', '4','5','6','7','8','9','10','11','12','13','14','15'],
-	            title: {
-	                text: null
-	            }
-	        },
-	        yAxis: {
-	        	visible:false
-	        },
-	        plotOptions: {
-	            bar: {
-	                dataLabels: {
-	                    enabled: true
-	                }
-	            },
-	            series:{
-	            	animation: false
-	            }
-	        },
-	        tooltip:{
-	        	enabled:false
-	        },
-	        legend: {
-	        	enabled:false
-	        },
-	        credits: {
-	            enabled: false
-	        },
-	        series: [{
-	        	name:'谐波',
-	        	data:[]
-	        }]
-	    };
-	$('#harmonicDialog .harmonic-graph').highcharts(harmonicParam);
+
 	$('#harmonicDialog tbody :radio').change(function(){
 		refresh_waveHarmonic();
 	});
+	$('#harmonicDialog .harmonic-graph').highcharts({
+        chart: {
+            type: 'bar',
+            animation:false,
+            height:360
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: ['1', '2', '3', '4','5','6','7','8','9','10','11','12','13','14','15'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+        	visible:false
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            },
+            series:{
+            	animation: false
+            }
+        },
+        tooltip:{
+        	enabled:false
+        },
+        legend: {
+        	enabled:false
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+        	name:'谐波',
+        	data:[]
+        }]
+    });
 	window.JSComtrade.chartObj.setCursorMovingListener(harmonic_update);
+	refresh_waveHarmonic();
 }
 
 function refresh_waveHarmonic(){
@@ -357,20 +369,28 @@ function closeHarmonicDlg(){
 	}
 }
 
-var tchannels={};
-tchannels.ua=1;
-tchannels.ub=2;
-tchannels.uc=3;
-tchannels.u0=4;
-tchannels.ia=5;
-tchannels.ib=6;
-tchannels.ic=7;
-tchannels.i0=8;
 function getV(chl,s1,s2){
-	var chlindex = tchannels[chl];
+	var chlindex = getChannelIndex(chl);
 	if( typeof chlindex == undefined || chlindex == 'undefined')
 		return math.complex(0,0);
-	return getHarmonic(s1,s3,chlindex,1);
+	return getHarmonic(s1,s2,chlindex,1);
+}
+
+function getChannelIndex(type){
+	switch(type){
+	case 'ua':
+		return $('#ImpedanceDialog #imp_ua').val();
+	case 'ub':
+		return $('#ImpedanceDialog #imp_ub').val();
+	case 'uc':
+		return $('#ImpedanceDialog #imp_uc').val();
+	case 'ia':
+		return $('#ImpedanceDialog #imp_ia').val();
+	case 'ib':
+		return $('#ImpedanceDialog #imp_ib').val();
+	case 'ic':
+		return $('#ImpedanceDialog #imp_ic').val();
+	}
 }
 
 /**
@@ -385,10 +405,10 @@ function getImpedance(s1, s2, phase, re, im){
 	switch(phase){
 	case 1://a
 		{
-		var fi = getV('ia',s1,s2) - getV('ib',s1,s2);
+		var fi = math.subtract(getV('ia',s1,s2),getV('ib',s1,s2));
 		if( math.abs(fi) > 0.00001 ){
-			var fu = getV('ua',s1,s2)-getV('ub',s1,s2);
-			return fu/fi;
+			var fu = math.subtract(getV('ua',s1,s2),getV('ub',s1,s2));
+			return math.divide(fu,fi);
 		}else{
 			return math.complex(0,0);
 		}
@@ -396,10 +416,10 @@ function getImpedance(s1, s2, phase, re, im){
 		}
 	case 2://b
 		{
-		var fi = getV('ib',s1,s2) - getV('ic',s1,s2);
+		var fi = math.subtract(getV('ib',s1,s2),getV('ic',s1,s2));
 		if( math.abs(fi) > 0.00001 ){
-			var fu = getV('ub',s1,s2)-getV('uc',s1,s2);
-			return fu/fi;
+			var fu = math.subtract(getV('ub',s1,s2),getV('uc',s1,s2));
+			return math.divide(fu,fi);
 		}else{
 			return math.complex(0,0);
 		}
@@ -407,10 +427,10 @@ function getImpedance(s1, s2, phase, re, im){
 		}
 	case 3://c
 		{
-		var fi = getV('ic',s1,s2) - getV('ia',s1,s2);
+		var fi = math.subtract(getV('ic',s1,s2),getV('ia',s1,s2));
 		if( math.abs(fi) > 0.00001 ){
-			var fu = getV('uc',s1,s2)-getV('ua',s1,s2);
-			return fu/fi;
+			var fu = math.subtract(getV('uc',s1,s2),getV('ua',s1,s2));
+			return math.divide(fu,fi);
 		}else{
 			return math.complex(0,0);
 		}
@@ -421,37 +441,37 @@ function getImpedance(s1, s2, phase, re, im){
 		var ia = getV('ia',s1,s2);
 		var ib = getV('ib',s1,s2);
 		var ic = getV('ic',s1,s2);
-		var i0 = ia+ib+ic;
-		var fi = ia+kGround*i0 ;
+		var i0 = math.add(math.add(ia,ib),ic);
+		var fi = math.add(ia, math.multiply(kGround,i0) );
 		if( math.abs(fi) > 0.00001 ){
 			var fu = getV('ua',s1,s2);
-			return fu/fi;
+			return math.divide(fu,fi);
 		}
 		break;
 		}
 	case 5://bc
 		{
-			var ia = getV('ia',s1,s2);
-			var ib = getV('ib',s1,s2);
-			var ic = getV('ic',s1,s2);
-			var i0 = ia+ib+ic;
-			var fi = ib+kGround*i0 ;
+		var ia = getV('ia',s1,s2);
+		var ib = getV('ib',s1,s2);
+		var ic = getV('ic',s1,s2);
+		var i0 = math.add(math.add(ia,ib),ic);
+		var fi = math.add(ib, math.multiply(kGround,i0) );
 			if( math.abs(fi) > 0.00001 ){
 				var fu = getV('ub',s1,s2);
-				return fu/fi;
+				return math.divide(fu,fi);
 			}
 			break;
 		}
 	case 6://ca
 		{
-			var ia = getV('ia',s1,s2);
-			var ib = getV('ib',s1,s2);
-			var ic = getV('ic',s1,s2);
-			var i0 = ia+ib+ic;
-			var fi = ic+kGround*i0 ;
+		var ia = getV('ia',s1,s2);
+		var ib = getV('ib',s1,s2);
+		var ic = getV('ic',s1,s2);
+		var i0 = math.add(math.add(ia,ib),ic);
+		var fi = math.add(ic, math.multiply(kGround,i0) );
 			if( math.abs(fi) > 0.00001 ){
 				var fu = getV('uc',s1,s2);
-				return fu/fi;
+				return math.divide(fu,fi);
 			}
 			break;
 		}
@@ -499,8 +519,15 @@ function wave_impedance(){
 	$('#ImpedanceDialog #startCyc').change(function(){
 		fillEndCyc();
 	});
+	$('#ImpedanceDialog input').change(function(){
+		renderImpedanceLine();
+	});
+	$('#ImpedanceDialog select').change(function(){
+		renderImpedanceLine();
+	});
 	fillEndCyc();
 	$('#ImpedanceDialog').show();
+	renderImpedanceLine();
 }
 
 function fillEndCyc(){
@@ -566,6 +593,7 @@ function autoSetChl(){
 	}
 }
 
+var cycs={};
 function getCycCount(){
 	var lineFreq = window.JSComtrade.chartObj.getOptions().comtrade.lineFreq;
 	var rates = window.JSComtrade.chartObj.getOptions().comtrade.rates;
@@ -573,10 +601,19 @@ function getCycCount(){
 		return 0;
 	}
 	var cyccount=0;
+	var samplecount=0;
 	for(var i in rates){
 		var rate = rates[i];
 		if( (rate.rate - lineFreq)>1.0){
-			cyccount += parseInt(rate.count/(rate.rate/lineFreq));
+			var samplesPreCyc = parseInt(rate.rate/lineFreq);
+			var cycnum = parseInt(rate.count/samplesPreCyc);			
+			for(var c=0; c<cycnum; c++){
+				cycs[c+1]={};
+				cycs[c+1].sampleStart=samplecount;
+				samplecount += samplesPreCyc;
+				cycs[c+1].sampleEnd=samplecount-1;
+			}
+			cyccount += cycnum;
 		}else{
 			break;
 		}
@@ -584,6 +621,95 @@ function getCycCount(){
 	return cyccount;
 }
 
+function renderImpedanceLine(){
+	var cats=new Array;
+	var startCyc = parseInt($('#ImpedanceDialog #startCyc').val());
+	var endCyc = parseInt($('#ImpedanceDialog #endCyc').val());
+	for(var i = startCyc; i <= endCyc; i++){
+		cats.push(i);
+	}
+	var lineFreq = window.JSComtrade.chartObj.getOptions().comtrade.lineFreq;
+	var rates = window.JSComtrade.chartObj.getOptions().comtrade.rates;
+	
+	var v1={},v2={},v3={};
+	var bAmp = $('#ImpedanceDialog #impTypeRadios1').prop('checked')
+	var bPhase = $('#ImpedanceDialog #impPhaseRadios1').prop('checked');
+	if(bPhase){
+		v1.name='A';
+		v2.name='B';
+		v3.name='C';
+	}else{
+		v1.name='AB';
+		v2.name='BC';
+		v3.name='CA';
+	}
+	v1.data=new Array;
+	v2.data=new Array;
+	v3.data=new Array;
+	var series=new Array;
+	series.push(v1);
+	series.push(v2);
+	series.push(v3);
+	var kr = $('#ImpedanceDialog #kr').val();
+	var kx = $('#ImpedanceDialog #kx').val();
+	for(var c = startCyc; c <= endCyc; c++){
+		var s1 = cycs[c].sampleStart, s2=cycs[c].sampleEnd;
+		for( var j = 0; j < 3; j++){
+			if(bAmp){//幅值
+				if(bPhase){
+					//单相
+					series[j].data.push( parseFloat(math.abs(getImpedance(s1,s2,j+1,kr,kx)).toFixed(2)) );
+				}else{
+					//相间
+					series[j].data.push( parseFloat(math.abs(getImpedance(s1,s2,j+1+3,kr,kx)).toFixed(2)) );
+				}
+			}else{//相角
+				if(bPhase){
+					//单相
+					series[j].data.push( parseFloat((math.arg(getImpedance(s1,s2,j+1,kr,kx))*180/math.PI).toFixed(2)) );
+				}else{
+					//相间
+					series[j].data.push( parseFloat((math.arg(getImpedance(s1,s2,j+1+3,kr,kx))*180/math.PI).toFixed(2)) );
+				}
+			}
+		}
+	}
+	
+	
+	$('#ImpedanceDialog .Impedance-graph').highcharts({
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: cats
+        },
+        yAxis: {
+            title: {
+                text: bAmp?'幅值':'相角 (°)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: bAmp?'':'°',
+            crosshairs: true,
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        credits: {
+            enabled: false
+        },
+        series: series
+    });
+}
 
 function wave_hdr_hide(){
 	$('#wave-hdr .panel-zero').hide();
@@ -592,6 +718,7 @@ function wave_hdr_hide(){
 	$('#wave-hdr .panel-warning').hide();
 	$('#wave-hdr .panel-danger').hide();
 	$('#wave-hdr .panel-primary').hide();
+	$('#wave-hdr .alert').show();
 }
 
 function wave_hdr_show(){
@@ -601,20 +728,27 @@ function wave_hdr_show(){
 	$('#wave-hdr .panel-warning').show();
 	$('#wave-hdr .panel-danger').show();
 	$('#wave-hdr .panel-primary').show();
+	$('#wave-hdr .alert').hide();
 }
 
-function wave_hdr(hdrData){
+function wave_hdr(){
+	var w = $(window).width()-40;
+	var h = $(window).height()-100;
+	
+	$('#waveHdrModal .modal-dialog').attr("style", 'width:'+w+'px'+';height:'+h+'px');
+	$('#waveHdrModal #wave-hdr').attr("style", 'width:'+(w-30)+'px'+';height:'+(h-60)+'px');
+	
+	$('#waveHdrModal').modal('show');
+	var hdrData = window.JSComtrade.chartObj.getOptions().comtrade.hdr;
 	if( hdrData == null )
 		return;
 	if( hdrData.result == 0 ){
 		$('#wave-hdr .alert').html($.i18n.prop('b_hdrnotexist'));
-		$('#wave-hdr .alert').show();
 		wave_hdr_hide();
 		return;
 	}
 	if( hdrData.result == 1 ){
 		$('#wave-hdr .alert').html($.i18n.prop('b_hdrformaterror'));
-		$('#wave-hdr .alert').show();
 		wave_hdr_hide();
 		return;
 	}
