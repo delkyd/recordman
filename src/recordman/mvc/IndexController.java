@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 	@RequestMapping("/")
 	public String index(){
-		return "redirect:/runview/runstatus/";
+		return "redirect:/runview/recordfile/";
 	}
 }

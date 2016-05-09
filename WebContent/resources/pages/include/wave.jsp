@@ -278,32 +278,32 @@
 							</div>
 							<div class="row">
 							<div class="col-md-2 form-group">
-								<label for="startCyc" class="control-label">起始周波</label>
+								<label for="startCyc" class="control-label"><fmt:message key="imp_startcyc" bundle="${bundle }"/></label>
 							    <select class="form-control" id="startCyc" ></select>
 							</div>
 							<div class="col-md-2 form-group">
-								<label for="endCyc" class="control-label">结束周波</label>
+								<label for="endCyc" class="control-label"><fmt:message key="imp_endcyc" bundle="${bundle }"/></label>
 							    <select class="form-control" id="endCyc" ></select>
 							</div>
 							<div class="col-md-2 form-group">
-								<label for="startCyc" class="control-label">零序补偿系数kr</label>
+								<label for="kr" class="control-label"><fmt:message key="imp_kr" bundle="${bundle }"/></label>
 							    <input type='text' class="form-control" id="kr" value='0'></input>
 							</div>
 							<div class="col-md-2 form-group">
-								<label for="kx" class="control-label">零序补偿系数kx</label>
+								<label for="kx" class="control-label"><fmt:message key="imp_kx" bundle="${bundle }"/></label>
 							    <input type='text'  class="form-control" id="kx" value='0'></input>
 							</div>
 							<div class="col-md-2 form-group radiogroup">
 								<div class="radio">
 								  <label>
 								    <input type="radio" name="impPhaseRadios" id="impPhaseRadios1" checked value="1">
-								   	 单相
+								   	 <fmt:message key="imp_singlephase" bundle="${bundle }"/>
 								  </label>
 								</div>
 								<div class="radio">
 								  <label>
 								    <input type="radio" name="impPhaseRadios" id="impPhaseRadios2" value="2">
-								   	 相间
+								   	 <fmt:message key="imp_interphase" bundle="${bundle }"/>
 								  </label>
 								</div>
 							</div>
@@ -311,13 +311,13 @@
 								<div class="radio">
 								  <label>
 								    <input type="radio" name="impTypeRadios" id="impTypeRadios1" checked value="1">
-								   	 幅值
+								   	 <fmt:message key="wavevector_angle" bundle="${bundle }"/>
 								  </label>
 								</div>
 								<div class="radio">
 								  <label>
 								    <input type="radio" name="impTypeRadios" id="impTypeRadios2" value="2">
-								   	 相角
+								   	 <fmt:message key="wavevector_amp" bundle="${bundle }"/>
 								  </label>
 								</div>
 							</div>

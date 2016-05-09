@@ -12,8 +12,36 @@
 	<%@ include file="../include/slidemenu.jsp"%>
 	<div class="site-wrapper slideout-panel">				
 		<%@ include file="../include/nav.jsp"%>	
-		<div id="content" class="container-fluid">
-			<div class="faq">
+		<div id="content" class="container-fluid faq">
+			<div class="col-md-3">
+				<div class="runstatus-callouts">
+					<div id="info" class="callout ">
+						<div class="contained">
+							<div class="title"><fmt:message key="runstatus_title_Info" bundle="${bundle }"/></div>
+							<div class="content"></div>
+						</div>
+					</div>
+					<div id="function" class="callout ">
+						<div class="contained">
+							<div class="title"><fmt:message key="runstatus_title_function" bundle="${bundle }"/></div>
+							<div class="content"></div>
+						</div>
+					</div>
+					<div id="overview" class="callout">
+						<div class="contained">
+							<div class="title"><fmt:message key="runstatus_title_overview" bundle="${bundle }"/></div>
+							<div class="content"></div>
+						</div>
+					</div>
+					<div id="subsystem" class="callout">
+						<div class="contained">
+							<div class="title"><fmt:message key="runstatus_title_subsystem" bundle="${bundle }"/></div>
+							<div class="content"></div>
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="col-md-8">
 				<div class="query-bar">
 					<form class="form-inline" onsubmit="return false;">
 						<div class="form-group">
@@ -22,12 +50,6 @@
 								<option>稳态</option>
 							</select>
 						</div>
-						<!-- <div class="form-group" >
-							<select id='dev' class="form-control">
-								<option>工控机</option>
-								<option>DSP</option>
-							</select>
-						</div> -->
 						<div class="form-group">
 							<select id='period' class="form-control">
 								<option value='1'>一天</option>
@@ -73,7 +95,6 @@
 				</div>
 			</div>
 		</div>
-		<form method="post"></form>
 		<%@ include file="../include/footer.jsp"%>
 	</div>	
 	<%@ include file="../include/wave.jsp"%>
@@ -83,6 +104,7 @@
 	<script src="<%=request.getContextPath()%>/resources/js/jscomtrade.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/jsvectorgraph.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/wave.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/recordman/runstatus.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/recordman/recordfile.js"></script>
 </body>
 </html>

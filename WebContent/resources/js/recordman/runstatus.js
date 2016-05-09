@@ -1,5 +1,5 @@
 $(function(){
-	setNavActive('nav_runstatus');
+	//setNavActive('nav_runstatus');
 	RefreshStatus();
 });
 
@@ -190,17 +190,6 @@ function updateFunction(data){
 	if( data == null )
 		return;
 	var html='';
-	if( !(data.file_count === undefined)  ){
-		html += "<span>" + $.i18n.prop('runstatus_func_filecount') + ":" + data.file_count + "</span>";
-	}else{
-		html += "<span>" + $.i18n.prop('runstatus_func_filecount') + ":" + 0 + "</span>";
-	}
-	if( !(data.last_file === undefined)  ){
-		html += "<span>" + $.i18n.prop('runstatus_func_lastfile') + ":" + data.last_file + "</span>";
-	}
-	if( !(data.last_time === undefined)  ){
-		html += "<span>" + $.i18n.prop('runstatus_func_lasttime') + ":" + data.last_time + "</span>";
-	}
 	if( !(data.ethernets === undefined)  ){
 		for( var i = 0; i < data.ethernets.length; i++ ){
 			var r = data.ethernets[i];

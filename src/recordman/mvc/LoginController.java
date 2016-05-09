@@ -31,19 +31,19 @@ public class LoginController {
 		try{						
 			if( name.equals("guest")){
 				request.getSession().removeAttribute("user");
-				CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("以游客身份登录系统", name), request);
-				return "redirect:/runview/runstatus/";
+				CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("以运行方式登录系统", name), request);
+				return "redirect:/runview/recordfile/";
 			}else{
 				user u = userdatahandle.find(name, pwd);
 				if( null != u ){
 					request.getSession().setAttribute("user", u);
-					CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("用户[%s]登录成功", name), request);
+					CommandMgr.getInstance().sendLog(logmsg.LOG_INFO, String.format("以检修方式登录成功", name), request);
 					if( u.getType() == user.USER_TYPE_ADMIN){
 						return "redirect:/devparam/devconfig/";
 					}else if( u.getType() == user.USER_TYPE_ENGINEER){
 						return "redirect:/mgrparam/channeltable/";
 					}
-					return "redirect:/runview/runstatus/";
+					return "redirect:/runview/recordfile/";
 				}else{
 					System.out.println("login failed");
 					model.addAttribute("loginFail", true);

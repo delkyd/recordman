@@ -34,8 +34,7 @@
 						<label class="control-label sr-only" for="name">name</label>
 						<span class="input-group-addon glyphicon glyphicon-user"></span>
 						<select class="form-control" id="name" name="name">
-							<option value="admin" selected><fmt:message key="user_admin" bundle="${bundle }"/></option>
-							<option value="engineer"><fmt:message key="user_engineer" bundle="${bundle }"/></option>						
+							<option value="admin" selected><fmt:message key="user_admin" bundle="${bundle }"/></option>						
 						</select>			
 					</div>
 					<div class="form-group input-group input-group-lg col-xs-10 col-xs-offset-1 ">

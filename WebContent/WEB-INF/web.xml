@@ -34,9 +34,7 @@
       <listener-class>
           org.springframework.web.context.ContextLoaderListener
       </listener-class>
-      <listener-class>
-          recordman.ContextListener
-      </listener-class>
+      <listener-class>recordman.ContextListener</listener-class>
   </listener>
   <context-param>
       <param-name>contextConfigLocation</param-name>

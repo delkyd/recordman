@@ -5,7 +5,7 @@ $(function(){
 	
 	showStyle=getCookie('recordfileShowStyle');
 	if( showStyle===''){
-		showStyle = 'icon';
+		showStyle = 'list';
 	}
 	setCheck(showStyle);
 

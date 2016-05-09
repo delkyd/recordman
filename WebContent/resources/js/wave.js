@@ -40,7 +40,7 @@ function exportComtrade(){
 	url = url.replace(/\#/g, "%23");
 	url = url.replace(/\+/g, "%2B");
 	url = url.replace(/\ /g, "%20");
-	url = encodeURI(url);
+	url = encodeURI(encodeURI(url));
 	window.location.href=url;
 }
 

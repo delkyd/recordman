@@ -10,24 +10,16 @@
 			</button>
 			<a class="home" href=""><img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave"><fmt:message key="product_name" bundle="${bundle }"/></a>
 			<c:if test="${empty user}">
-				<a class="loginItem" href="<%=request.getContextPath()%>/resources/pages/login.jsp"><fmt:message key="login" bundle="${bundle }"/></a>
-				<span class="loginItem"><fmt:message key="welcome" bundle="${bundle }"/><fmt:message key="user_guest" bundle="${bundle }"/></span>
+				<a class="loginItem" href="<%=request.getContextPath()%>/resources/pages/login.jsp"><fmt:message key="switch_Maintenance" bundle="${bundle }"/></a>
 			</c:if>
 			<c:if test="${!empty user}">
-				<a class="loginItem" href="<%=request.getContextPath()%>/resources/pages/login.jsp"><fmt:message key="logout" bundle="${bundle }"/></a>
-				<c:if test="${user.type==2}">
-					<span class="loginItem"><fmt:message key="welcome" bundle="${bundle }"/><fmt:message key="user_admin" bundle="${bundle }"/></span>
-				</c:if>
-				<c:if test="${user.type==3}">
-					<span class="loginItem"><fmt:message key="welcome" bundle="${bundle }"/><fmt:message key="user_engineer" bundle="${bundle }"/></span>
-				</c:if>
+				<a class="loginItem" href="<%=request.getContextPath()%>//logon/login/?name=guest"><fmt:message key="switch_run" bundle="${bundle }"/></a>
 			</c:if>
 		</div>
 		<div class="desktop-header">		
 			<ul>
 				<li><a class="home" href=""><img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave"><fmt:message key="product_name" bundle="${bundle }"/></a></li>
 				<c:if test="${empty user}">
-					<li id='nav_runstatus'><a href="<%=request.getContextPath()%>/runview/runstatus/"><fmt:message key="nav_runstatus" bundle="${bundle }"/></a></li>				
 					<li id='nav_faultrecord'><a href="<%=request.getContextPath()%>/runview/recordfile/"><fmt:message key="nav_faultrecord" bundle="${bundle }"/></a></li>
 					<li id='nav_manualrecord'><a href="<%=request.getContextPath()%>/runview/manualrecord/"><fmt:message key="nav_manualrecord" bundle="${bundle }"/></a></li>
 				</c:if>
@@ -57,17 +49,10 @@
 				</c:if>				
 			</ul>
 			<c:if test="${empty user}">
-				<a class="loginItem" href="<%=request.getContextPath()%>/resources/pages/login.jsp"><fmt:message key="login" bundle="${bundle }"/></a>
-				<span class="loginItem"><fmt:message key="welcome" bundle="${bundle }"/><fmt:message key="user_guest" bundle="${bundle }"/></span>
+				<a class="loginItem" href="<%=request.getContextPath()%>/resources/pages/login.jsp"><fmt:message key="switch_Maintenance" bundle="${bundle }"/></a>
 			</c:if>
 			<c:if test="${!empty user}">
-				<a class="loginItem" href="<%=request.getContextPath()%>/resources/pages/login.jsp"><fmt:message key="logout" bundle="${bundle }"/></a>
-				<c:if test="${user.type==2}">
-					<span class="loginItem"><fmt:message key="welcome" bundle="${bundle }"/><fmt:message key="user_admin" bundle="${bundle }"/></span>
-				</c:if>
-				<c:if test="${user.type==3}">
-					<span class="loginItem"><fmt:message key="welcome" bundle="${bundle }"/><fmt:message key="user_engineer" bundle="${bundle }"/></span>
-				</c:if>
+				<a class="loginItem" href="<%=request.getContextPath()%>//logon/login/?name=guest"><fmt:message key="switch_run" bundle="${bundle }"/></a>
 			</c:if>
 		</div>
 	</nav>
