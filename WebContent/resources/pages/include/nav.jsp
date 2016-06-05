@@ -8,7 +8,7 @@
 			<button class="btn-hamburger js-slideout-toggle btn-lg">
 				<span class="glyphicon glyphicon-menu-hamburger"></span>
 			</button>
-			<a class="home" href=""><img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave"><fmt:message key="product_name" bundle="${bundle }"/></a>
+			<a class="home" href=""><img src="<%=request.getContextPath()%>/resources/images/logo.png" alt="logo"><fmt:message key="product_name" bundle="${bundle }"/></a>
 			<c:if test="${empty user}">
 				<a class="loginItem" href="<%=request.getContextPath()%>/resources/pages/login.jsp"><fmt:message key="switch_Maintenance" bundle="${bundle }"/></a>
 			</c:if>
@@ -18,7 +18,7 @@
 		</div>
 		<div class="desktop-header">		
 			<ul>
-				<li><a class="home" href=""><img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave"><fmt:message key="product_name" bundle="${bundle }"/></a></li>
+				<li><a class="home" href=""><img src="<%=request.getContextPath()%>/resources/images/logo.png" alt="logo"><fmt:message key="product_name" bundle="${bundle }"/></a></li>
 				<c:if test="${empty user}">
 					<li id='nav_faultrecord'><a href="<%=request.getContextPath()%>/runview/recordfile/"><fmt:message key="nav_faultrecord" bundle="${bundle }"/></a></li>
 					<li id='nav_manualrecord'><a href="<%=request.getContextPath()%>/runview/manualrecord/"><fmt:message key="nav_manualrecord" bundle="${bundle }"/></a></li>
@@ -40,6 +40,7 @@
 					<li id='nav_sys' class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
 						aria-haspopup="true" aria-expanded="true"><fmt:message key="nav_systemtool" bundle="${bundle }"/><span class="caret"></span></a>
 						<ul class="dropdown-menu">
+							<li><a href="<%=request.getContextPath()%>/system/sysprocess/"><fmt:message key="nav_sys_process" bundle="${bundle }"/></a></li>
 							<li><a href="<%=request.getContextPath()%>/system/systime/"><fmt:message key="nav_sys_settime" bundle="${bundle }"/></a></li>
 							<li><a href="<%=request.getContextPath()%>/system/syspwd/"><fmt:message key="nav_sys_setpwd" bundle="${bundle }"/></a></li>						
 							<li><a href="<%=request.getContextPath()%>/system/syslog/"><fmt:message key="nav_sys_syslog" bundle="${bundle }"/></a></li>

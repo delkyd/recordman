@@ -1222,7 +1222,7 @@ var adapterRun = adapter.adapterRun,
  * Handle the options                                                         *
  *****************************************************************************/
 defaultOptions = {
-	colors: ['#7cb5ec', '#90ed7d', '#f7a35c', 
+	colors: ['#CC0033', '#003399', '#003300', 
 		    '#8085e9', '#f15c80', '#e4d354', '#2b908f', '#91e8e1', '#f45b5b'],
 	symbols: ['circle', 'diamond', 'square', 'triangle', 'triangle-down'],
 	lang: {
@@ -1251,14 +1251,14 @@ defaultOptions = {
 		backgroundColor: '#FFFFFF',
 		plotBorderColor: '#C0C0C0',
 		plotBorderWidth: 1,
-		plotBackgroundColor: '#000000',
+		plotBackgroundColor: '#FFFFFF',
 		stroke:{
-			color:'#FFFFFF',
+			color:'#000000',
 			width:1,
 			dash:'5,5'
 		},
 		fontSize:12,
-		color: '#FFFFFF'
+		color: '#000000'
 	},
 	title: {
 		text: '',
@@ -5704,6 +5704,7 @@ Chart.prototype={
 		chart.zeroPointX=chart.plotLeft+chart.plotWidth/2;
 		chart.zeroPointY=chart.plotTop+chart.plotHeight/2;
 		var strokeAttrs={stroke:chartOptions.stroke.color||NONE,
+				'fill':NONE,
 				'stroke-width':chartOptions.stroke.width,
 				'stroke-dasharray':chartOptions.stroke.dash};
 		renderer.circle(chart.zeroPointX, chart.zeroPointY, chart.circleR)

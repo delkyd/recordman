@@ -39,6 +39,8 @@ public class CommandMgr {
 	private String MESSAGE_PUBLISH_EXCHANGE="MESSAGE_PUBLISH_EXCHANGE";
 	private String rabbit_addr=null;
 	private int rabbit_port=5672;
+	private String rabbit_user=null;
+	private String rabbit_pwd=null;
 	private String APPID="WEBAPP";
 	
 	private CommandMgr(){
@@ -71,6 +73,8 @@ public class CommandMgr {
 			ConfigHandle confHandle = new ConfigHandle();
 			rabbit_addr = confHandle.getValue("rabbit_mq_base_config/addr");
 			rabbit_port = DTF.StringToInt(confHandle.getValue("rabbit_mq_base_config/port"));
+			rabbit_user = confHandle.getValue("rabbit_mq_base_config/user");
+			rabbit_pwd = confHandle.getValue("rabbit_mq_base_config/pwd");
 			LOG_EXCHANGE_NAME=confHandle.getValue("rabbit_mq_advance_config/log_exchange");
 			SEND_QUEUE = confHandle.getValue("rabbit_mq_advance_config/collector_recv_queue");
 			RECEIVE_QUEUE = confHandle.getValue("rabbit_mq_advance_config/web_result_queue");
@@ -149,6 +153,8 @@ public class CommandMgr {
 			ConnectionFactory factory = new ConnectionFactory();
 			factory.setHost(rabbit_addr);
 			factory.setPort(rabbit_port);
+			factory.setUsername(rabbit_user);
+			factory.setPassword(rabbit_pwd);
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
 			channel.queueDeclare(SEND_QUEUE, false, false, false, null);
@@ -179,6 +185,8 @@ public class CommandMgr {
 			ConnectionFactory factory = new ConnectionFactory();
 			factory.setHost(rabbit_addr);
 			factory.setPort(rabbit_port);
+			factory.setUsername(rabbit_user);
+			factory.setPassword(rabbit_pwd);
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
 			
@@ -209,6 +217,8 @@ public class CommandMgr {
 			ConnectionFactory factory = new ConnectionFactory();
 			factory.setHost(rabbit_addr);
 			factory.setPort(rabbit_port);
+			factory.setUsername(rabbit_user);
+			factory.setPassword(rabbit_pwd);
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
 			
@@ -256,6 +266,8 @@ public class CommandMgr {
 			ConnectionFactory factory = new ConnectionFactory();
 			factory.setHost(rabbit_addr);
 			factory.setPort(rabbit_port);
+			factory.setUsername(rabbit_user);
+			factory.setPassword(rabbit_pwd);
 		    recv_connection = factory.newConnection();
 		    recv_channel = recv_connection.createChannel();
 
@@ -291,6 +303,8 @@ public class CommandMgr {
 			ConnectionFactory factory = new ConnectionFactory();
 			factory.setHost(rabbit_addr);
 			factory.setPort(rabbit_port);
+			factory.setUsername(rabbit_user);
+			factory.setPassword(rabbit_pwd);
 			mp_connection = factory.newConnection();
 			mp_channel = mp_connection.createChannel();
 		    

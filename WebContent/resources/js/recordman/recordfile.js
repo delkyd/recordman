@@ -18,7 +18,7 @@ $(function(){
 		locale: $.i18n.prop('locale')
 	});
 	setdate();
-	$('#source').change(find);
+	$('#source').change(setdate);
 	$("#period").change(setdate);
 	$("#query").click(find);
 	
@@ -48,12 +48,9 @@ function setCheck(s){
 	}
 }
 
-function setdate(){
+function refreshPeriodDate(){
 	var period = parseInt($("#period").val());
 	if( period == CONST.PERIOD.NONE ){
-		$('#datetimepicker1').show();
-		$('#datetimepicker2').show();
-		$('#query').show();
 	}else{
 		var n = new Date();
 		var s = new moment(n);
@@ -85,6 +82,17 @@ function setdate(){
 		}
 		$('#datetimepicker1').data("DateTimePicker").date(s);
 		$('#datetimepicker2').data("DateTimePicker").date(n);
+	}
+}
+
+function setdate(){
+	var period = parseInt($("#period").val());
+	if( period == CONST.PERIOD.NONE ){
+		$('#datetimepicker1').show();
+		$('#datetimepicker2').show();
+		$('#query').show();
+	}else{
+		
 		$('#datetimepicker1').hide();
 		$('#datetimepicker2').hide();
 		$('#query').hide();
@@ -107,6 +115,7 @@ function exportitem(path, name){
 }
 
 function find(){
+	refreshPeriodDate();
 	var param={};
 	var s = $('#datetimepicker1').data("DateTimePicker").date();
 	var n = $('#datetimepicker2').data("DateTimePicker").date();
