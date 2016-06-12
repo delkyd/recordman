@@ -6,7 +6,6 @@
 <html class="no-js" lang="en">
 <head>
 <%@ include file="../include/html_head.jsp"%>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/bootstrap-toggle.min.css" />
 </head>
 <body>
 	<%@ include file="../include/slidemenu.jsp"%>
@@ -86,7 +85,6 @@
 		<%@ include file="../include/footer.jsp"%>
 	</div>
 	<%@ include file="../include/html_footer.jsp"%>
-	<script src="<%=request.getContextPath()%>/resources/js/bootstrap-toggle.min.js"></script>
 	<script src="<%=request.getContextPath()%>/resources/js/recordman/channelctrl.js"></script>
 </body>
 </html>

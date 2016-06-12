@@ -12,7 +12,7 @@
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" id="nav">
 			<div class="container">
-				<img src="<%=request.getContextPath()%>/resources/images/wave.png" alt="Wave">
+				<img src="<%=request.getContextPath()%>/resources/images/logo.png" alt="logo">
 				<span class="navbar-brand"><fmt:message key="brand" bundle="${bundle }"/></span>
 			</div>
 	</nav>

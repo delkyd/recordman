@@ -52,7 +52,7 @@ function fillTables(){
 						var chl = data.channels[i];
 						var html='';
 						 html += "<tr>";
-						 html += "<td>"+ "<input type='checkbox' data-toggle='toggle'"+(chl.enable==true?'checked':'')+"/>" + "</td>";
+						 html += "<td>"+ "<input type='checkbox' data-toggle='toggle' "+(chl.enable==true?'checked':'')+"/>" + "</td>";
 						 html += "<td class='channelId' id='"+chl.kind+"'>"+ chl.id + "</td>";
 						 html += "<td>"+ "<input class='channelName form-control' type='text' value='"+(validateVar(chl.name)?chl.name:'') + "' "+(chl.enable==false?'disabled':'')+"/></td>";
 						 html += "</tr>";
@@ -71,6 +71,7 @@ function fillTables(){
 					$('#channelTb2 tbody :checkbox').bootstrapToggle({
 						size:'mini'
 					});
+					
 					$('#channelTb1 tbody :checkbox').change(function(){
 						var ischecked = $(this).prop('checked');
 						var tdparent=$(this).parent();

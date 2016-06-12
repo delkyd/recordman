@@ -5,7 +5,7 @@ $(function(){
 	
 	showStyle=getCookie('recordfileShowStyle');
 	if( showStyle===''){
-		showStyle = 'list';
+		showStyle = 'icon';
 	}
 	setCheck(showStyle);
 
@@ -144,10 +144,10 @@ function getColor(index){
 		c = "blue";
 		break;
 	case 1:
-		c = "yellow";
+		c = "red";
 		break;
 	case 2:
-		c = "green";
+		c = "yellow";
 		break;
 	case 3:
 		c = "pink";
@@ -168,9 +168,10 @@ function fillData(data){
 				 var path = f.savePath+f.name;
 				 html += "<div class='item' id='"+ path + "'><div class='toolbar'><div class='icon open' onclick="+ 
 				 		'"openitem('+ "'" + path + "','"+f.name+ "')\"></div>" + 
-				 		"<div class='icon export' onclick=\"exportitem('"+path+"','"+f.name+"')\"></div></div>";
-				 html += "<h5>" + f.shortTime + "</h5>";
-				 html += "<h5 class='filename'>" + f.name + "</h5>";
+				 		"<div class='icon export' onclick=\"exportitem('"+path+"','"+f.name+"')\"></div>"+
+				 		"<div><h5 class=''>" + f.name + "</h5></div>"+"</div>";
+				 html += "<h5 class='time'>" + f.shortTime + "</h5>";
+				 //html += "<h5 class='filename'>" + f.name + "</h5>";
 				 html += "<h5>" + $.i18n.prop('faulttype_'+f.faultType) + "</h5>";
 				 html += "<h5>" + $.i18n.prop('fault_distance')+":"+(validateVar(f.distance)?(f.distance + "(km)"):"-")+ "</h5></div>";
 			 }

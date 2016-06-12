@@ -42,6 +42,9 @@ footer p {
 .bluebk{
 	background-color: #003b64;
 }
+.navbar-brand{
+	float:none;
+}
 
 
 /*框架布局*/
@@ -609,35 +612,35 @@ fieldset[disabled] .customBtn {
 }
 
 .result-zone .blue{
-	border-bottom:5px solid #31c2de;
+	border-bottom:5px solid #20AFF1;
 }
 
 .result-zone .blue .color{
-	background-color: #31c2de;
+	background-color: #20AFF1;
 }
 
 .result-zone .yellow{
-	border-bottom:5px solid #ff8000;
+	border-bottom:5px solid #FCC431;
 }
 
 .result-zone .yellow .color{
-	background-color: #ff8000;
+	background-color: #FCC431;
 }
 
 .result-zone .pink{
-	border-bottom:5px solid #e83f96;
+	border-bottom:5px solid #ED7DFB;
 }
 
 .result-zone .pink .color{
-	background-color: #e83f96;
+	background-color: #ED7DFB;
 }
 
-.result-zone .green{
-	border-bottom:5px solid #bad730;
+.result-zone .red{
+	border-bottom:5px solid #F26339;
 }
 
-.result-zone .green .color{
-	background-color: #bad730;
+.result-zone .red .color{
+	background-color: #F26339;
 }
 
 .result-zone .gallery{
@@ -648,8 +651,8 @@ fieldset[disabled] .customBtn {
 	margin-right:10px;
 	margin-bottom:10px;
 	background: #ffffff;
-	width:180px;
-	height:130px;
+	width:160px;
+	height:90px;
 
 	padding:0px 10px;
 	word-wrap:break-word;
@@ -663,37 +666,34 @@ fieldset[disabled] .customBtn {
 	background: RGBA(206,82,79,0.7);
 }
 
-
 .result-zone .blue .gallery .item{
-	border-top:2px solid #31c2de;
+	border-top:2px solid #20AFF1;
 }
 
 .result-zone .yellow .gallery .item{
-	border-top:2px solid #ff8000;
+	border-top:2px solid #FCC431;
 }
 
 .result-zone .pink .gallery .item{
-	border-top:2px solid #e83f96;
+	border-top:2px solid #ED7DFB;
 }
 
-.result-zone .green .gallery .item{
-	border-top:2px solid #bad730;
+.result-zone .red .gallery .item{
+	border-top:2px solid #F26339;
 }
 
 .result-zone .gallery .item:hover{
 	cursor: pointer;
-	/* border-top-width:8px; */
 }
 
-.result-zone .gallery .item .filename{
+.result-zone .gallery .item .time{
 	font-weight: 800;
-	height:36px;
 }
 
 .gallery .item:hover .toolbar{
 	width:100%;
 	height:100%;
-	background: RGBA(255,255,255,0.5);
+	background: RGBA(255,255,255,0.9);
 	position: absolute;
 	left:0px;
 	top:0px;
@@ -712,6 +712,16 @@ fieldset[disabled] .customBtn {
 
 .gallery .item:hover .toolbar .icon:hover{
 	background-size: 100%;
+}
+
+.gallery .item .toolbar h5{
+	display:none;
+}
+
+.gallery .item:hover .toolbar h5{
+	display:block;
+	color: #20AFF1;
+	font-weight: 400;
 }
 
 .gallery .item:hover .toolbar .export{
